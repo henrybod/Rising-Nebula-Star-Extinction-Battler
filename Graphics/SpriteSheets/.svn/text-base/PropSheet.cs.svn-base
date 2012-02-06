@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Hook.Graphics.SpriteSheets
+{
+    public class PropSheet : SpriteSheet
+    {
+        public const int WHEEL = 0;
+        public const int THICKLINK = 1;
+        public const int THINLINK = 2;
+        public const int PLAYER = 3;
+        public const int START = 4;
+        public const int FINISH = 5;
+        public const int DIE = 6;
+
+        public PropSheet(Texture2D SheetImage)
+            : base()
+        {
+            this.SheetImage = SheetImage;
+
+            FrameValues = new int[,]{
+                {505, 507, 1},   //Wheel
+                {30, 20, 1},    //Thick Chain Link
+                {30, 10, 1},     //Thin Chain Link
+                {40, 60, 2},     //Player
+                {40, 40, 1},     //Level start
+                {40, 40, 1},     //Level finish
+                {80, 80, 1}     //5 dot die
+            };
+        }
+    }
+}

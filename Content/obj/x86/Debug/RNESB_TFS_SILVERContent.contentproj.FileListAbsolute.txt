@@ -1,0 +1,2 @@
+C:\Users\Hank\Desktop\RSNSB_TFS\Src\RNESB_TFS_SILVER\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\Content\obj\x86\Debug\ResolveAssemblyReference.cache

@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>GameFont.spritefont</Source>
+      <Name>GameFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb</Output>
+      <Time>2011-01-28T19:11:14-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\Music\Forest Boss.mp3</Source>
+      <Name>Audio\Music\Forest Boss</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.xnb</Output>
+      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.wma</Extra>
+      <Time>2011-01-28T19:11:14-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\Music\Forest Theme.mp3</Source>
+      <Name>Audio\Music\Forest Theme</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.xnb</Output>
+      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.wma</Extra>
+      <Time>2011-01-28T19:11:14-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\Music\teamstairwell Intro.mp3</Source>
+      <Name>Audio\Music\teamstairwell Intro</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.xnb</Output>
+      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.wma</Extra>
+      <Time>2011-01-29T09:43:54-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\Music\teamstairwell Theme.mp3</Source>
+      <Name>Audio\Music\teamstairwell Theme</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.xnb</Output>
+      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.wma</Extra>
+      <Time>2011-01-29T09:43:54-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\Music\04 - Boogie Wonderland.mp3</Source>
+      <Name>Audio\Music\04 - Boogie Wonderland</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.xnb</Output>
+      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.wma</Extra>
+      <Time>2011-01-29T18:11:04-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\CyberSheet.png</Source>
+      <Name>SpriteSheets\CyberSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\CyberSheet.xnb</Output>
+      <Time>2011-01-28T19:11:14-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\EffectSheet.png</Source>
+      <Name>SpriteSheets\EffectSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EffectSheet.xnb</Output>
+      <Time>2011-01-28T19:11:14-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\EnvironmentSheet.png</Source>
+      <Name>SpriteSheets\EnvironmentSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EnvironmentSheet.xnb</Output>
+      <Time>2011-01-28T19:11:14-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\PanelSheet.png</Source>
+      <Name>SpriteSheets\PanelSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PanelSheet.xnb</Output>
+      <Time>2011-01-30T14:08:38-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\PlayerSheet.png</Source>
+      <Name>SpriteSheets\PlayerSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PlayerSheet.xnb</Output>
+      <Time>2011-01-30T12:29:24-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\PrimitiveSheet.png</Source>
+      <Name>SpriteSheets\PrimitiveSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PrimitiveSheet.xnb</Output>
+      <Time>2011-01-29T06:37:44-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\PropSheet.png</Source>
+      <Name>SpriteSheets\PropSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PropSheet.xnb</Output>
+      <Time>2011-01-30T12:43:38-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\Background.png</Source>
+      <Name>SpriteSheets\Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Background.xnb</Output>
+      <Time>2011-01-29T09:07:56-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\TitleBackground.png</Source>
+      <Name>SpriteSheets\TitleBackground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleBackground.xnb</Output>
+      <Time>2011-01-29T09:08:02-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\BombAnimSheet.png</Source>
+      <Name>SpriteSheets\BombAnimSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheet.xnb</Output>
+      <Time>2011-01-30T08:53:48-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\BombAnimSheetSingle.png</Source>
+      <Name>SpriteSheets\BombAnimSheetSingle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheetSingle.xnb</Output>
+      <Time>2011-01-29T15:40:04-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\InterfaceSheet.png</Source>
+      <Name>SpriteSheets\InterfaceSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InterfaceSheet.xnb</Output>
+      <Time>2011-01-29T18:11:48-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\TitleSheet.png</Source>
+      <Name>SpriteSheets\TitleSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleSheet.xnb</Output>
+      <Time>2011-01-30T04:16:08-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\InfoTwo.png</Source>
+      <Name>SpriteSheets\InfoTwo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoTwo.xnb</Output>
+      <Time>2011-01-30T05:00:36-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\Gumball Background.png</Source>
+      <Name>SpriteSheets\Gumball Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Gumball Background.xnb</Output>
+      <Time>2011-01-30T12:29:22-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\Credits.png</Source>
+      <Name>SpriteSheets\Credits</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Credits.xnb</Output>
+      <Time>2011-01-30T13:18:04-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\InfoOne.png</Source>
+      <Name>SpriteSheets\InfoOne</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoOne.xnb</Output>
+      <Time>2011-01-30T13:19:16-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\Feeble Human Quote.wav</Source>
+      <Name>Audio\SoundEffects\Feeble Human Quote</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Feeble Human Quote.xnb</Output>
+      <Time>2011-01-30T03:26:02-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\MEGAMAN!.wav</Source>
+      <Name>Audio\SoundEffects\MEGAMAN!</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\MEGAMAN!.xnb</Output>
+      <Time>2011-01-30T03:26:02-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\Missle.wav</Source>
+      <Name>Audio\SoundEffects\Missle</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Missle.xnb</Output>
+      <Time>2011-01-30T03:26:02-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\Boss Death.wav</Source>
+      <Name>Audio\SoundEffects\Boss Death</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Boss Death.xnb</Output>
+      <Time>2011-01-30T03:25:58-06:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-05:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-05:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-05:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-05:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-05:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-05:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2012-01-20T11:25:28.7566644-06:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

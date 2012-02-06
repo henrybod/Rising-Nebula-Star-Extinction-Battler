@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="teamstairwell">
+</Property><Property Name="Solution File" Value="C:\Users\Hank\Desktop\RSNSB_TFS\Src\RNESB_TFS_SILVER\teamstairwell.sln">
+</Property><Property Name="Date" Value="Friday, January 20, 2012">
+</Property><Property Name="Time" Value="11:34 AM">
+</Property><Property Name="Solution" Value="teamstairwell">
+</Property><Property Name="Solution File" Value="C:\Users\Hank\Desktop\RSNSB_TFS\Src\RNESB_TFS_SILVER\teamstairwell.sln">
+</Property><Property Name="Date" Value="Friday, January 20, 2012">
+</Property><Property Name="Time" Value="11:34:18 AM">
+</Property></Properties><Event ErrorLevel="0" Project="teamstairwell" Source="teamstairwell.csproj" Description="Upgraded XNA Game Studio project to XNA Framework 4.0.">
+</Event><Event ErrorLevel="0" Project="teamstairwell" Source="teamstairwell.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="teamstairwell" Source="teamstairwell.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="teamstairwell.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="teamstairwell.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="teamstairwell" Source="teamstairwell.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="teamstairwell" Source="teamstairwell.csproj" Description="Upgraded XNA Framework references to XNA Framework 4.0.">
+</Event><Event ErrorLevel="0" Project="RNESB_TFS_SILVERContent" Source="Content\RNESB_TFS_SILVERContent.contentproj" Description="Upgraded XNA Game Studio nested content projects to XNA Framework 4.0 and promoted to sibling project.">
+</Event></UpgradeLog>

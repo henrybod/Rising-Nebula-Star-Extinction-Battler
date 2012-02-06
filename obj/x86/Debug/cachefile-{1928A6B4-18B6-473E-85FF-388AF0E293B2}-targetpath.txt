@@ -1,0 +1,32 @@
+Content\GameFont.xnb
+Content\Audio\Music\Forest Boss.xnb
+Content\Audio\Music\Forest Boss.wma
+Content\Audio\Music\Forest Theme.xnb
+Content\Audio\Music\Forest Theme.wma
+Content\Audio\Music\teamstairwell Intro.xnb
+Content\Audio\Music\teamstairwell Intro.wma
+Content\Audio\Music\teamstairwell Theme.xnb
+Content\Audio\Music\teamstairwell Theme.wma
+Content\Audio\Music\04 - Boogie Wonderland.xnb
+Content\Audio\Music\04 - Boogie Wonderland.wma
+Content\SpriteSheets\CyberSheet.xnb
+Content\SpriteSheets\EffectSheet.xnb
+Content\SpriteSheets\EnvironmentSheet.xnb
+Content\SpriteSheets\PanelSheet.xnb
+Content\SpriteSheets\PlayerSheet.xnb
+Content\SpriteSheets\PrimitiveSheet.xnb
+Content\SpriteSheets\PropSheet.xnb
+Content\SpriteSheets\Background.xnb
+Content\SpriteSheets\TitleBackground.xnb
+Content\SpriteSheets\BombAnimSheet.xnb
+Content\SpriteSheets\BombAnimSheetSingle.xnb
+Content\SpriteSheets\InterfaceSheet.xnb
+Content\SpriteSheets\TitleSheet.xnb
+Content\SpriteSheets\InfoTwo.xnb
+Content\SpriteSheets\Gumball Background.xnb
+Content\SpriteSheets\Credits.xnb
+Content\SpriteSheets\InfoOne.xnb
+Content\Audio\SoundEffects\Feeble Human Quote.xnb
+Content\Audio\SoundEffects\MEGAMAN!.xnb
+Content\Audio\SoundEffects\Missle.xnb
+Content\Audio\SoundEffects\Boss Death.xnb

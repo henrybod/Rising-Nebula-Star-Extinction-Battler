@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/110/trunk/Hook/Hook/Graphics/SpriteSheets
+END
+EnvironmentSheet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/69/trunk/Hook/Hook/Graphics/SpriteSheets/EnvironmentSheet.cs
+END
+PrimitiveSheet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/16/trunk/Hook/Hook/Graphics/SpriteSheets/PrimitiveSheet.cs
+END
+PlayerSheet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/110/trunk/Hook/Hook/Graphics/SpriteSheets/PlayerSheet.cs
+END
+EffectSheet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/78/trunk/Hook/Hook/Graphics/SpriteSheets/EffectSheet.cs
+END
+PanelSheet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/16/trunk/Hook/Hook/Graphics/SpriteSheets/PanelSheet.cs
+END
+PropSheet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/78/trunk/Hook/Hook/Graphics/SpriteSheets/PropSheet.cs
+END
+ParticlePlayerSheet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/101/trunk/Hook/Hook/Graphics/SpriteSheets/ParticlePlayerSheet.cs
+END

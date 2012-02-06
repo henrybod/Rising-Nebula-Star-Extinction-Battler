@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Hook.Graphics.SpriteSheets
+{
+    public class PlayerSheet : SpriteSheet
+    {
+        public const int GROUNDIDLE = 0;
+        public const int GROUNDRUN = 1;
+
+        public PlayerSheet(Texture2D SheetImage)
+            : base()
+        {
+            this.SheetImage = SheetImage;
+
+            FrameValues = new int[,]{
+                {40, 60, 2}, //temp player
+                {40, 60, 6}, //player run
+                {40, 60, 1}, //player jump
+                {40, 60, 1}, //player jump 2
+                {40, 60, 1}, //player fall
+                {40, 60, 1}, //player fall 2
+                {40, 60, 4}, //player walk
+                {40, 60, 4} // player movement dust
+            };
+        }
+    }
+}

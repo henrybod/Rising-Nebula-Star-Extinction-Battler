@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Net;
+using Microsoft.Xna.Framework.Storage;
+using Hook.Graphics.SpriteSheets;
+
+namespace teamstairwell
+{
+    /// <summary>
+    /// This is the main type for your game
+    /// </summary>
+    public class Game1 : Microsoft.Xna.Framework.Game
+    {
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        //public static Vector2 RESOLUTION = new Vector2(1600, 1000);
+        public static Vector2 RESOLUTION = new Vector2(1200, 750);
+
+        public static PrimitiveSheet PrimitiveSheet;
+        public static EnvironmentSheet EnvironmentSheet;
+        public static PropSheet PropSheet;
+        public static PanelSheet PanelSheet;
+        public static PlayerSheet PlayerSheet;
+        public static ParticlePlayerSheet ParticlePlayerSheet;
+        public static EffectSheet EffectSheet;
+
+        public static Dictionary<string, Song> Music;
+        //public static Song ForestMusic, ForestBoss;
+
+        public static SpriteFont GameFont;
+
+        //public ScreenManager ScreenManager;
+
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
+            graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
+            Content.RootDirectory = "Content";
+
+            Components.Add(new GamerServicesComponent(this));
+            //this.Components.Add(new GamerServicesComponent(this));
+        }
+
+        /// <summary>
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
+        /// </summary>
+        protected override void Initialize()
+        {
+            // TODO: Add your initialization logic here
+
+            base.Initialize();
+        }
+
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent()
+        {
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // TODO: use this.Content to load your game content here
+            PrimitiveSheet = new PrimitiveSheet(Content.Load<Texture2D>("Spritesheets/PrimitiveSheet"));
+            PropSheet = new PropSheet(Content.Load<Texture2D>("Spritesheets/PropSheet"));
+            PanelSheet = new PanelSheet(Content.Load<Texture2D>("Spritesheets/PanelSheet"));
+            EnvironmentSheet = new EnvironmentSheet(Content.Load<Texture2D>("Spritesheets/EnvironmentSheet"));
+            PlayerSheet = new PlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
+            ParticlePlayerSheet = new ParticlePlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
+            EffectSheet = new EffectSheet(Content.Load<Texture2D>("Spritesheets/EffectSheet"));
+
+            Music = new Dictionary<string, Song>();
+            Music.Add("ForestMusic", Content.Load<Song>("Audio/Music/Forest Theme"));
+            Music.Add("ForestBoss", Content.Load<Song>("Audio/Music/Forest Boss"));
+            //ForestMusic = Content.Load<Song>("Audio/Music/Forest Theme");
+            //ForestBoss = Content.Load<Song>("Audio/Music/Forest Boss");
+
+            GameFont = Content.Load<SpriteFont>("GameFont");
+            
+            MediaPlayer.Volume = 0.1f;
+
+            //ScreenManager = new ScreenManager();
+        }
+
+        /// <summary>
+        /// UnloadContent will be called once per game and is the place to unload
+        /// all content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // TODO: Unload any non ContentManager content here
+        }
+
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Update(GameTime gameTime)
+        {
+            // Allows the game to exit
+            if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
+            
+            // TODO: Add your update logic here
+
+            if (IsActive)
+            {
+                //ScreenManager.Update(gameTime);
+            }
+
+            base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.White);
+            spriteBatch.Begin();
+
+            //ScreenManager.Draw(spriteBatch);
+
+            spriteBatch.End();
+            base.Draw(gameTime);
+        }
+    }
+}

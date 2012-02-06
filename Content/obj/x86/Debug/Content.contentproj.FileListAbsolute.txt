@@ -1,0 +1,6 @@
+D:\StairWell\teamstairwell\teamstairwell\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+G:\IAN\teamstairwell\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Matt\Desktop\teamstairwell\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\owner\Desktop\teamstairwell\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Matthew Paniagua\Desktop\teamstairwell\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Chris\Desktop\teamstairwell\teamstairwell\Content\obj\x86\Debug\ResolveAssemblyReference.cache
