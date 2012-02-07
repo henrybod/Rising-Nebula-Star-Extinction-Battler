@@ -1,3 +1,0 @@
-Will I ever get GitExtensions to push a file to GitHub?
-
-UPDATE: The answer is yes!

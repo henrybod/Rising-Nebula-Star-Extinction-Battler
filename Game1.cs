@@ -14,29 +14,17 @@ using Hook.Graphics.SpriteSheets;
 using teamstairwell.Interface;
 using teamstairwell.Graphics.SpriteSheets;
 
-namespace teamstairwell
-{
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
-    {
+namespace teamstairwell{
 
-        /*Player player;
-        Boss boss;
-        List<Bullet> bul;
-        List<BulletSpawner> bsp;*/
+    public class Game1 : Microsoft.Xna.Framework.Game {
 
-        //GameEnvironment Env;
-
+        //XNA objects for managing content
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //public static Vector2 RESOLUTION = new Vector2(1600, 1000);
+        //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
-
         public static bool GUMBALLMODE = false;
-
         public static Background Background;
         public static GumBackground GumBackground;
         public static TitleBackground TitleBackground;
@@ -54,46 +42,31 @@ namespace teamstairwell
 
         public static teamstairwell.Graphics.SpriteSheets.Credits creditp;
 
-        public static Dictionary<string, SoundEffect> SoundEffs;
-
-
-        public static Dictionary<string, Song> Music;
-        //public static Song ForestMusic, ForestBoss;
+        public static Dictionary<string, SoundEffect> SoundEffs; //hash table to reference sound effects
+        public static Dictionary<string, Song> Music; //hash table to reference music
 
         public static SpriteFont GameFont;
 
         public ScreenManage ScreenManager;
 
-        public Game1()
-        {
+
+
+
+        //functions
+        public Game1(){
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
             Content.RootDirectory = "Content";
-
-            //Components.Add(new GamerServicesComponent(this));
-            //this.Components.Add(new GamerServicesComponent(this));
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
+        protected override void Initialize(){
+            MediaPlayer.Volume = 0.1f;
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
+        protected override void LoadContent(){
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -117,7 +90,7 @@ namespace teamstairwell
             Music = new Dictionary<string, Song>();
             Music.Add("ForestMusic", Content.Load<Song>("Audio/Music/Forest Theme"));
             Music.Add("ForestBoss", Content.Load<Song>("Audio/Music/Forest Boss"));
-            Music.Add("MenuMusic", Content.Load<Song>("Audio/Music/teamstairwell Intro"));
+            Music.Add("MenuMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
             Music.Add("GameMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
 
             SoundEffs = new Dictionary<string, SoundEffect>();
@@ -127,7 +100,7 @@ namespace teamstairwell
 
             GameFont = Content.Load<SpriteFont>("GameFont");
 
-            MediaPlayer.Volume = 0.1f;
+            
 
             //Env = new GameEnvironment();
 

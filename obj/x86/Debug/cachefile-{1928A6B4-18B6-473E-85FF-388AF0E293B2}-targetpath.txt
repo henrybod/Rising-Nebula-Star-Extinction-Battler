@@ -30,3 +30,4 @@ Content\Audio\SoundEffects\Feeble Human Quote.xnb
 Content\Audio\SoundEffects\MEGAMAN!.xnb
 Content\Audio\SoundEffects\Missle.xnb
 Content\Audio\SoundEffects\Boss Death.xnb
+Content\Audio\Music\teamstairwell Intro.mp3

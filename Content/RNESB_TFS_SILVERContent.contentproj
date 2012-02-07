@@ -120,6 +120,7 @@
       <Name>teamstairwell Intro</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Audio\Music\teamstairwell Theme.mp3">
       <Name>teamstairwell Theme</Name>

@@ -7,7 +7,7 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb</Output>
       <Time>2011-01-28T19:11:14-06:00</Time>
     </Item>
     <Item>
@@ -16,8 +16,8 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.xnb</Output>
-      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.wma</Extra>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.xnb</Output>
+      <Extra>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.wma</Extra>
       <Time>2011-01-28T19:11:14-06:00</Time>
     </Item>
     <Item>
@@ -26,8 +26,8 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.xnb</Output>
-      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.wma</Extra>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.xnb</Output>
+      <Extra>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.wma</Extra>
       <Time>2011-01-28T19:11:14-06:00</Time>
     </Item>
     <Item>
@@ -36,8 +36,8 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.xnb</Output>
-      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.wma</Extra>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.xnb</Output>
+      <Extra>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.wma</Extra>
       <Time>2011-01-29T09:43:54-06:00</Time>
     </Item>
     <Item>
@@ -46,8 +46,8 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.xnb</Output>
-      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.wma</Extra>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.xnb</Output>
+      <Extra>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.wma</Extra>
       <Time>2011-01-29T09:43:54-06:00</Time>
     </Item>
     <Item>
@@ -56,8 +56,8 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.xnb</Output>
-      <Extra>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.wma</Extra>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.xnb</Output>
+      <Extra>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.wma</Extra>
       <Time>2011-01-29T18:11:04-06:00</Time>
     </Item>
     <Item>
@@ -66,7 +66,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\CyberSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\CyberSheet.xnb</Output>
       <Time>2011-01-28T19:11:14-06:00</Time>
     </Item>
     <Item>
@@ -75,7 +75,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EffectSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EffectSheet.xnb</Output>
       <Time>2011-01-28T19:11:14-06:00</Time>
     </Item>
     <Item>
@@ -84,7 +84,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EnvironmentSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EnvironmentSheet.xnb</Output>
       <Time>2011-01-28T19:11:14-06:00</Time>
     </Item>
     <Item>
@@ -93,7 +93,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PanelSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PanelSheet.xnb</Output>
       <Time>2011-01-30T14:08:38-06:00</Time>
     </Item>
     <Item>
@@ -102,7 +102,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PlayerSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PlayerSheet.xnb</Output>
       <Time>2011-01-30T12:29:24-06:00</Time>
     </Item>
     <Item>
@@ -111,7 +111,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PrimitiveSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PrimitiveSheet.xnb</Output>
       <Time>2011-01-29T06:37:44-06:00</Time>
     </Item>
     <Item>
@@ -120,7 +120,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PropSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PropSheet.xnb</Output>
       <Time>2011-01-30T12:43:38-06:00</Time>
     </Item>
     <Item>
@@ -129,7 +129,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Background.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Background.xnb</Output>
       <Time>2011-01-29T09:07:56-06:00</Time>
     </Item>
     <Item>
@@ -138,7 +138,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleBackground.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleBackground.xnb</Output>
       <Time>2011-01-29T09:08:02-06:00</Time>
     </Item>
     <Item>
@@ -147,7 +147,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheet.xnb</Output>
       <Time>2011-01-30T08:53:48-06:00</Time>
     </Item>
     <Item>
@@ -156,7 +156,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheetSingle.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheetSingle.xnb</Output>
       <Time>2011-01-29T15:40:04-06:00</Time>
     </Item>
     <Item>
@@ -165,7 +165,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InterfaceSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InterfaceSheet.xnb</Output>
       <Time>2011-01-29T18:11:48-06:00</Time>
     </Item>
     <Item>
@@ -174,7 +174,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleSheet.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleSheet.xnb</Output>
       <Time>2011-01-30T04:16:08-06:00</Time>
     </Item>
     <Item>
@@ -183,7 +183,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoTwo.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoTwo.xnb</Output>
       <Time>2011-01-30T05:00:36-06:00</Time>
     </Item>
     <Item>
@@ -192,7 +192,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Gumball Background.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Gumball Background.xnb</Output>
       <Time>2011-01-30T12:29:22-06:00</Time>
     </Item>
     <Item>
@@ -201,7 +201,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Credits.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Credits.xnb</Output>
       <Time>2011-01-30T13:18:04-06:00</Time>
     </Item>
     <Item>
@@ -210,7 +210,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoOne.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoOne.xnb</Output>
       <Time>2011-01-30T13:19:16-06:00</Time>
     </Item>
     <Item>
@@ -219,7 +219,7 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Feeble Human Quote.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Feeble Human Quote.xnb</Output>
       <Time>2011-01-30T03:26:02-06:00</Time>
     </Item>
     <Item>
@@ -228,7 +228,7 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\MEGAMAN!.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\MEGAMAN!.xnb</Output>
       <Time>2011-01-30T03:26:02-06:00</Time>
     </Item>
     <Item>
@@ -237,7 +237,7 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Missle.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Missle.xnb</Output>
       <Time>2011-01-30T03:26:02-06:00</Time>
     </Item>
     <Item>
@@ -246,7 +246,7 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Boss Death.xnb</Output>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Boss Death.xnb</Output>
       <Time>2011-01-30T03:25:58-06:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
@@ -255,10 +255,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\Content\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\Content\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Hank\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\Content\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
