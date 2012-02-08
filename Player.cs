@@ -27,6 +27,7 @@ namespace teamstairwell
         TimeSpan invisibleSpan = new TimeSpan(0, 0, 0, 2, 500);
         public bool invisible;
         KeyboardState oldstate = Keyboard.GetState();
+        MouseState oldmouse = Mouse.GetState();
 
         public bool fury;
         public bool surge;
@@ -61,24 +62,112 @@ namespace teamstairwell
             pic = normalSprite;
         }
 
+        public void processMouseInput(GameTime time)
+        {
+            MouseState mouseState = Mouse.GetState();
+            Vector2 mP = new Vector2(mouseState.X, mouseState.Y) - Game1.RESOLUTION / 2;
+
+            //Calculate ship rotation from mouse cursor position
+            rot = (float)Math.Atan2(mP.Y - pos.Y, mP.X - pos.X);
+            rot = rot + MathHelper.ToRadians(90);
+
+            //Left Mouse Click Fires Primary
+            if (mouseState.LeftButton == ButtonState.Pressed)
+            {
+                Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER));
+                pBs.Add(b);
+                if (fury)
+                {
+                    Vector2 lpos = pos;
+                    lpos.X -= 7;
+                    Vector2 rpos = pos;
+                    rpos.X += 7;
+                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
+                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
+                    lpos.X -= 11;
+                    rpos.X += 11;
+                    pBs.Add(new Bullet(lpos, new Vector2(-1, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
+                    pBs.Add(new Bullet(rpos, new Vector2(1, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
+                }
+                if (surge)
+                {
+                    Vector2 lpos = pos;
+                    lpos.X -= 7;
+                    Vector2 rpos = pos;
+                    rpos.X += 7;
+                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.GOLDLASER)));
+                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.GOLDLASER)));
+                }
+                if (angleGun)
+                {
+                    Vector2 lpos = pos;
+                    lpos.X -= 11;
+                    Vector2 rpos = pos;
+                    rpos.X += 11;
+                    pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE)));
+                    pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE)));
+                }
+                if (angleRocket)
+                {
+                    Vector2 lpos = pos;
+                    lpos.X -= 7;
+                    Vector2 rpos = pos;
+                    rpos.X += 7;
+                    pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(Game1.PropSheet, PropSheet.ROCKET)));
+                    pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(Game1.PropSheet, PropSheet.ROCKET)));
+                }
+                if (rotTurretR)
+                {
+                    pBs.Add(turretRotR());
+                }
+                if (rotTurretL)
+                {
+                    pBs.Add(turretRotL());
+                }
+                //shoot
+            }
+
+            //Right Mouse Click triggers Bomb
+            if (mouseState.RightButton == ButtonState.Pressed && oldmouse.RightButton == ButtonState.Released)
+            {
+                if (bomb > 0)
+                {
+                    int numbomb = 20;
+                    for (int i = 0; i < numbomb; i++)
+                    {
+                        Vector2 v = new Vector2((float)Math.Cos(Math.PI * 2 * i / numbomb), (float)Math.Sin(Math.PI * 2 * i / numbomb));
+                        pBs.Add(new Bomb(pos, v * 10, Vector2.Zero, 200f, new Sprite(Game1.DaBomb, ScreenBomb.SCREENBOMB)));
+                    }
+                    bomb--;
+                    invisible = true;
+                    invisibleTime = time.TotalGameTime;
+                }
+                //bomb
+            }
+
+            oldmouse = mouseState;
+        }
+
         public override void update(GameTime time)
         {
             Console.WriteLine(pos);
 
             KeyboardState state = Keyboard.GetState();
 
-            if (state.IsKeyDown(Keys.Up) && state.IsKeyUp(Keys.Down))
+            processMouseInput(time);
+
+            if (state.IsKeyDown(Keys.W) && state.IsKeyUp(Keys.S))
             {
                 vel.Y = -5;
             }
-            else if (state.IsKeyDown(Keys.Down) && state.IsKeyUp(Keys.Up))
+            else if (state.IsKeyDown(Keys.S) && state.IsKeyUp(Keys.W))
             {
                 vel.Y = 5;
             }
             else
                 vel.Y = 0;
 
-            if (state.IsKeyDown(Keys.Left) && state.IsKeyUp(Keys.Right))
+            if (state.IsKeyDown(Keys.A) && state.IsKeyUp(Keys.D))
             {
                 vel.X = -5;
                 if (pic == normalSprite || pic == bankRightSprite)
@@ -86,7 +175,7 @@ namespace teamstairwell
                     pic = bankLeftSprite;
                 }
             }
-            else if (state.IsKeyDown(Keys.Right) && state.IsKeyUp(Keys.Left))
+            else if (state.IsKeyDown(Keys.D) && state.IsKeyUp(Keys.A))
             {
                 vel.X = 5;
                 if (pic == normalSprite || pic == bankLeftSprite)
@@ -108,7 +197,7 @@ namespace teamstairwell
                 vel = vel / 2;
             }
 
-            if (state.IsKeyDown(Keys.Z))
+            /*if (state.IsKeyDown(Keys.Z))
             {
                 Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER));
                 pBs.Add(b);
@@ -178,7 +267,7 @@ namespace teamstairwell
                     invisibleTime = time.TotalGameTime;
                 }
                 //bomb
-            }
+            }*/
 
             if (invisible)
             {

@@ -168,7 +168,7 @@ namespace teamstairwell
 
         public void draw(SpriteBatch sb)
         {
-            pic.Draw(sb);
+            pic.Draw(sb, rot);
         }
 
         public void remove()

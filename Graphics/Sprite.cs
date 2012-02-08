@@ -66,6 +66,11 @@ namespace Hook.Graphics
             sb.Draw(SpriteSheet.SheetImage, new Vector2((Position - Cam.Position).X, (Position - Cam.Position).Y) * Cam.Zoom * BackgroundFactor + Game1.RESOLUTION / 2, SourceRect, Color.White, Rotation.Z, new Vector2(Origin.X, Origin.Y), Scale * Cam.Zoom, SpriteEffect, 0);
         }
 
+        public void Draw(SpriteBatch sb, float angle)
+        {
+            sb.Draw(SpriteSheet.SheetImage, new Vector2(Position.X, Position.Y) + Game1.RESOLUTION / 2, SourceRect, Color.White, angle, new Vector2(Origin.X, Origin.Y), Scale, SpriteEffect, 0);
+        }
+
         public void SetType(int SpriteType)
         {
             this.SpriteType = SpriteType;
