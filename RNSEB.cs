@@ -22,6 +22,9 @@ namespace teamstairwell{
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Henry Stuff (just testin')
+        HenryMenu MainMenu = new HenryMenu();
+
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
         public static bool GUMBALLMODE = false;
@@ -61,6 +64,9 @@ namespace teamstairwell{
         }
 
         protected override void Initialize(){
+
+
+
             MediaPlayer.Volume = 0.1f;
             base.Initialize();
         }
@@ -100,7 +106,13 @@ namespace teamstairwell{
 
             GameFont = Content.Load<SpriteFont>("GameFont");
 
-            
+
+            //Henry Stuff
+            MainMenu.SetBackground(this.Content, "SpriteSheets/TitleBackground");
+            MainMenu.SpinBackground = true;
+            MainMenu.AddButton(new HenryButton(100, 200, "Start", this.Content));
+
+
 
             //Env = new GameEnvironment();
 
@@ -168,20 +180,7 @@ namespace teamstairwell{
             spriteBatch.Begin();
 
             ScreenManager.Draw(spriteBatch);
-            /*player.draw(spriteBatch);
-            boss.draw(spriteBatch);
-
-            foreach (BulletSpawner bs in bsp)
-            {
-                bs.draw(spriteBatch);
-            }
-
-            foreach(Bullet b in bul)
-            {
-                b.draw(spriteBatch);
-            }*/
-
-            //Env.draw(spriteBatch);
+            
 
             spriteBatch.End();
             base.Draw(gameTime);

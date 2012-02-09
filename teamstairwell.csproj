@@ -124,6 +124,10 @@
     <Compile Include="HardEnvironment.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Explosion.cs" />
+    <Compile Include="Interface\HenryButton.cs" />
+    <Compile Include="Interface\HenryMenu.cs" />
+    <Compile Include="Interface\HenryMouse.cs" />
+    <Compile Include="Interface\HenrySprite.cs" />
     <Compile Include="RNSEB.cs" />
     <Compile Include="GameEnvironment.cs" />
     <Compile Include="Graphics\Camera.cs" />
