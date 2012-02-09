@@ -15,7 +15,7 @@ namespace teamstairwell.Interface
         {
             Paused = new TextSprite("GAME BE PAUSED!");
             Paused.Color = Color.White;
-            Paused.Position = new Vector3(Game1.RESOLUTION.X / 2 - 40, Game1.RESOLUTION.Y / 2 - 60, 0);
+            Paused.Position = new Vector3(RNSEB.RESOLUTION.X / 2 - 40, RNSEB.RESOLUTION.Y / 2 - 60, 0);
         }
 
         public void Update(GameTime gt)

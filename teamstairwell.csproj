@@ -124,7 +124,7 @@
     <Compile Include="HardEnvironment.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Explosion.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="RNSEB.cs" />
     <Compile Include="GameEnvironment.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Sprite.cs" />

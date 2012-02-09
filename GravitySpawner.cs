@@ -16,8 +16,8 @@ namespace teamstairwell
             : base(position, velocity, acceleration, radius, rotation, rotationVelocity, bossBullets, retract, numberofshots, rateoffire)
         {
             bullets = bossBullets;
-            normalSprite = new Sprite(Game1.PropSheet, PropSheet.MAGNETGUY);
-            selectSprite = new Sprite(Game1.PropSheet, PropSheet.MAGNETGUYAURA);
+            normalSprite = new Sprite(RNSEB.PropSheet, PropSheet.MAGNETGUY);
+            selectSprite = new Sprite(RNSEB.PropSheet, PropSheet.MAGNETGUYAURA);
             pic = normalSprite;
             //pic = new Sprite(Game1.PropSheet, PropSheet.GRAVITYSOURCE);
         }

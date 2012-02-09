@@ -16,7 +16,7 @@ using teamstairwell.Graphics.SpriteSheets;
  
 namespace teamstairwell{
 
-    public class Game1 : Microsoft.Xna.Framework.Game {
+    public class RNSEB : Microsoft.Xna.Framework.Game {
 
         //XNA objects for managing content
         GraphicsDeviceManager graphics;
@@ -53,7 +53,7 @@ namespace teamstairwell{
 
 
         //functions
-        public Game1(){
+        public RNSEB(){
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;

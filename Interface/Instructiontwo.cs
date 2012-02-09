@@ -13,8 +13,8 @@ namespace teamstairwell.Interface
         public Instructiontwo()
             : base()
         {
-            MenuBack = new Sprite(Game1.TitleBackground, TitleBackground.TITLEBACKGROUND);
-            infosheetTwo = new Sprite(Game1.InfoTwo, InfoTwo.INFOTWO);
+            MenuBack = new Sprite(RNSEB.TitleBackground, TitleBackground.TITLEBACKGROUND);
+            infosheetTwo = new Sprite(RNSEB.InfoTwo, InfoTwo.INFOTWO);
         }
 
         public void LinkButtons()

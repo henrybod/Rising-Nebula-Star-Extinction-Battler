@@ -9,7 +9,7 @@ namespace teamstairwell
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
+            using (RNSEB game = new RNSEB())
             {
                 game.Run();
             }

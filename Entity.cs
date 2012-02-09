@@ -46,7 +46,7 @@ namespace teamstairwell
             hitrad = 0;
             removing = false;
 
-            pic = new Sprite(Game1.PlayerSheet, PlayerSheet.PNORMAL);
+            pic = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
         }
 
         public Entity(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius)
@@ -59,7 +59,7 @@ namespace teamstairwell
             removing = false;
             r = new Random();
 
-            pic = new Sprite(Game1.PlayerSheet, PlayerSheet.PNORMAL);
+            pic = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
         }
 
         public Entity(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, Player pl)
@@ -75,7 +75,7 @@ namespace teamstairwell
             inflateTimer = 0;
             r = new Random();
 
-            pic = new Sprite(Game1.PlayerSheet, PlayerSheet.PNORMAL);
+            pic = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
         }
 
         public Entity(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, List<Bullet> bBs)
@@ -90,7 +90,7 @@ namespace teamstairwell
             splitTimer = 2;
             r = new Random();
 
-            pic = new Sprite(Game1.PlayerSheet, PlayerSheet.PNORMAL);
+            pic = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
         }
 
         public virtual void update(GameTime gt)
@@ -118,24 +118,24 @@ namespace teamstairwell
                 {
                     if (r.NextDouble() > .35)
                     {
-                        if (Game1.GUMBALLMODE)
+                        if (RNSEB.GUMBALLMODE)
                         {
-                            bossBullets.Add(new Bullet(pos, new Vector2(vel.Y, -vel.X), Vector2.Zero, 15, new Sprite(Game1.PropSheet, PropSheet.GUM1), bossBullets));
+                            bossBullets.Add(new Bullet(pos, new Vector2(vel.Y, -vel.X), Vector2.Zero, 15, new Sprite(RNSEB.PropSheet, PropSheet.GUM1), bossBullets));
                         }
                         else
                         {
-                            bossBullets.Add(new Bullet(pos, new Vector2(vel.Y, -vel.X), Vector2.Zero, 15, new Sprite(Game1.PropSheet, PropSheet.ORANGEBULLET), bossBullets));
+                            bossBullets.Add(new Bullet(pos, new Vector2(vel.Y, -vel.X), Vector2.Zero, 15, new Sprite(RNSEB.PropSheet, PropSheet.ORANGEBULLET), bossBullets));
                         }
                     }
                     if (r.NextDouble() > .35)
                     {
-                        if (Game1.GUMBALLMODE)
+                        if (RNSEB.GUMBALLMODE)
                         {
-                            bossBullets.Add(new Bullet(pos, new Vector2(-vel.Y, vel.X), Vector2.Zero, 15, new Sprite(Game1.PropSheet, PropSheet.GUM1), bossBullets));
+                            bossBullets.Add(new Bullet(pos, new Vector2(-vel.Y, vel.X), Vector2.Zero, 15, new Sprite(RNSEB.PropSheet, PropSheet.GUM1), bossBullets));
                         }
                         else
                         {
-                            bossBullets.Add(new Bullet(pos, new Vector2(-vel.Y, vel.X), Vector2.Zero, 15, new Sprite(Game1.PropSheet, PropSheet.ORANGEBULLET), bossBullets));
+                            bossBullets.Add(new Bullet(pos, new Vector2(-vel.Y, vel.X), Vector2.Zero, 15, new Sprite(RNSEB.PropSheet, PropSheet.ORANGEBULLET), bossBullets));
                         }
                     }
                     remove();

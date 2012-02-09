@@ -17,8 +17,8 @@ namespace teamstairwell
             : base(position, velocity, acceleration, radius, rotation, rotationVelocity, bossBullets, retract, numberofshots, rateoffire)
         {
             bullets = bossBullets;
-            normalSprite = new Sprite(Game1.PropSheet, PropSheet.GRAVITYSOURCE);
-            selectSprite = new Sprite(Game1.PropSheet, PropSheet.GRAVITYSOURCEAURA);
+            normalSprite = new Sprite(RNSEB.PropSheet, PropSheet.GRAVITYSOURCE);
+            selectSprite = new Sprite(RNSEB.PropSheet, PropSheet.GRAVITYSOURCEAURA);
             pic = normalSprite;
             p = pl;
             //pic = new Sprite(Game1.PropSheet, PropSheet.GRAVITYSOURCE);
@@ -26,13 +26,13 @@ namespace teamstairwell
 
         public override void SpawnB()
         {
-            if (Game1.GUMBALLMODE)
+            if (RNSEB.GUMBALLMODE)
             {
-                bullets.Add(new Bullet(pos, Vector2.Zero, Vector2.Zero, 30, new Sprite(Game1.PropSheet, PropSheet.GUM1), p));
+                bullets.Add(new Bullet(pos, Vector2.Zero, Vector2.Zero, 30, new Sprite(RNSEB.PropSheet, PropSheet.GUM1), p));
             }
             else
             {
-                bullets.Add(new Bullet(pos, Vector2.Zero, Vector2.Zero, 30, new Sprite(Game1.PropSheet, PropSheet.LARGEBULLET), p));
+                bullets.Add(new Bullet(pos, Vector2.Zero, Vector2.Zero, 30, new Sprite(RNSEB.PropSheet, PropSheet.LARGEBULLET), p));
             }
         }
     }

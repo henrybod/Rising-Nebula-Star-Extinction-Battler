@@ -58,17 +58,17 @@ namespace Hook.Graphics
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(SpriteSheet.SheetImage, new Vector2(Position.X, Position.Y) + Game1.RESOLUTION / 2, SourceRect, Color.White, Rotation.Z, new Vector2(Origin.X, Origin.Y), Scale, SpriteEffect, 0);
+            sb.Draw(SpriteSheet.SheetImage, new Vector2(Position.X, Position.Y) + RNSEB.RESOLUTION / 2, SourceRect, Color.White, Rotation.Z, new Vector2(Origin.X, Origin.Y), Scale, SpriteEffect, 0);
         }
 
         public void Draw(SpriteBatch sb, Camera Cam)
         {
-            sb.Draw(SpriteSheet.SheetImage, new Vector2((Position - Cam.Position).X, (Position - Cam.Position).Y) * Cam.Zoom * BackgroundFactor + Game1.RESOLUTION / 2, SourceRect, Color.White, Rotation.Z, new Vector2(Origin.X, Origin.Y), Scale * Cam.Zoom, SpriteEffect, 0);
+            sb.Draw(SpriteSheet.SheetImage, new Vector2((Position - Cam.Position).X, (Position - Cam.Position).Y) * Cam.Zoom * BackgroundFactor + RNSEB.RESOLUTION / 2, SourceRect, Color.White, Rotation.Z, new Vector2(Origin.X, Origin.Y), Scale * Cam.Zoom, SpriteEffect, 0);
         }
 
         public void Draw(SpriteBatch sb, float angle)
         {
-            sb.Draw(SpriteSheet.SheetImage, new Vector2(Position.X, Position.Y) + Game1.RESOLUTION / 2, SourceRect, Color.White, angle, new Vector2(Origin.X, Origin.Y), Scale, SpriteEffect, 0);
+            sb.Draw(SpriteSheet.SheetImage, new Vector2(Position.X, Position.Y) + RNSEB.RESOLUTION / 2, SourceRect, Color.White, angle, new Vector2(Origin.X, Origin.Y), Scale, SpriteEffect, 0);
         }
 
         public void SetType(int SpriteType)
@@ -120,13 +120,13 @@ namespace Hook.Graphics
 
                         switch (Sheet)
                         {
-                            case "EffectSheet": SpriteSheet = Game1.EffectSheet; break;
-                            case "EnvironmentSheet": SpriteSheet = Game1.EnvironmentSheet; break;
-                            case "PanelSheet": SpriteSheet = Game1.PanelSheet; break;
-                            case "ParticlePlayerSheet": SpriteSheet = Game1.ParticlePlayerSheet; break;
-                            case "PlayerSheet": SpriteSheet = Game1.PlayerSheet; break;
-                            case "PrimitiveSheet": SpriteSheet = Game1.PrimitiveSheet; break;
-                            case "PropSheet": SpriteSheet = Game1.PropSheet; break;
+                            case "EffectSheet": SpriteSheet = RNSEB.EffectSheet; break;
+                            case "EnvironmentSheet": SpriteSheet = RNSEB.EnvironmentSheet; break;
+                            case "PanelSheet": SpriteSheet = RNSEB.PanelSheet; break;
+                            case "ParticlePlayerSheet": SpriteSheet = RNSEB.ParticlePlayerSheet; break;
+                            case "PlayerSheet": SpriteSheet = RNSEB.PlayerSheet; break;
+                            case "PrimitiveSheet": SpriteSheet = RNSEB.PrimitiveSheet; break;
+                            case "PropSheet": SpriteSheet = RNSEB.PropSheet; break;
                         }
                     }
                     else if (Lines[s].StartsWith("SpriteType = "))

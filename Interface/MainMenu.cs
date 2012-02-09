@@ -14,11 +14,11 @@ namespace teamstairwell.Interface
 
         public MainMenu() : base()
         {
-            MediaPlayer.Play(Game1.Music["MenuMusic"]);
+            MediaPlayer.Play(RNSEB.Music["MenuMusic"]);
             MediaPlayer.Volume = 1.5f;
             MediaPlayer.IsRepeating = true;
-            MenuBack = new Sprite(Game1.TitleBackground, TitleBackground.TITLEBACKGROUND);
-            titleSheet = new Sprite(Game1.TitleSheet, TitleSheet.TITLESHEET);
+            MenuBack = new Sprite(RNSEB.TitleBackground, TitleBackground.TITLEBACKGROUND);
+            titleSheet = new Sprite(RNSEB.TitleSheet, TitleSheet.TITLESHEET);
             Creditword = new TextSprite("Credits \n Ship!");
         }
         public void LinkButtons()

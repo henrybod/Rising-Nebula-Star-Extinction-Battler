@@ -22,7 +22,7 @@ namespace teamstairwell.Interface
             PTVictory.Scale = 1.5f;
             PTVictory.Origin = new Vector3(370, 150, 0);
             ChallengeAgain.Origin = new Vector3(100, -10, 0);
-            MenuBack = new Sprite(Game1.TitleBackground, TitleBackground.TITLEBACKGROUND);
+            MenuBack = new Sprite(RNSEB.TitleBackground, TitleBackground.TITLEBACKGROUND);
         }
 
         public void Update(GameTime gt)

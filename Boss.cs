@@ -37,31 +37,31 @@ namespace teamstairwell
         public Boss(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, List<BulletSpawner> spawnerList, List<Bullet> bulletList, Player player)
             : base(position, velocity, acceleration, radius)
         {
-            if (Game1.GUMBALLMODE)
+            if (RNSEB.GUMBALLMODE)
             {
-                normalSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.FACE);
-                damageSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.OLDFACE);
+                normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.FACE);
+                damageSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.OLDFACE);
                 damageSprite.FrameRate = 20f;
-                boomSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.OLDFACE);
+                boomSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.OLDFACE);
             }
             else
             {
-                normalSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.BOSSNORMAL);
-                damageSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.BOSSHIT);
+                normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.BOSSNORMAL);
+                damageSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.BOSSHIT);
                 damageSprite.FrameRate = 20f;
-                boomSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.BOSSBOOM);
+                boomSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.BOSSBOOM);
             }
             
-            hbartick = new Sprite(Game1.PropSheet, PropSheet.HEALTHTICK);
+            hbartick = new Sprite(RNSEB.PropSheet, PropSheet.HEALTHTICK);
             pic = normalSprite;
 
-            leftSphere = new Sprite(Game1.PlayerSheet, PlayerSheet.BENERGYSPHERE);
+            leftSphere = new Sprite(RNSEB.PlayerSheet, PlayerSheet.BENERGYSPHERE);
             leftSphere.Position = new Vector3(pos.X - 125, pos.Y, 0);
-            rightSphere = new Sprite(Game1.PlayerSheet, PlayerSheet.BENERGYSPHERE);
+            rightSphere = new Sprite(RNSEB.PlayerSheet, PlayerSheet.BENERGYSPHERE);
             rightSphere.Position = new Vector3(pos.X + 125, pos.Y, 0);
 
             
-            selectTarget = new Sprite(Game1.PropSheet, PropSheet.TARGET);
+            selectTarget = new Sprite(RNSEB.PropSheet, PropSheet.TARGET);
             //startRot = new Sprite(Game1.PrimitiveSheet, PrimitiveSheet.FLAG);
             //endRot = new Sprite(Game1.PrimitiveSheet, PrimitiveSheet.FLAG);
 
@@ -171,7 +171,7 @@ namespace teamstairwell
         public void processMouseInput()
         {
             MouseState mouseState = Mouse.GetState();
-            Vector2 mP = new Vector2(mouseState.X, mouseState.Y) - Game1.RESOLUTION / 2;
+            Vector2 mP = new Vector2(mouseState.X, mouseState.Y) - RNSEB.RESOLUTION / 2;
             curWheel = mouseState.ScrollWheelValue;
 
             BulletSpawner wheelProbe = mouseOverSpawner(mP);
@@ -317,7 +317,7 @@ namespace teamstairwell
         {
             Vector2 atPlayer = (new Vector2(playerPos.X - pos.X, playerPos.Y - pos.Y));
             atPlayer.Normalize();
-            bulletlst.Add(new Bullet(pos, 2 * atPlayer, Vector2.Zero, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM0)));
+            bulletlst.Add(new Bullet(pos, 2 * atPlayer, Vector2.Zero, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM0)));
         }
 
         internal void death()

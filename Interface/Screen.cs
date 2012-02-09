@@ -29,16 +29,16 @@ namespace teamstairwell.Interface
         public Sprite Creditpic; 
         
 
-        public Sprite pship = new Sprite(Game1.PlayerSheet, PlayerSheet.PNORMAL); 
-        public Sprite play = new Sprite(Game1.PanelSheet, PanelSheet.NORMALMODE);
-        public Sprite hopeless = new Sprite(Game1.PanelSheet, PanelSheet.HOPELESSMODE);
-        public Sprite story = new Sprite(Game1.PanelSheet, PanelSheet.STORYBUTTONFRAME);
-        public Sprite instructions = new Sprite(Game1.PanelSheet, PanelSheet.INSTRBUTTONFRAME);
-        public Sprite exit = new Sprite(Game1.PanelSheet, PanelSheet.EXITBUTTONFRAME);
-        public Sprite redbar = new Sprite(Game1.PanelSheet, PanelSheet.REDBAR);
-        public Sprite back = new Sprite(Game1.PanelSheet, PanelSheet.BACKBUTTONFRAME);
-        public Sprite pageOne = new Sprite(Game1.PanelSheet, PanelSheet.PAGEONE);
-        public Sprite pageTwo = new Sprite(Game1.PanelSheet, PanelSheet.PAGETWO);
+        public Sprite pship = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL); 
+        public Sprite play = new Sprite(RNSEB.PanelSheet, PanelSheet.NORMALMODE);
+        public Sprite hopeless = new Sprite(RNSEB.PanelSheet, PanelSheet.HOPELESSMODE);
+        public Sprite story = new Sprite(RNSEB.PanelSheet, PanelSheet.STORYBUTTONFRAME);
+        public Sprite instructions = new Sprite(RNSEB.PanelSheet, PanelSheet.INSTRBUTTONFRAME);
+        public Sprite exit = new Sprite(RNSEB.PanelSheet, PanelSheet.EXITBUTTONFRAME);
+        public Sprite redbar = new Sprite(RNSEB.PanelSheet, PanelSheet.REDBAR);
+        public Sprite back = new Sprite(RNSEB.PanelSheet, PanelSheet.BACKBUTTONFRAME);
+        public Sprite pageOne = new Sprite(RNSEB.PanelSheet, PanelSheet.PAGEONE);
+        public Sprite pageTwo = new Sprite(RNSEB.PanelSheet, PanelSheet.PAGETWO);
 
         public TextSprite Creditword;
             
@@ -127,7 +127,7 @@ namespace teamstairwell.Interface
         {
             if(ingame==true)
             {
-            MediaPlayer.Play(Game1.Music["GameMusic"]);
+            MediaPlayer.Play(RNSEB.Music["GameMusic"]);
             MediaPlayer.Volume = 1.5f;
             MediaPlayer.IsRepeating = true;
             }
@@ -135,8 +135,8 @@ namespace teamstairwell.Interface
 
         public bool MouseInBounds(MenuPane MP, MenuItem MI)
         {
-            float MouseX = Mouse.GetState().X - Game1.RESOLUTION.X / 2;
-            float MouseY = Mouse.GetState().Y - Game1.RESOLUTION.Y / 2;
+            float MouseX = Mouse.GetState().X - RNSEB.RESOLUTION.X / 2;
+            float MouseY = Mouse.GetState().Y - RNSEB.RESOLUTION.Y / 2;
             Vector2 Origin = MP.Position + MI.Position;
 
             if ((MouseX > Origin.X - MI.Dimension.X / 2) && (MouseX < Origin.X + MI.Dimension.X / 2) &&
@@ -159,8 +159,8 @@ namespace teamstairwell.Interface
                 KeyboardState kbs = Keyboard.GetState();
                 if (kbs.IsKeyDown(Keys.T) && kbs.IsKeyDown(Keys.G) && kbs.IsKeyDown(Keys.K))
                 {
-                    Game1.GUMBALLMODE = true;
-                    Game1.SoundEffs["Feeblehuman"].Play();
+                    RNSEB.GUMBALLMODE = true;
+                    RNSEB.SoundEffs["Feeblehuman"].Play();
                 }
             }
 

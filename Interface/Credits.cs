@@ -12,8 +12,8 @@ namespace teamstairwell.Interface
     {
         public Credits() : base()
         {
-            MenuBack = new Sprite(Game1.TitleBackground, TitleBackground.TITLEBACKGROUND);
-            Creditpic = new Sprite(Game1.creditp, teamstairwell.Graphics.SpriteSheets.Credits.CREDIT);
+            MenuBack = new Sprite(RNSEB.TitleBackground, TitleBackground.TITLEBACKGROUND);
+            Creditpic = new Sprite(RNSEB.creditp, teamstairwell.Graphics.SpriteSheets.Credits.CREDIT);
         }
 
         public void LinkButtons()

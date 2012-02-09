@@ -55,10 +55,10 @@ namespace teamstairwell
             //bulletSpawners.Add(new LineSpawner(new Vector2(-200, -200), new Vector2(1, 0), Vector2.Zero, 200f, 0f, 0f, bossBullets, true, 10));
             //bulletSpawners.Add(new BurstSpawner(new Vector2(), Vector2.Zero, Vector2.Zero, 50f, 0f, .01f, bossBullets, true, 20));
 
-            NumOfBombs = new Sprite(Game1.PropSheet, PropSheet.BOMBGET);
-            NumOfBombs.Position = new Vector3(Game1.RESOLUTION.X / 2 - 25, Game1.RESOLUTION.Y / 2 - 25, 0);
-            NumOfLives = new Sprite(Game1.PropSheet, PropSheet.ONEUP);
-            NumOfLives.Position = new Vector3(Game1.RESOLUTION.X / 2 - 24, Game1.RESOLUTION.Y / 2 - 70, 0);
+            NumOfBombs = new Sprite(RNSEB.PropSheet, PropSheet.BOMBGET);
+            NumOfBombs.Position = new Vector3(RNSEB.RESOLUTION.X / 2 - 25, RNSEB.RESOLUTION.Y / 2 - 25, 0);
+            NumOfLives = new Sprite(RNSEB.PropSheet, PropSheet.ONEUP);
+            NumOfLives.Position = new Vector3(RNSEB.RESOLUTION.X / 2 - 24, RNSEB.RESOLUTION.Y / 2 - 70, 0);
             NumOfLives.Scale = .70f;
             //BossHPBar = new Sprite(Game1.PanelSheet, PanelSheet.BUTTONFRAME);
             //BossHPBar.Position = new Vector3(Game1.RESOLUTION.X / 2 - 1000, Game1.RESOLUTION.Y / 2 - 700, 0);
@@ -76,8 +76,8 @@ namespace teamstairwell
 
             numBombs = p.bomb;
             numlives = p.live;
-            PauseScreen = new Sprite(Game1.PanelSheet, PanelSheet.REDBAR);
-            PauseScreen.Position = new Vector3(Game1.RESOLUTION.X / 2 - 600, Game1.RESOLUTION.Y / 2 - 400, 0);
+            PauseScreen = new Sprite(RNSEB.PanelSheet, PanelSheet.REDBAR);
+            PauseScreen.Position = new Vector3(RNSEB.RESOLUTION.X / 2 - 600, RNSEB.RESOLUTION.Y / 2 - 400, 0);
 
 
             textBombs = new TextSprite(numBombs + "x");
@@ -94,13 +94,13 @@ namespace teamstairwell
 
         public void update(GameTime gt)
         {
-            if (!gumFlag && Game1.GUMBALLMODE)
+            if (!gumFlag && RNSEB.GUMBALLMODE)
             {
-                b.normalSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.FACE);
+                b.normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.FACE);
                 //b.normalSprite.FrameRate = 10;
-                b.damageSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.OLDFACE);
+                b.damageSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.OLDFACE);
                 b.damageSprite.FrameRate = 20f;
-                b.boomSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.OLDFACE);
+                b.boomSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.OLDFACE);
                 gumFlag = true;
             }
 
@@ -153,10 +153,10 @@ namespace teamstairwell
                 numlives = p.live;
 
                 textBombs.Text = numBombs + "x";
-                textBombs.Position = new Vector3(Game1.RESOLUTION.X / 2 - 40, Game1.RESOLUTION.Y / 2 - 25, 0);
+                textBombs.Position = new Vector3(RNSEB.RESOLUTION.X / 2 - 40, RNSEB.RESOLUTION.Y / 2 - 25, 0);
                 textBombs.Update(gt);
                 textLives.Text = numlives + "x";
-                textLives.Position = new Vector3(Game1.RESOLUTION.X / 2 - 48, Game1.RESOLUTION.Y / 2 - 67, 0);
+                textLives.Position = new Vector3(RNSEB.RESOLUTION.X / 2 - 48, RNSEB.RESOLUTION.Y / 2 - 67, 0);
                 textLives.Update(gt);
 
                 if (powerTimer > 0)
@@ -201,14 +201,14 @@ namespace teamstairwell
                     if (!playerDeath && p.live <= 0)
                     {
                         playerDeath = true;
-                        Game1.SoundEffs["MissleSound"].Play();
+                        RNSEB.SoundEffs["MissleSound"].Play();
                         gameOverTimer = 5;
                     }
 
                     if (!bossDeath && b.health <= 0)
                     {
                         bossDeath = true;
-                        Game1.SoundEffs["MissleSound"].Play();
+                        RNSEB.SoundEffs["MissleSound"].Play();
                         gameOverTimer = 5;
                     }
 
@@ -305,42 +305,42 @@ namespace teamstairwell
                 if (blog >= 7)
                 {
                     type = "rotTurretR";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.D);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.D);
                 }
                 else if (blog >= 6)
                 {
                     type = "angleRocket";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.ROCKET);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.ROCKET);
                 }
                 else if (blog >= 5)
                 {
                     type = "angleGun";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.G);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.G);
                 }
                 else if (blog >= 4)
                 {
                     type = "bomb";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.BOMBGET);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.BOMBGET);
                 }
                 else if (blog >= 3)
                 {
                     type = "life";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.ONEUP);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.ONEUP);
                 }
                 else if (blog >= 2)
                 {
                     type = "gun";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.K);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.K);
                 }
                 else if (blog >= 1)
                 {
                     type = "surge";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.P);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.P);
                 }
                 else
                 {
                     type = "rotTurretL";
-                    spr = new Sprite(Game1.PropSheet, PropSheet.M);
+                    spr = new Sprite(RNSEB.PropSheet, PropSheet.M);
                 }
 
                 bossBullets.Add(new Powerup(posi, new Vector2(0, 3), Vector2.Zero, 20f, spr, type));
@@ -385,7 +385,7 @@ namespace teamstairwell
                         }
                         if (hurtTimer == 0)
                         {
-                            Game1.SoundEffs["MegaDead"].Play();
+                            RNSEB.SoundEffs["MegaDead"].Play();
                             hurtTimer = 1;
                         }
 
@@ -435,7 +435,7 @@ namespace teamstairwell
                             }
                             if (hurtTimer == 0)
                             {
-                                Game1.SoundEffs["MegaDead"].Play();
+                                RNSEB.SoundEffs["MegaDead"].Play();
                                 hurtTimer = 0;
                             }
 
@@ -484,7 +484,7 @@ namespace teamstairwell
                         }
                         if (hurtTimer == 0)
                         {
-                            Game1.SoundEffs["MegaDead"].Play();
+                            RNSEB.SoundEffs["MegaDead"].Play();
                             hurtTimer = 0;
                         }
 
@@ -496,10 +496,10 @@ namespace teamstairwell
 
         public static bool entityOffScreen(Entity e)
         {
-            if (e.pos.X + e.hitrad < -Game1.RESOLUTION.X / 2
-                || e.pos.X - e.hitrad > Game1.RESOLUTION.X / 2
-                || e.pos.Y + e.hitrad < -Game1.RESOLUTION.Y / 2
-                || e.pos.Y - e.hitrad > Game1.RESOLUTION.Y / 2)
+            if (e.pos.X + e.hitrad < -RNSEB.RESOLUTION.X / 2
+                || e.pos.X - e.hitrad > RNSEB.RESOLUTION.X / 2
+                || e.pos.Y + e.hitrad < -RNSEB.RESOLUTION.Y / 2
+                || e.pos.Y - e.hitrad > RNSEB.RESOLUTION.Y / 2)
             {
                 return true;
             }
