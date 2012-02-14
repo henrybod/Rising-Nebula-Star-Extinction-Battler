@@ -23,7 +23,9 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        HenryMenu MainMenu = new HenryMenu();
+        bool HenryMode = false;
+        HenryMenu MainMenu;
+        HenryMouse TheMouse;
 
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
@@ -56,132 +58,107 @@ namespace teamstairwell{
 
 
         //functions
-        public RNSEB(){
+        public RNSEB() {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
             Content.RootDirectory = "Content";
         }
 
-        protected override void Initialize(){
+        protected override void Initialize() {
+            MediaPlayer.Volume = 0.01f;
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            if(HenryMode) {
+                TheMouse = new HenryMouse();
+                MainMenu = new HenryMenu(this.Content);
+            }
 
-
-
-            MediaPlayer.Volume = 0.1f;
             base.Initialize();
         }
 
         protected override void LoadContent(){
 
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
-            PrimitiveSheet = new PrimitiveSheet(Content.Load<Texture2D>("Spritesheets/PrimitiveSheet"));
-            PropSheet = new PropSheet(Content.Load<Texture2D>("Spritesheets/PropSheet"));
-            PanelSheet = new PanelSheet(Content.Load<Texture2D>("Spritesheets/PanelSheet"));
-            EnvironmentSheet = new EnvironmentSheet(Content.Load<Texture2D>("Spritesheets/EnvironmentSheet"));
-            PlayerSheet = new PlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
-            ParticlePlayerSheet = new ParticlePlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
-            //EffectSheet = new EffectSheet(Content.Load<Texture2D>("Spritesheets/EffectSheet"));
-            Background = new Background(Content.Load<Texture2D>("Spritesheets/Background"));
-            GumBackground = new GumBackground(Content.Load<Texture2D>("Spritesheets/Gumball Background"));
-            TitleBackground = new TitleBackground(Content.Load<Texture2D>("Spritesheets/TitleBackground"));
-            DaBomb = new ScreenBomb(Content.Load<Texture2D>("Spritesheets/BombAnimSheet"));
-            TitleSheet = new TitleSheet(Content.Load<Texture2D>("Spritesheets/TitleSheet"));
-            InfoOne = new InfoOne(Content.Load<Texture2D>("Spritesheets/InfoOne"));
-            InfoTwo = new InfoTwo(Content.Load<Texture2D>("Spritesheets/InfoTwo"));
-            creditp = new teamstairwell.Graphics.SpriteSheets.Credits(Content.Load<Texture2D>("Spritesheets/Credits"));
+            GameFont = this.Content.Load<SpriteFont>("GameFont");
 
-            Music = new Dictionary<string, Song>();
-            Music.Add("ForestMusic", Content.Load<Song>("Audio/Music/Forest Theme"));
-            Music.Add("ForestBoss", Content.Load<Song>("Audio/Music/Forest Boss"));
-            Music.Add("MenuMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
-            Music.Add("GameMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
+            if(!HenryMode){
+                PrimitiveSheet = new PrimitiveSheet(Content.Load<Texture2D>("Spritesheets/PrimitiveSheet"));
+                PropSheet = new PropSheet(Content.Load<Texture2D>("Spritesheets/PropSheet"));
+                PanelSheet = new PanelSheet(Content.Load<Texture2D>("Spritesheets/PanelSheet"));
+                EnvironmentSheet = new EnvironmentSheet(Content.Load<Texture2D>("Spritesheets/EnvironmentSheet"));
+                PlayerSheet = new PlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
+                ParticlePlayerSheet = new ParticlePlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
+                //EffectSheet = new EffectSheet(Content.Load<Texture2D>("Spritesheets/EffectSheet"));
+                Background = new Background(Content.Load<Texture2D>("Spritesheets/Background"));
+                GumBackground = new GumBackground(Content.Load<Texture2D>("Spritesheets/Gumball Background"));
+                TitleBackground = new TitleBackground(Content.Load<Texture2D>("Spritesheets/TitleBackground"));
+                DaBomb = new ScreenBomb(Content.Load<Texture2D>("Spritesheets/BombAnimSheet"));
+                TitleSheet = new TitleSheet(Content.Load<Texture2D>("Spritesheets/TitleSheet"));
+                InfoOne = new InfoOne(Content.Load<Texture2D>("Spritesheets/InfoOne"));
+                InfoTwo = new InfoTwo(Content.Load<Texture2D>("Spritesheets/InfoTwo"));
+                creditp = new teamstairwell.Graphics.SpriteSheets.Credits(Content.Load<Texture2D>("Spritesheets/Credits"));
 
-            SoundEffs = new Dictionary<string, SoundEffect>();
-            SoundEffs.Add("MissleSound", Content.Load<SoundEffect>("Audio/SoundEffects/Missle"));
-            SoundEffs.Add("MegaDead", Content.Load<SoundEffect>("Audio/SoundEffects/MEGAMAN!"));
-            SoundEffs.Add("Feeblehuman", Content.Load<SoundEffect>("Audio/SoundEffects/Feeble Human Quote"));
+                Music = new Dictionary<string, Song>();
+                Music.Add("ForestMusic", Content.Load<Song>("Audio/Music/Forest Theme"));
+                Music.Add("ForestBoss", Content.Load<Song>("Audio/Music/Forest Boss"));
+                Music.Add("MenuMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
+                Music.Add("GameMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
 
-            GameFont = Content.Load<SpriteFont>("GameFont");
+                SoundEffs = new Dictionary<string, SoundEffect>();
+                SoundEffs.Add("MissleSound", Content.Load<SoundEffect>("Audio/SoundEffects/Missle"));
+                SoundEffs.Add("MegaDead", Content.Load<SoundEffect>("Audio/SoundEffects/MEGAMAN!"));
+                SoundEffs.Add("Feeblehuman", Content.Load<SoundEffect>("Audio/SoundEffects/Feeble Human Quote"));
 
+                ScreenManager = new ScreenManage();
 
-            //Henry Stuff
-            MainMenu.SetBackground(this.Content, "SpriteSheets/TitleBackground");
-            MainMenu.SpinBackground = true;
-            MainMenu.AddButton(new HenryButton(100, 200, "Start", this.Content));
-
-
-
-            //Env = new GameEnvironment();
-
-            /*bsp = new List<BulletSpawner>();
-            bul = new List<Bullet>();
-
-            player = new Player(Vector2.Zero, Vector2.Zero, Vector2.Zero, 0f);
-            boss = new Boss(new Vector2(0, -350), new Vector2(7, 0), Vector2.Zero, 0f, bsp);*/
-
-            ScreenManager = new ScreenManage();
+            }else{
+                //Henry Stuff
+                TheMouse.LoadContent(this.Content, "SpriteSheets/Cursor");
+                MainMenu.SetBackground("SpriteSheets/TitleBackground");
+                MainMenu.SpinBackground = true;
+                MainMenu.AddButton(0.4f, 0.4f, "Single Player");
+                MainMenu.AddButton(0.4f, 0.6f, "Multiplayer");
+                MainMenu.AddButton(0.6f, 0.4f, "Options");
+                MainMenu.AddButton(0.6f, 0.6f, "Quit");
+            }
+            
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
+        protected override void UnloadContent() {
             // TODO: Unload any non ContentManager content here
+            // mayhaps utilization of this function will clear up our generous memory usage problem
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            if(!HenryMode){
 
-            if (IsActive)
-            {
-                ScreenManager.Update(gameTime);
+                if (IsActive)
+                    ScreenManager.Update(gameTime);
+
+            }else{
+                teamstairwell.Interface.HenryInput.Update(gameTime);
+                TheMouse.Update(gameTime);
+                MainMenu.Update(gameTime);
             }
-
-            /*player.update(gameTime, bul);
-            boss.update(gameTime);
-
-            foreach (BulletSpawner bs in bsp)
-            {
-                bs.update(gameTime);
-            }
-
-            foreach (Bullet b in bul)
-            {
-                b.update(gameTime);
-            }*/
-
-            //Env.update(gameTime);
 
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
+        protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Goldenrod);
             spriteBatch.Begin();
 
-            ScreenManager.Draw(spriteBatch);
-            
-
+            if(!HenryMode){
+                ScreenManager.Draw(spriteBatch);
+            }else{
+                //Henry Stuff
+                MainMenu.Draw(spriteBatch);
+                TheMouse.Draw(spriteBatch); //mouse is always the last thing drawn so it appears on top
+            }
             spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -13,18 +13,19 @@ namespace teamstairwell.Interface {
         public Vector2 Position = new Vector2(0, 0);
         public Vector2 Origin = new Vector2(0, 0);
         protected Texture2D Texture;
-        public Rectangle Size;
-        public float scale = 1.0f;
+        public Vector2 Size = new Vector2(0, 0);
+        private float scale = 1.0f;
         public float Rotation = 0.0f;
         private string filename;
 
         public float Scale {
             get {
-                return this.scale;
+                return scale;
             }
             set {
-                this.scale = value;
-                this.Size = new Rectangle(0, 0, (int)(Texture.Width * scale), (int)(Texture.Height * scale));
+                scale = value;
+                Size.X = (int)(Texture.Width * scale);
+                Size.Y = (int)(Texture.Height * scale);
             }
         }
 
@@ -35,7 +36,8 @@ namespace teamstairwell.Interface {
         public void LoadContent(ContentManager cm, string filename) {
             Texture = cm.Load<Texture2D>(filename);
             this.filename = filename;
-            Size = new Rectangle(0, 0, (int)(Texture.Width * scale), (int)(Texture.Height * scale));
+            Size.X = (int)(Texture.Width * scale);
+            Size.Y = (int)(Texture.Height * scale);
         }
 
         public void Draw(SpriteBatch sprites) {

@@ -223,6 +223,33 @@
       <Time>2012-02-08T13:30:02.6427174-06:00</Time>
     </Item>
     <Item>
+      <Source>SpriteSheets\ButtonNormal.png</Source>
+      <Name>SpriteSheets\ButtonNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\ButtonNormal.xnb</Output>
+      <Time>2012-02-13T17:30:48.969496-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\ButtonHighlight.png</Source>
+      <Name>SpriteSheets\ButtonHighlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\ButtonHighlight.xnb</Output>
+      <Time>2012-02-13T17:29:40.3715724-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\ButtonClick.png</Source>
+      <Name>SpriteSheets\ButtonClick</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\ButtonClick.xnb</Output>
+      <Time>2012-02-13T17:27:53.9824873-06:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\SoundEffects\Feeble Human Quote.wav</Source>
       <Name>Audio\SoundEffects\Feeble Human Quote</Name>
       <Importer>WavImporter</Importer>
@@ -257,6 +284,15 @@
       <Options>None</Options>
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Boss Death.xnb</Output>
       <Time>2012-02-09T13:20:32.7339178-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\Cursor.png</Source>
+      <Name>SpriteSheets\Cursor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Cursor.xnb</Output>
+      <Time>2012-02-13T21:34:57.2853317-06:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
