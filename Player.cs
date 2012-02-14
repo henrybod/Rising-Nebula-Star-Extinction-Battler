@@ -74,7 +74,7 @@ namespace teamstairwell
             //Left Mouse Click Fires Primary
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER));
+                Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot);
                 pBs.Add(b);
                 if (fury)
                 {

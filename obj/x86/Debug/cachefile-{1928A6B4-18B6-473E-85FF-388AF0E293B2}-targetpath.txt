@@ -30,9 +30,9 @@ Content\SpriteSheets\buttonBlank.xnb
 Content\SpriteSheets\ButtonNormal.xnb
 Content\SpriteSheets\ButtonHighlight.xnb
 Content\SpriteSheets\ButtonClick.xnb
+Content\SpriteSheets\Cursor.xnb
 Content\Audio\SoundEffects\Feeble Human Quote.xnb
 Content\Audio\SoundEffects\MEGAMAN!.xnb
 Content\Audio\SoundEffects\Missle.xnb
 Content\Audio\SoundEffects\Boss Death.xnb
-Content\SpriteSheets\Cursor.xnb
 Content\Audio\Music\teamstairwell Intro.mp3
