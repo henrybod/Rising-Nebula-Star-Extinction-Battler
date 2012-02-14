@@ -16,8 +16,8 @@ namespace teamstairwell
         {
             numB = bulletNumber;
 
-            normalSprite = new Sprite(Game1.PropSheet, PropSheet.HORIZON);
-            selectSprite = new Sprite(Game1.PropSheet, PropSheet.HORIZONAURA);
+            normalSprite = new Sprite(RNSEB.PropSheet, PropSheet.HORIZON);
+            selectSprite = new Sprite(RNSEB.PropSheet, PropSheet.HORIZONAURA);
             pic = normalSprite;
         }
 
@@ -34,15 +34,15 @@ namespace teamstairwell
                     Vector2 a = new Vector2(-dir.Y, dir.X) * (float)Math.Pow(-1, i);
                     Vector2 b = new Vector2(-dir.Y, dir.X) * (float)Math.Pow(-1, i + 1);
                     Bullet bu, bh;
-                    if(Game1.GUMBALLMODE)
+                    if(RNSEB.GUMBALLMODE)
                     {
-                        bu = new Bullet(pos + offset * i, a * 2, a * -.01f, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM1));
-                        bh = new Bullet(pos - offset * i, b * 2, b * -.01f, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM1));
+                        bu = new Bullet(pos + offset * i, a * 2, a * -.01f, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM1));
+                        bh = new Bullet(pos - offset * i, b * 2, b * -.01f, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM1));
                     }
                     else
                     {
-                        bu = new Bullet(pos + offset * i, a * 2, a * -.01f, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM0));
-                        bh = new Bullet(pos - offset * i, b * 2, b * -.01f, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM0));
+                        bu = new Bullet(pos + offset * i, a * 2, a * -.01f, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM0));
+                        bh = new Bullet(pos - offset * i, b * 2, b * -.01f, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM0));
                     }
                     bBs.Add(bu);
                     bBs.Add(bh);
@@ -54,15 +54,15 @@ namespace teamstairwell
                     Vector2 a = new Vector2(-dir.Y, dir.X) * (float)Math.Pow(-1, i);
                     Vector2 b = new Vector2(-dir.Y, dir.X) * (float)Math.Pow(-1, i + 1);
                     Bullet bu, bh;
-                    if(Game1.GUMBALLMODE)
+                    if(RNSEB.GUMBALLMODE)
                     {
-                        bu = new Bullet(pos + offset * i, Vector2.Zero, a * .05f, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM1));
-                        bh = new Bullet(pos - offset * i, Vector2.Zero, b * .05f, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM1));
+                        bu = new Bullet(pos + offset * i, Vector2.Zero, a * .05f, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM1));
+                        bh = new Bullet(pos - offset * i, Vector2.Zero, b * .05f, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM1));
                     }
                     else
                     {
-                        bu = new Bullet(pos + offset * i, Vector2.Zero, a * .05f, 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM0));
-                        bh = new Bullet(pos - offset * i, Vector2.Zero, b * .05f,  7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM0));
+                        bu = new Bullet(pos + offset * i, Vector2.Zero, a * .05f, 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM0));
+                        bh = new Bullet(pos - offset * i, Vector2.Zero, b * .05f,  7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM0));
                     }
                     bBs.Add(bu);
                     bBs.Add(bh);

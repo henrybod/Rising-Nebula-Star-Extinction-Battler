@@ -21,10 +21,15 @@ Content\SpriteSheets\InfoTwo.xnb
 Content\SpriteSheets\Gumball Background.xnb
 Content\SpriteSheets\Credits.xnb
 Content\SpriteSheets\InfoOne.xnb
+Content\SpriteSheets\buttonBlank.xnb
+Content\SpriteSheets\ButtonNormal.xnb
+Content\SpriteSheets\ButtonHighlight.xnb
+Content\SpriteSheets\ButtonClick.xnb
 Content\Audio\SoundEffects\Feeble Human Quote.xnb
 Content\Audio\SoundEffects\MEGAMAN!.xnb
 Content\Audio\SoundEffects\Missle.xnb
 Content\Audio\SoundEffects\Boss Death.xnb
+Content\SpriteSheets\Cursor.xnb
 Content\Audio\Music\Forest Boss.wma
 Content\Audio\Music\Forest Theme.wma
 Content\Audio\Music\teamstairwell Intro.wma

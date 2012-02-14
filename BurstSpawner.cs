@@ -17,8 +17,8 @@ namespace teamstairwell
         {
             bulletNum = bulletCount;
             doRetract = retract;
-            normalSprite = new Sprite(Game1.PropSheet, PropSheet.RADIAL);
-            selectSprite = new Sprite(Game1.PropSheet, PropSheet.RADIALAURA);
+            normalSprite = new Sprite(RNSEB.PropSheet, PropSheet.RADIAL);
+            selectSprite = new Sprite(RNSEB.PropSheet, PropSheet.RADIALAURA);
             pic = normalSprite;
         }
 
@@ -38,13 +38,13 @@ namespace teamstairwell
                     ay = -.02f * vy;
                 }
 
-                if (Game1.GUMBALLMODE)
+                if (RNSEB.GUMBALLMODE)
                 {
-                    bBs.Add(new Bullet(pos, new Vector2(2 * vx, 2 * vy), new Vector2(ax, ay), 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM1)));
+                    bBs.Add(new Bullet(pos, new Vector2(2 * vx, 2 * vy), new Vector2(ax, ay), 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM1)));
                 }
                 else
                 {
-                    bBs.Add(new Bullet(pos, new Vector2(2 * vx, 2 * vy), new Vector2(ax, ay), 7.5f, new Sprite(Game1.PropSheet, PropSheet.BULLETB)));
+                    bBs.Add(new Bullet(pos, new Vector2(2 * vx, 2 * vy), new Vector2(ax, ay), 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.BULLETB)));
                 }
             }
         }

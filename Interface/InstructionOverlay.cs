@@ -12,8 +12,8 @@ namespace teamstairwell.Interface
     {
         public InstructionOverlay() : base()
         {
-            MenuBack = new Sprite(Game1.TitleBackground, TitleBackground.TITLEBACKGROUND);
-            infosheetOne = new Sprite(Game1.InfoOne, InfoOne.INFOONE);
+            MenuBack = new Sprite(RNSEB.TitleBackground, TitleBackground.TITLEBACKGROUND);
+            infosheetOne = new Sprite(RNSEB.InfoOne, InfoOne.INFOONE);
         }
 
         public void LinkButtons()

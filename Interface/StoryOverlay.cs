@@ -15,7 +15,7 @@ namespace teamstairwell.Interface
         //public TextSprite TehStory;
         public StoryOverlay() : base()
         {
-            MenuBack = new Sprite(Game1.TitleBackground, TitleBackground.TITLEBACKGROUND);
+            MenuBack = new Sprite(RNSEB.TitleBackground, TitleBackground.TITLEBACKGROUND);
             //TehStory = new TextSprite("In the far future, your race has been at war with \"the others\" for thousands of years. \n After ravaging every habitable planet in the galaxy with the fires of war, there are no longer any planets left. \n You are the last warrior of your species. \n Although there's no real future for your people, you must fulfill your duty and finish this war. \n Defeat the last remaining member of \"the others\" and claim victory in the final war. \n The last rival awaits you.");
             //TehStory.Color = Color.White;
         }

@@ -31,7 +31,7 @@ namespace Hook.Graphics
             SpriteEffect = SpriteEffects.None;
             Position = Rotation = Vector3.Zero;
             this.Text = Text;
-            Font = Game1.GameFont;
+            Font = RNSEB.GameFont;
             Color = Color.Black;
             Origin = new Vector3(Font.MeasureString(Text).X / 2, Font.MeasureString(Text).Y / 2, 0);
 
@@ -73,7 +73,7 @@ namespace Hook.Graphics
         
         public void Draw(SpriteBatch sb)
         {
-            sb.DrawString(Font, Text, new Vector2(Position.X + Game1.RESOLUTION.X / 2, Position.Y + Game1.RESOLUTION.Y / 2), Color, Rotation.Z, new Vector2(Origin.X, Origin.Y), Scale, SpriteEffect, 0);
+            sb.DrawString(Font, Text, new Vector2(Position.X + RNSEB.RESOLUTION.X / 2, Position.Y + RNSEB.RESOLUTION.Y / 2), Color, Rotation.Z, new Vector2(Origin.X, Origin.Y), Scale, SpriteEffect, 0);
         }
 
         public void SetFlip(bool IsFlipped)

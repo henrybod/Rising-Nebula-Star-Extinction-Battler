@@ -14,8 +14,8 @@ namespace teamstairwell
         public AimSpawner(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, float rotation, float rotationVelocity, List<Bullet> bossBullets, Boolean retract, int numberofshots, double rateoffire, Player player)
             : base(position, velocity, acceleration, radius, rotation, rotationVelocity, bossBullets, retract, numberofshots, rateoffire)
         {
-            normalSprite = new Sprite(Game1.PropSheet, PropSheet.SKULL);
-            selectSprite = new Sprite(Game1.PropSheet, PropSheet.SKULLAURA);
+            normalSprite = new Sprite(RNSEB.PropSheet, PropSheet.SKULL);
+            selectSprite = new Sprite(RNSEB.PropSheet, PropSheet.SKULLAURA);
             pic = normalSprite;
             pla = player;
         }
@@ -35,13 +35,13 @@ namespace teamstairwell
                 ax = -.005f * vx;
                 ay = -.005f * vy;
             }*/
-            if (Game1.GUMBALLMODE)
+            if (RNSEB.GUMBALLMODE)
             {
-                bBs.Add(new Bullet(pos, (.5f + power * 3 / 9) * topla, new Vector2(ax, ay), 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM1)));
+                bBs.Add(new Bullet(pos, (.5f + power * 3 / 9) * topla, new Vector2(ax, ay), 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM1)));
             }
             else
             {
-                bBs.Add(new Bullet(pos, (.5f + power * 3 / 9) * topla, new Vector2(ax, ay), 7.5f, new Sprite(Game1.PropSheet, PropSheet.BULLETA)));
+                bBs.Add(new Bullet(pos, (.5f + power * 3 / 9) * topla, new Vector2(ax, ay), 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.BULLETA)));
             }
         }
     }

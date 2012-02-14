@@ -51,7 +51,7 @@ namespace teamstairwell.Interface
 
             keepgoing = true;
 
-            MouseCursor = new Sprite(Game1.PropSheet, PropSheet.DOOMCURSOR);
+            MouseCursor = new Sprite(RNSEB.PropSheet, PropSheet.DOOMCURSOR);
             MouseCursor.Origin = Vector3.Zero;
 
             ScreenStack.Push(MainMenuScreen);
@@ -125,7 +125,7 @@ namespace teamstairwell.Interface
                 CurrentScreen.Update(gt);
             }
 
-            MouseCursor.Position = new Vector3((Mouse.GetState().X - Game1.RESOLUTION.X / 2), (Mouse.GetState().Y - Game1.RESOLUTION.Y / 2), 0);
+            MouseCursor.Position = new Vector3((Mouse.GetState().X - RNSEB.RESOLUTION.X / 2), (Mouse.GetState().Y - RNSEB.RESOLUTION.Y / 2), 0);
             MouseCursor.Update(gt);
         }
 

@@ -14,7 +14,7 @@ namespace teamstairwell.Interface
     public class InGameOverlay : Screen
     {
         bool backFlag;
-        Sprite Sbackground = new Sprite(Game1.Background, Background.BACKGROUND); 
+        Sprite Sbackground = new Sprite(RNSEB.Background, Background.BACKGROUND); 
         
         public GameEnvironment Env;
 
@@ -27,9 +27,9 @@ namespace teamstairwell.Interface
 
         public new void Update(GameTime gt)
         {
-            if (!backFlag && Game1.GUMBALLMODE)
+            if (!backFlag && RNSEB.GUMBALLMODE)
             {
-                Sbackground = new Sprite(Game1.GumBackground, GumBackground.BACKGROUND);
+                Sbackground = new Sprite(RNSEB.GumBackground, GumBackground.BACKGROUND);
                 backFlag = true;
             }
 

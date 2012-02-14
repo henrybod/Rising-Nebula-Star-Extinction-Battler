@@ -50,15 +50,15 @@ namespace teamstairwell
             timer = 0;
             shots = numberofshots;
 
-            normalSprite = new Sprite(Game1.PropSheet, PropSheet.LINE);
-            selectSprite = new Sprite(Game1.PropSheet, PropSheet.LINEAURA);
+            normalSprite = new Sprite(RNSEB.PropSheet, PropSheet.LINE);
+            selectSprite = new Sprite(RNSEB.PropSheet, PropSheet.LINEAURA);
             pic = normalSprite;
 
             queuePoints = new List<Vector2>();
             flagSprites = new List<Sprite>();
             for (int f = 0; f < maxQueue; f++)
             {
-                flagSprites.Add(new Sprite(Game1.PropSheet, PropSheet.BOUY));
+                flagSprites.Add(new Sprite(RNSEB.PropSheet, PropSheet.BOUY));
             }
             //startRot = new Sprite(Game1.PrimitiveSheet, PrimitiveSheet.FLAG);
             //endRot = new Sprite(Game1.PrimitiveSheet, PrimitiveSheet.FLAG);
@@ -76,13 +76,13 @@ namespace teamstairwell
                 ax = -.005f * vx;
                 ay = -.005f * vy;
             }
-            if (Game1.GUMBALLMODE)
+            if (RNSEB.GUMBALLMODE)
             {
-                bBs.Add(new Bullet(pos, new Vector2(1f + power * 3 / 10 * vx, .5f + power * 3 / 10 * vy), new Vector2(ax, ay), 7.5f, new Sprite(Game1.PropSheet, PropSheet.GUM1)));
+                bBs.Add(new Bullet(pos, new Vector2(1f + power * 3 / 10 * vx, .5f + power * 3 / 10 * vy), new Vector2(ax, ay), 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.GUM1)));
             }
             else
             {
-                bBs.Add(new Bullet(pos, new Vector2(1f + power * 3 / 10 * vx, .5f + power * 3 / 10 * vy), new Vector2(ax, ay), 7.5f, new Sprite(Game1.PropSheet, PropSheet.BULLETC)));
+                bBs.Add(new Bullet(pos, new Vector2(1f + power * 3 / 10 * vx, .5f + power * 3 / 10 * vy), new Vector2(ax, ay), 7.5f, new Sprite(RNSEB.PropSheet, PropSheet.BULLETC)));
             }
             //lst.Add(new Bullet(pos, new Vector2(0, 2), Vector2.Zero, 7.5f, new Sprite(Game1.PropSheet, PropSheet.THICKLINK)));
         }
@@ -127,7 +127,7 @@ namespace teamstairwell
 
         public new void remove()
         {
-            bBs.Add(new Explosion(pos, Vector2.Zero, Vector2.Zero, 20, new Sprite(Game1.PropSheet, PropSheet.SOURCEEXPLOSION)));
+            bBs.Add(new Explosion(pos, Vector2.Zero, Vector2.Zero, 20, new Sprite(RNSEB.PropSheet, PropSheet.SOURCEEXPLOSION)));
             base.remove();
         }
 

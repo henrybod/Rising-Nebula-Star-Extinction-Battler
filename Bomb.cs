@@ -31,7 +31,7 @@ namespace teamstairwell
                 float xOff = 100 * (float)(r.NextDouble() - .5);
                 float yOff = 100 * (float)(r.NextDouble() - .5);
                 float ro = (float)(2 * Math.PI * r.NextDouble());
-                Explosion e = new Explosion(bomb.pos + new Vector2(xOff, yOff), Vector2.Zero, Vector2.Zero, 20, new Sprite(Game1.PropSheet, PropSheet.SOURCEEXPLOSION));
+                Explosion e = new Explosion(bomb.pos + new Vector2(xOff, yOff), Vector2.Zero, Vector2.Zero, 20, new Sprite(RNSEB.PropSheet, PropSheet.SOURCEEXPLOSION));
                 e.rot = e.pic.Rotation.Z = ro;
                 bossBullets.Add(e);
             }

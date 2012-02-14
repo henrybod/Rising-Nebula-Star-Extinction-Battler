@@ -16,21 +16,21 @@ namespace teamstairwell
             : base(position, velocity, acceleration, radius, rotation, rotationVelocity, bossBullets, retract, numberofshots, rateoffire)
         {
             bullets = bossBullets;
-            normalSprite = new Sprite(Game1.PropSheet, PropSheet.HEXSPAWN);
-            selectSprite = new Sprite(Game1.PropSheet, PropSheet.HEXSPAWNAURA);
+            normalSprite = new Sprite(RNSEB.PropSheet, PropSheet.HEXSPAWN);
+            selectSprite = new Sprite(RNSEB.PropSheet, PropSheet.HEXSPAWNAURA);
             pic = normalSprite;
             //pic = new Sprite(Game1.PropSheet, PropSheet.GRAVITYSOURCE);
         }
 
         public override void SpawnB()
         {
-            if (Game1.GUMBALLMODE)
+            if (RNSEB.GUMBALLMODE)
             {
-                bullets.Add(new Bullet(pos, vel.Length() * new Vector2((float)Math.Cos(rot), (float)Math.Sin(rot)), Vector2.Zero, 15, new Sprite(Game1.PropSheet, PropSheet.GUM1), bullets));
+                bullets.Add(new Bullet(pos, vel.Length() * new Vector2((float)Math.Cos(rot), (float)Math.Sin(rot)), Vector2.Zero, 15, new Sprite(RNSEB.PropSheet, PropSheet.GUM1), bullets));
             }
             else
             {
-                bullets.Add(new Bullet(pos, vel.Length() * new Vector2((float)Math.Cos(rot), (float)Math.Sin(rot)), Vector2.Zero, 15, new Sprite(Game1.PropSheet, PropSheet.ORANGEBULLET), bullets));
+                bullets.Add(new Bullet(pos, vel.Length() * new Vector2((float)Math.Cos(rot), (float)Math.Sin(rot)), Vector2.Zero, 15, new Sprite(RNSEB.PropSheet, PropSheet.ORANGEBULLET), bullets));
             }
         }
     }

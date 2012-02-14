@@ -53,11 +53,11 @@ namespace teamstairwell
             pBs = playerBullets;
             invisible = false;
 
-            normalSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.PNORMAL);
-            shieldSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.PSHIELD);
-            boomSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.PBOOM);
-            bankLeftSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.PGOLEFT);
-            bankRightSprite = new Sprite(Game1.PlayerSheet, PlayerSheet.PGORIGHT);
+            normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
+            shieldSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PSHIELD);
+            boomSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PBOOM);
+            bankLeftSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PGOLEFT);
+            bankRightSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PGORIGHT);
 
             pic = normalSprite;
         }
@@ -65,7 +65,7 @@ namespace teamstairwell
         public void processMouseInput(GameTime time)
         {
             MouseState mouseState = Mouse.GetState();
-            Vector2 mP = new Vector2(mouseState.X, mouseState.Y) - Game1.RESOLUTION / 2;
+            Vector2 mP = new Vector2(mouseState.X, mouseState.Y) - RNSEB.RESOLUTION / 2;
 
             //Calculate ship rotation from mouse cursor position
             rot = (float)Math.Atan2(mP.Y - pos.Y, mP.X - pos.X);
@@ -74,7 +74,7 @@ namespace teamstairwell
             //Left Mouse Click Fires Primary
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER));
+                Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER));
                 pBs.Add(b);
                 if (fury)
                 {
@@ -82,12 +82,12 @@ namespace teamstairwell
                     lpos.X -= 7;
                     Vector2 rpos = pos;
                     rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
+                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
+                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
                     lpos.X -= 11;
                     rpos.X += 11;
-                    pBs.Add(new Bullet(lpos, new Vector2(-1, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(1, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
+                    pBs.Add(new Bullet(lpos, new Vector2(-1, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
+                    pBs.Add(new Bullet(rpos, new Vector2(1, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
                 }
                 if (surge)
                 {
@@ -95,8 +95,8 @@ namespace teamstairwell
                     lpos.X -= 7;
                     Vector2 rpos = pos;
                     rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.GOLDLASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.GOLDLASER)));
+                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER)));
+                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER)));
                 }
                 if (angleGun)
                 {
@@ -104,8 +104,8 @@ namespace teamstairwell
                     lpos.X -= 11;
                     Vector2 rpos = pos;
                     rpos.X += 11;
-                    pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE)));
-                    pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE)));
+                    pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
+                    pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
                 }
                 if (angleRocket)
                 {
@@ -113,8 +113,8 @@ namespace teamstairwell
                     lpos.X -= 7;
                     Vector2 rpos = pos;
                     rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(Game1.PropSheet, PropSheet.ROCKET)));
-                    pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(Game1.PropSheet, PropSheet.ROCKET)));
+                    pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
+                    pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
                 }
                 if (rotTurretR)
                 {
@@ -136,7 +136,7 @@ namespace teamstairwell
                     for (int i = 0; i < numbomb; i++)
                     {
                         Vector2 v = new Vector2((float)Math.Cos(Math.PI * 2 * i / numbomb), (float)Math.Sin(Math.PI * 2 * i / numbomb));
-                        pBs.Add(new Bomb(pos, v * 10, Vector2.Zero, 200f, new Sprite(Game1.DaBomb, ScreenBomb.SCREENBOMB)));
+                        pBs.Add(new Bomb(pos, v * 10, Vector2.Zero, 200f, new Sprite(RNSEB.DaBomb, ScreenBomb.SCREENBOMB)));
                     }
                     bomb--;
                     invisible = true;
@@ -310,7 +310,7 @@ namespace teamstairwell
             rotTurretAngleR %= (float)Math.PI;
             Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR + (float)Math.PI), (float)Math.Sin(rotTurretAngleR + (float)Math.PI));
 
-            return new Bullet(pos, veldir * 4, Vector2.Zero, 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE));
+            return new Bullet(pos, veldir * 4, Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE));
         }
 
         internal Bullet turretRotL()
@@ -319,7 +319,7 @@ namespace teamstairwell
             rotTurretAngleL %= (float)Math.PI;
             Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleL), (float)Math.Sin(rotTurretAngleL));
 
-            return new Bullet(pos, veldir * 4, Vector2.Zero, 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE));
+            return new Bullet(pos, veldir * 4, Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE));
         }
     }
 }

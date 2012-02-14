@@ -36,10 +36,10 @@ namespace Hook.Graphics
 
         public void ConstrainPosition()
         {
-            if(Position.Y > -Game1.RESOLUTION.Y / 2)
-                Position.Y = -Game1.RESOLUTION.Y / 2;
-            if(Position.Y < -7200 + Game1.RESOLUTION.Y / 2)
-                Position.Y = -7200 + Game1.RESOLUTION.Y / 2;
+            if(Position.Y > -RNSEB.RESOLUTION.Y / 2)
+                Position.Y = -RNSEB.RESOLUTION.Y / 2;
+            if(Position.Y < -7200 + RNSEB.RESOLUTION.Y / 2)
+                Position.Y = -7200 + RNSEB.RESOLUTION.Y / 2;
         }
 
         public void ZoomOut()
