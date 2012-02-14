@@ -17,8 +17,9 @@ namespace teamstairwell.Interface {
         public HenryButton(int x, int y, string text, ContentManager cm, string filename) {
             base.LoadContent(cm, filename); //load the button background
             buttonText = new HenryText(text); //load the textbox
-            buttonText.Color = Color.Black; //set the text color
-            
+            buttonText.Color = Color.Teal; //set the text color
+            //word wrap the text
+
             this.Position = new Vector2(x, y); //set the button position where specified
             this.CenterOrigin(); //place button measuring from center of texture
             buttonText.Position.X = x;// + this.Texture.Width / 2.0f; //set text position to center of button
