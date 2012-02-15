@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface {
     //the mouse is simply a sprite that moves with the mouse input

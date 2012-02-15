@@ -23,9 +23,21 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        bool HenryMode = false;
+        bool HenryMode = true;
         HenryMenu MainMenu;
         HenryMouse TheMouse;
+        public enum HenryScreen {
+            MainMenu,
+            Battlefield,
+            PauseMenu,
+            Credits,
+            LoadSaveMenu,
+            HowToPlay,
+            Exit
+        };
+        public static HenryScreen CurrentScreen = HenryScreen.MainMenu; //start by displaying the main menu
+        public static HenrySpriteSheets HenrySprites;
+        public static SpriteFont ButtonFont;
 
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
@@ -71,6 +83,7 @@ namespace teamstairwell{
             if(HenryMode) {
                 TheMouse = new HenryMouse();
                 MainMenu = new HenryMenu(this.Content);
+                HenrySprites = new HenrySpriteSheets();
             }
 
             base.Initialize();
@@ -113,13 +126,15 @@ namespace teamstairwell{
 
             }else{
                 //Henry Stuff
-                TheMouse.LoadContent(this.Content, "SpriteSheets/Cursor");
-                MainMenu.SetBackground("SpriteSheets/TitleBackground");
+                ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
+                ButtonFont.LineSpacing = 20;
+                TheMouse.LoadContent(this.Content, "Cursor");
+                MainMenu.SetBackground("MenuBackground");
                 MainMenu.SpinBackground = true;
-                MainMenu.AddButton(0.4f, 0.4f, "Single Player");
-                MainMenu.AddButton(0.4f, 0.6f, "Multiplayer");
-                MainMenu.AddButton(0.6f, 0.4f, "Options");
-                MainMenu.AddButton(0.6f, 0.6f, "Quit");
+                MainMenu.AddButton(0.4f, 0.4f, "Single\nPlayer", HenryScreen.Battlefield);
+                MainMenu.AddButton(0.4f, 0.6f, "Multi-\nplayer", HenryScreen.Battlefield);
+                MainMenu.AddButton(0.6f, 0.4f, "Load /\n Save", HenryScreen.LoadSaveMenu);
+                MainMenu.AddButton(0.6f, 0.6f, "Quit", HenryScreen.Exit);
             }
             
         }
@@ -131,7 +146,7 @@ namespace teamstairwell{
 
         protected override void Update(GameTime gameTime) {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) //this looks like xbox to me
                 this.Exit();
 
             if(!HenryMode){
@@ -140,6 +155,8 @@ namespace teamstairwell{
                     ScreenManager.Update(gameTime);
 
             }else{
+                if (CurrentScreen == HenryScreen.Exit)
+                    this.Exit();
                 teamstairwell.Interface.HenryInput.Update(gameTime);
                 TheMouse.Update(gameTime);
                 MainMenu.Update(gameTime);
@@ -149,14 +166,19 @@ namespace teamstairwell{
         }
 
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.Goldenrod);
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
             if(!HenryMode){
                 ScreenManager.Draw(spriteBatch);
             }else{
                 //Henry Stuff
-                MainMenu.Draw(spriteBatch);
+                switch(CurrentScreen){
+                    case HenryScreen.MainMenu:
+                        MainMenu.Draw(spriteBatch);
+                        break;
+                    //more cases later
+                }
                 TheMouse.Draw(spriteBatch); //mouse is always the last thing drawn so it appears on top
             }
             spriteBatch.End();
