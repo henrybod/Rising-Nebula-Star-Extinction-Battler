@@ -1,4 +1,7 @@
 Content\GameFont.xnb
+Content\ButtonFont.xnb
+Content\TitleFont.xnb
+Content\TextFont.xnb
 Content\Audio\Music\Forest Boss.xnb
 Content\Audio\Music\Forest Theme.xnb
 Content\Audio\Music\teamstairwell Intro.xnb
@@ -22,10 +25,8 @@ Content\SpriteSheets\Gumball Background.xnb
 Content\SpriteSheets\Credits.xnb
 Content\SpriteSheets\InfoOne.xnb
 Content\SpriteSheets\buttonBlank.xnb
-Content\SpriteSheets\ButtonNormal.xnb
-Content\SpriteSheets\ButtonHighlight.xnb
-Content\SpriteSheets\ButtonClick.xnb
 Content\SpriteSheets\Cursor.xnb
+Content\SpriteSheets\Button.xnb
 Content\Audio\SoundEffects\Feeble Human Quote.xnb
 Content\Audio\SoundEffects\MEGAMAN!.xnb
 Content\Audio\SoundEffects\Missle.xnb

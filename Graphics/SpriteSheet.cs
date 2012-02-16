@@ -11,8 +11,8 @@ namespace Hook.Graphics
         public Texture2D SheetImage;
         public int[,] FrameValues;  //Width, height, # of frames
 
-        public SpriteSheet()
-        {
+        public SpriteSheet() {
+
         }
 
         public int GetFrameWidth(int SpriteType)
