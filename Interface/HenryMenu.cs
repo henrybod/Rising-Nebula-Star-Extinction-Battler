@@ -13,10 +13,10 @@ namespace teamstairwell.Interface {
 
         private ContentManager cm;
         private List<HenryButton> buttons = new List<HenryButton>();
-        //private List<HenryTextField> texts = new List<HenryTextField>();
+        private List<HenryText> texts = new List<HenryText>();
         private HenrySprite background = new HenrySprite();
         public bool SpinBackground = false;
-
+        
         public HenryMenu(ContentManager cm){
             this.cm = cm;
         }
@@ -34,18 +34,31 @@ namespace teamstairwell.Interface {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void AddButton(float percentX, float percentY, string text, RNSEB.HenryScreen link, string spriteName = "Button") {
+        public void AddButton(float percentX, float percentY, string text, RNSEB.HenryScreen link, string spriteName = "Button", float scale = 0.6f) {
             int x = (int)(percentX * RNSEB.RESOLUTION.X);
             int y = (int)(percentY * RNSEB.RESOLUTION.Y);
             HenryButton b = new HenryButton(x, y, text, link, cm, spriteName);
-            b.Scale = 0.6f;
+            b.Scale = scale;
+            if (spriteName != "Button")
+                b.Animate = true;
+            
             buttons.Add(b);
+        }
+
+        public void AddText(float percentX, float percentY, SpriteFont sf, Color c, string text) {
+            int x = (int)(percentX * RNSEB.RESOLUTION.X);
+            int y = (int)(percentY * RNSEB.RESOLUTION.Y);
+            HenryText t = new HenryText(new Vector2(x, y), sf, text);
+            t.Color = c;
+            texts.Add(t);
         }
 
         public void Draw(SpriteBatch sb) {
             background.Draw(sb);
             foreach(HenryButton b in buttons)
                 b.Draw(sb);
+            foreach(HenryText t in texts)
+                t.Draw(sb);
         }
 
         public void Update(GameTime gt){

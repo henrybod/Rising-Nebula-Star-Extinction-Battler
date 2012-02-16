@@ -12,9 +12,12 @@ namespace teamstairwell.Interface {
     //the mouse is simply a sprite that moves with the mouse input
     class HenryMouse : HenrySprite {
 
-        public void Update(GameTime gt){
+        public new void Update(GameTime gt){
             base.Position = new Vector2(HenryInput.MouseX, HenryInput.MouseY);
             //also change cursor
+            //we need some sort of target / crosshair thing for the battlefield
+            //base.Animate = true;
+            base.Update(gt);
         }
 
         public new void Draw(SpriteBatch sb){

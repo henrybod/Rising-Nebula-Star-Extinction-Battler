@@ -25,7 +25,7 @@ namespace teamstairwell.Interface {
         public static bool MouseIsIn(Vector2 pos, Vector2 area){
             if (MouseX < pos.X + area.X / 2
                 && MouseX > pos.X - area.X / 2
-                && MouseY < pos.Y + area.X / 2
+                && MouseY < pos.Y + area.Y / 2
                 && MouseY > pos.Y - area.Y / 2)
                 return true;
             return false;

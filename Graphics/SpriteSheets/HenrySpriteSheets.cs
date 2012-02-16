@@ -12,9 +12,33 @@ namespace teamstairwell.Graphics.SpriteSheets {
 
         public HenrySpriteSheets() {
             //define all the sprites to be used in the game
+            //they must be defined in the order they are drawn on their respective sheet!!!
+
+            //interface
             AddSprite(ref All, "SpriteSheets/Cursor", "Cursor", 11, 19, 1);
             AddSprite(ref All, "SpriteSheets/Button", "Button", 229, 130, 3);
             AddSprite(ref All, "SpriteSheets/TitleBackground", "MenuBackground", 1750, 1454, 1);
+
+            //zihou
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerIdle", 40, 40, 4);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerHit", 40, 40, 4);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerDeath", 40, 40, 6);
+
+            //boss
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossIdle", 200, 200, 2);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossHit", 200, 200, 3);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossDeath", 200, 200, 5);
+
+            //zihou
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerShiftLeft", 40, 40, 3);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerGoLeft", 40, 40, 2);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerShiftRight", 40, 40, 3);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerGoRight", 40, 40, 2);
+
+            //boss
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossField", 500, 519, 1);
+            AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossSillyFace", 200, 200, 4);
+
             //here shall be a whole lotta code
 
 

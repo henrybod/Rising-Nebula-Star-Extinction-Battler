@@ -18,18 +18,33 @@ namespace teamstairwell.Graphics {
         private float scale = 1.0f;
         public float Rotation = 0.0f;
         public bool Animate = false;
-        protected int frame = 0, totalFrames;
+        private int frame = 0, totalFrames;
         private Rectangle viewRect = new Rectangle(0, 0, 0, 0);
+        private float frameSpeed = 25.0f; //sprite frames to display per second
+        private float timeSinceLastFrameChange = 0.0f;
 
         public float Scale {
-            get {
-                return scale;
-            }
+            get { return scale; }
             set {
                 scale = value;
                 Size.X = (int)(viewRect.Width * scale);
                 Size.Y = (int)(viewRect.Height * scale);
             }
+        }
+
+        public float FrameSpeed {
+            get { return frameSpeed; }
+            set { if(value > 0) frameSpeed = value; }
+        }
+
+        protected int Frame {
+            get { return frame; }
+            set { if (value >= 0) frame = value; }
+        }
+
+        protected int TotalFrames {
+            get { return totalFrames; }
+            set { if (value > 0) frameSpeed = value; }
         }
 
         public void CenterOrigin(){
@@ -53,8 +68,14 @@ namespace teamstairwell.Graphics {
         }
 
         public void Update(GameTime gt) {
-            if(Animate) frame = (frame + 1) % totalFrames; //auto change frames
-            viewRect.X = viewRect.Width * frame; //update viewRect to match frame
+            if(Animate){ //automatically change frames
+                timeSinceLastFrameChange += (float)gt.ElapsedGameTime.TotalSeconds;
+                if(timeSinceLastFrameChange >= 1 / frameSpeed){
+                    timeSinceLastFrameChange = 0;
+                    frame = (frame + 1) % totalFrames;
+                }
+            }
+            viewRect.X = viewRect.Width * frame; //update viewRect to match frame (this is outside the loop so frame may be updated manually by a child obj)
         }
     }
 }

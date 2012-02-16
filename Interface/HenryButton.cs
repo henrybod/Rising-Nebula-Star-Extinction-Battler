@@ -26,15 +26,11 @@ namespace teamstairwell.Interface {
 
         public HenryButton(int x, int y, string text, RNSEB.HenryScreen link, ContentManager cm, string spriteName) {
             base.LoadContent(cm, spriteName); //load the button background
-            buttonText = new HenryText(text); //load the textbox
-            buttonText.Color = Color.Red; //set the text color
-            //word wrap the text
-
             this.Position = new Vector2(x, y); //set the button position where specified
-            this.CenterOrigin(); //place button measuring from center of texture
-            buttonText.Position.X = x;// + this.Texture.Width / 2.0f; //set text position to center of button
-            buttonText.Position.Y = y;// + this.Texture.Height / 2.0f; //set text position to center of button
+            this.CenterOrigin(); //draw button measuring from center of texture
 
+            buttonText = new HenryText(this.Position, RNSEB.ButtonFont, text);
+            buttonText.Color = Color.Red; //set the text color
             this.cm = cm; //store the content manager reference so we can use it later to swap button textures
 
             this.link = link; //store where a click will take us
@@ -43,29 +39,29 @@ namespace teamstairwell.Interface {
         public new void Update(GameTime gt) {
             prevState = currState; //current state is now old
             //check mouse hover/click
-            if(HenryInput.MouseIsIn(this.Position, this.Size)){
+            if(HenryInput.MouseIsIn(Position, Size)){
                 if(HenryInput.M1) {
                     //mouse is pressing button
-                    base.frame = 2;
+                    if(!this.Animate) base.Frame = 2;
                     buttonText.Color = Color.Aqua;
                     currState = ButtonState.Pressed;
                 } else {
                     //mouse is hovering over button
-                    base.frame = 1;
+                    if (!this.Animate) base.Frame = 1;
                     buttonText.Color = Color.Aqua;
                     currState = ButtonState.Highlighted;
                 }
             } else {
                 //mouse isn't over button
-                base.frame = 0;
+                if(!this.Animate) base.Frame = 0;
                 buttonText.Color = Color.Red;
                 currState = ButtonState.Normal;
             }
 
             if(currState == ButtonState.Highlighted && prevState == ButtonState.Pressed)
                 RNSEB.CurrentScreen = this.link;
-
-            base.Update(gt); //update view (in case sprite frame has changed)
+            
+            base.Update(gt); //update view (in case base.frame has changed)
         }
 
         public new void Draw(SpriteBatch sb) {
