@@ -34,8 +34,8 @@ namespace teamstairwell
 
             rot = angle;
             angle = angle + MathHelper.ToRadians(90);
-            vel.X = (float)Math.Cos(angle) * -12;
-            vel.Y = (float)Math.Sin(angle) * -12;
+            vel.X = (float)Math.Cos(angle) * velocity.X;
+            vel.Y = (float)Math.Sin(angle) * velocity.Y;
 
             if (sprite != null)
             {

@@ -23,7 +23,7 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        bool HenryMode = true;
+        bool HenryMode = false;
         HenryMenu MainMenu, Credits;
         HenryMouse TheMouse;
         public enum HenryScreen {
