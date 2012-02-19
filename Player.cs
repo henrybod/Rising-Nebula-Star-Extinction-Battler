@@ -114,26 +114,37 @@ namespace teamstairwell
                     rpos.Y += (float)Math.Sin(rot) * 11;
 
                     Vector2 laccel = new Vector2(0, 0);
+                    laccel.X = (float)Math.Sin(rot) * 2;
                     laccel.Y = (float)Math.Cos(rot) * -2;
-                    //laccel.X = (float)Math.Sin(rot) * -2;
-                    pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
-                    pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
-                    //pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rot));
-                    //pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rot));
+                    //pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
+                    //pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
+                    pBs.Add(new Bullet(lpos, new Vector2(-6, -6), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rot - 0.31f));
+                    pBs.Add(new Bullet(rpos, new Vector2(-6, -6), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rot + 0.31f));
                 }
                 if (angleRocket)
                 {
                     Vector2 lpos = pos;
-                    lpos.X -= 7;
+                    lpos.X += (float)Math.Cos(rot) * -7;
+                    lpos.Y += (float)Math.Sin(rot) * -7;
                     Vector2 rpos = pos;
-                    rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
-                    pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
+                    rpos.X += (float)Math.Cos(rot) * 7;
+                    rpos.Y += (float)Math.Sin(rot) * 7;
+
+                    Vector2 laccel = new Vector2(0, 0);
+                    laccel.X = (float)Math.Sin(rot) * 6;
+                    laccel.Y = (float)Math.Cos(rot) * -6;
+
+                    //pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
+                    //pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
+                    pBs.Add(new Bullet(lpos, new Vector2(-15, -15), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET), rot - 1.5f, rot));
+                    pBs.Add(new Bullet(rpos, new Vector2(-15, -15), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET), rot + 1.5f, rot));
                 }
+                //rotTurretR = true;
                 if (rotTurretR)
                 {
                     pBs.Add(turretRotR());
                 }
+                //rotTurretL = true;
                 if (rotTurretL)
                 {
                     pBs.Add(turretRotL());
