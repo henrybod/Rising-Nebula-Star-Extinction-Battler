@@ -295,45 +295,6 @@ C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\obj\
 C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.xnb
 C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.mp3
 C:\Users\Hank\Desktop\CSCSE4420\RNSEB\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.wma
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\CyberSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EffectSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EnvironmentSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PanelSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PlayerSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PrimitiveSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PropSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Background.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleBackground.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheetSingle.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InterfaceSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleSheet.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoTwo.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Gumball Background.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Credits.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoOne.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Feeble Human Quote.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\MEGAMAN!.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Missle.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Boss Death.xnb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.wma
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.wma
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.wma
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.wma
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.wma
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.mp3
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\teamstairwell.exe
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\teamstairwell.pdb
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\teamstairwell.exe
-C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\teamstairwell.pdb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.xnb
@@ -374,17 +335,69 @@ C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\obj\x86\De
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\teamstairwell.exe
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\teamstairwell.pdb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\buttonBlank.xnb
+<<<<<<< HEAD
 C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\buttonBlank.xnb
 C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\ButtonNormal.xnb
 C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\ButtonHighlight.xnb
 C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\ButtonClick.xnb
 C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Cursor.xnb
+=======
+C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Cursor.xnb
+>>>>>>> d723ffcdd20718a3132247cbcd27a53934ed8dda
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Button.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\ButtonFont.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TitleFont.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TextFont.xnb
+<<<<<<< HEAD
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\HenryBossDeath.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\HenryButtonClick.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\HenryButtonRollover.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\HenryUpgrade.xnb
 C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\HenryPlayerDeath.xnb
+=======
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\ButtonFont.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TitleFont.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TextFont.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\CyberSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EffectSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\EnvironmentSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PanelSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PlayerSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PrimitiveSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PropSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Background.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleBackground.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheetSingle.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InterfaceSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\TitleSheet.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoTwo.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Gumball Background.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Credits.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\InfoOne.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\buttonBlank.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Cursor.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Button.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Feeble Human Quote.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\MEGAMAN!.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Missle.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Boss Death.xnb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Boss.wma
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\Forest Theme.wma
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.wma
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Theme.wma
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\04 - Boogie Wonderland.wma
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\teamstairwell Intro.mp3
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\teamstairwell.exe
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\teamstairwell.pdb
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\teamstairwell.exe
+C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\obj\x86\Debug\teamstairwell.pdb
+>>>>>>> d723ffcdd20718a3132247cbcd27a53934ed8dda

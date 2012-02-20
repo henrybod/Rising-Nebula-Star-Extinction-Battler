@@ -24,6 +24,7 @@ namespace teamstairwell
             }
         }
 
+        //Creates bullet with related sprite rotation and velocity.
         public Bullet(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, Sprite sprite, float angle)
             : base(position, velocity, acceleration, radius)
         {
@@ -34,8 +35,28 @@ namespace teamstairwell
 
             rot = angle;
             angle = angle + MathHelper.ToRadians(90);
-            vel.X = (float)Math.Cos(angle) * -12;
-            vel.Y = (float)Math.Sin(angle) * -12;
+            vel.X = (float)Math.Cos(angle) * velocity.X;
+            vel.Y = (float)Math.Sin(angle) * velocity.Y;
+
+            if (sprite != null)
+            {
+                pic = sprite;
+            }
+        }
+
+        //Creates a bullet with SEPARATE sprite rotation and velocity (not trigonometrically related)
+        public Bullet(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, Sprite sprite, float angle, float drawAngle)
+            : base(position, velocity, acceleration, radius)
+        {
+            pos = position;
+            vel = velocity;
+            acc = acceleration;
+            hitrad = radius;
+
+            rot = drawAngle;
+            angle = angle + MathHelper.ToRadians(90);
+            vel.X = (float)Math.Cos(angle) * velocity.X;
+            vel.Y = (float)Math.Sin(angle) * velocity.Y;
 
             if (sprite != null)
             {

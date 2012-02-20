@@ -24,7 +24,7 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        bool HenryMode = true;
+        bool HenryMode = false;
         HenryMenu MainMenu, Credits, UpgradeMenu;
         HenryBattlefield TheBattlefield;
         HenryMouse TheMouse;
@@ -123,7 +123,7 @@ namespace teamstairwell{
                 Music = new Dictionary<string, Song>();
                 Music.Add("ForestMusic", Content.Load<Song>("Audio/Music/Forest Theme"));
                 Music.Add("ForestBoss", Content.Load<Song>("Audio/Music/Forest Boss"));
-                Music.Add("MenuMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
+                Music.Add("MenuMusic", Content.Load<Song>("Audio/Music/teamstairwell Intro"));
                 Music.Add("GameMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
 
                 SoundEffs = new Dictionary<string, SoundEffect>();

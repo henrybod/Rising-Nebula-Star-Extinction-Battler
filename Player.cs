@@ -74,52 +74,77 @@ namespace teamstairwell
             //Left Mouse Click Fires Primary
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot);
+                Bullet b = new Bullet(pos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot);
                 pBs.Add(b);
                 if (fury)
                 {
                     Vector2 lpos = pos;
-                    lpos.X -= 7;
+                    lpos.X += (float)Math.Cos(rot) * -7;
+                    lpos.Y += (float)Math.Sin(rot) * -7;
                     Vector2 rpos = pos;
-                    rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
-                    lpos.X -= 11;
-                    rpos.X += 11;
-                    pBs.Add(new Bullet(lpos, new Vector2(-1, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(1, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER)));
+                    rpos.X += (float)Math.Cos(rot) * 7;
+                    rpos.Y += (float)Math.Sin(rot) * 7;
+                    pBs.Add(new Bullet(lpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot - .08f));
+                    pBs.Add(new Bullet(rpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot + .08f));
+                    lpos.X += (float)Math.Cos(rot) * -11;
+                    lpos.Y += (float)Math.Sin(rot) * -11;
+                    rpos.X += (float)Math.Cos(rot) * 11;
+                    rpos.Y += (float)Math.Sin(rot) * 11;
+                    pBs.Add(new Bullet(lpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot - .16f));
+                    pBs.Add(new Bullet(rpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot + .16f));
                 }
                 if (surge)
                 {
                     Vector2 lpos = pos;
-                    lpos.X -= 7;
+                    lpos.X += (float)Math.Cos(rot) * -8;
+                    lpos.Y += (float)Math.Sin(rot) * -8;
                     Vector2 rpos = pos;
-                    rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER)));
+                    rpos.X += (float)Math.Cos(rot) * 8;
+                    rpos.Y += (float)Math.Sin(rot) * 8;
+                    pBs.Add(new Bullet(lpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER), rot));
+                    pBs.Add(new Bullet(rpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER), rot));
                 }
                 if (angleGun)
                 {
                     Vector2 lpos = pos;
-                    lpos.X -= 11;
+                    lpos.X += (float)Math.Cos(rot) * -11;
+                    lpos.Y += (float)Math.Sin(rot) * -11;
                     Vector2 rpos = pos;
-                    rpos.X += 11;
-                    pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
-                    pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
+                    rpos.X += (float)Math.Cos(rot) * 11;
+                    rpos.Y += (float)Math.Sin(rot) * 11;
+
+                    Vector2 laccel = new Vector2(0, 0);
+                    laccel.X = (float)Math.Sin(rot) * 2;
+                    laccel.Y = (float)Math.Cos(rot) * -2;
+                    //pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
+                    //pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE)));
+                    pBs.Add(new Bullet(lpos, new Vector2(-6, -6), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rot - 0.31f));
+                    pBs.Add(new Bullet(rpos, new Vector2(-6, -6), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rot + 0.31f));
                 }
                 if (angleRocket)
                 {
                     Vector2 lpos = pos;
-                    lpos.X -= 7;
+                    lpos.X += (float)Math.Cos(rot) * -7;
+                    lpos.Y += (float)Math.Sin(rot) * -7;
                     Vector2 rpos = pos;
-                    rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
-                    pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
+                    rpos.X += (float)Math.Cos(rot) * 7;
+                    rpos.Y += (float)Math.Sin(rot) * 7;
+
+                    Vector2 laccel = new Vector2(0, 0);
+                    laccel.X = (float)Math.Sin(rot) * 6;
+                    laccel.Y = (float)Math.Cos(rot) * -6;
+
+                    //pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
+                    //pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET)));
+                    pBs.Add(new Bullet(lpos, new Vector2(-15, -15), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET), rot - 1.5f, rot));
+                    pBs.Add(new Bullet(rpos, new Vector2(-15, -15), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET), rot + 1.5f, rot));
                 }
+                //rotTurretR = true;
                 if (rotTurretR)
                 {
                     pBs.Add(turretRotR());
                 }
+                //rotTurretL = true;
                 if (rotTurretL)
                 {
                     pBs.Add(turretRotL());
