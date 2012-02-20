@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Storage;
 using Hook.Graphics;
 using Hook.Graphics.SpriteSheets;
 using teamstairwell.Graphics.SpriteSheets;
+using System.Diagnostics;
 #endregion
 
 namespace teamstairwell
@@ -35,7 +36,7 @@ namespace teamstairwell
         public bool angleGun;
         public bool angleRocket;
         public bool rotTurretR;
-        float rotTurretAngleR = 0;
+        float rotTurretAngleR;
         public bool rotTurretL;
         float rotTurretAngleL = (float)Math.PI;
         public TimeSpan trackTime = TimeSpan.Zero;
@@ -68,8 +69,13 @@ namespace teamstairwell
             Vector2 mP = new Vector2(mouseState.X, mouseState.Y) - RNSEB.RESOLUTION / 2;
 
             //Calculate ship rotation from mouse cursor position
-            rot = (float)Math.Atan2(mP.Y - pos.Y, mP.X - pos.X);
-            rot = rot + MathHelper.ToRadians(90);
+            float angle = (float)Math.Atan2(mP.Y - pos.Y, mP.X - pos.X);
+            angle = angle + MathHelper.ToRadians(90);
+            //rotTurretAngleR += angle - rot;
+            //Debug.Print("Angle: {0}", angle - rot);
+            rot = angle;
+            //rot = (float)Math.Atan2(mP.Y - pos.Y, mP.X - pos.X);
+            //rot = rot + MathHelper.ToRadians(90);
 
             //Left Mouse Click Fires Primary
             if (mouseState.LeftButton == ButtonState.Pressed)
@@ -144,7 +150,7 @@ namespace teamstairwell
                 {
                     pBs.Add(turretRotR());
                 }
-                //rotTurretL = true;
+                rotTurretL = true;
                 if (rotTurretL)
                 {
                     pBs.Add(turretRotL());
@@ -222,78 +228,6 @@ namespace teamstairwell
                 vel = vel / 2;
             }
 
-            /*if (state.IsKeyDown(Keys.Z))
-            {
-                Bullet b = new Bullet(pos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER));
-                pBs.Add(b);
-                if (fury)
-                {
-                    Vector2 lpos = pos;
-                    lpos.X -= 7;
-                    Vector2 rpos = pos;
-                    rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
-                    lpos.X -= 11;
-                    rpos.X += 11;
-                    pBs.Add(new Bullet(lpos, new Vector2(-1, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(1, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.LASER)));
-                }
-                if (surge)
-                {
-                    Vector2 lpos = pos;
-                    lpos.X -= 7;
-                    Vector2 rpos = pos;
-                    rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.GOLDLASER)));
-                    pBs.Add(new Bullet(rpos, new Vector2(0, -12), new Vector2(0, 0), 0f, new Sprite(Game1.PropSheet, PropSheet.GOLDLASER)));
-                }
-                if (angleGun)
-                {
-                    Vector2 lpos = pos;
-                    lpos.X -= 11;
-                    Vector2 rpos = pos;
-                    rpos.X += 11;
-                    pBs.Add(new Bullet(lpos, new Vector2(-2, -6), new Vector2(0, -2), 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE)));
-                    pBs.Add(new Bullet(rpos, new Vector2(2, -6), new Vector2(0, -2), 0f, new Sprite(Game1.PropSheet, PropSheet.MISSLE)));
-                }
-                if (angleRocket)
-                {
-                    Vector2 lpos = pos;
-                    lpos.X -= 7;
-                    Vector2 rpos = pos;
-                    rpos.X += 7;
-                    pBs.Add(new Bullet(lpos, new Vector2(-15, 0), new Vector2(.1f, -6), 0f, new Sprite(Game1.PropSheet, PropSheet.ROCKET)));
-                    pBs.Add(new Bullet(rpos, new Vector2(15, 0), new Vector2(-.1f, -6), 0f, new Sprite(Game1.PropSheet, PropSheet.ROCKET)));
-                }
-                if (rotTurretR)
-                {
-                    pBs.Add(turretRotR());
-                }
-                if (rotTurretL)
-                {
-                    pBs.Add(turretRotL());
-                }
-                //shoot
-            }
-
-            if (state.IsKeyDown(Keys.X) && oldstate.IsKeyUp(Keys.X))
-            {
-                if (bomb > 0)
-                {
-                    int numbomb = 20;
-                    for (int i = 0; i < numbomb; i++)
-                    {
-                        Vector2 v = new Vector2((float)Math.Cos(Math.PI * 2 * i / numbomb), (float)Math.Sin(Math.PI * 2 * i / numbomb));
-                        pBs.Add(new Bomb(pos, v * 10, Vector2.Zero, 200f, new Sprite(Game1.DaBomb, ScreenBomb.SCREENBOMB)));
-                    }
-                    bomb--;
-                    invisible = true;
-                    invisibleTime = time.TotalGameTime;
-                }
-                //bomb
-            }*/
-
             if (invisible)
             {
                 pic = shieldSprite;
@@ -331,15 +265,30 @@ namespace teamstairwell
 
         internal Bullet turretRotR()
         {
+            if (rotTurretAngleR > rot + Math.PI)
+            {
+                rotTurretAngleR += (float)Math.PI;
+            }
             rotTurretAngleR++;
+            rotTurretAngleR %= (float)Math.PI * 2;
+            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR - MathHelper.ToRadians(60)), (float)Math.Sin(rotTurretAngleR - MathHelper.ToRadians(60)));
+            //Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR), (float)Math.Sin(rotTurretAngleR));
+            /*rotTurretAngleR++;
             rotTurretAngleR %= (float)Math.PI;
-            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR + (float)Math.PI), (float)Math.Sin(rotTurretAngleR + (float)Math.PI));
+            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR + (float)Math.PI), (float)Math.Sin(rotTurretAngleR + (float)Math.PI));*/
 
-            return new Bullet(pos, veldir * 4, Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE));
+            return new Bullet(pos, veldir * -4, Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE));
         }
 
         internal Bullet turretRotL()
         {
+            /*if (rotTurretAngleL < rot)
+            {
+                rotTurretAngleL -= (float)Math.PI;
+            }
+            rotTurretAngleL--;
+            rotTurretAngleL %= (float)Math.PI * 2;
+            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleL), (float)Math.Sin(rotTurretAngleL));*/
             rotTurretAngleL--;
             rotTurretAngleL %= (float)Math.PI;
             Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleL), (float)Math.Sin(rotTurretAngleL));
