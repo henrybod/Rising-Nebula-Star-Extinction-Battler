@@ -16,7 +16,8 @@ namespace teamstairwell.Interface {
             base.Position = new Vector2(HenryInput.MouseX, HenryInput.MouseY);
             //also change cursor
             //we need some sort of target / crosshair thing for the battlefield
-            //base.Animate = true;
+            base.Animate = true;
+            base.FrameSpeed = 10;
             base.Update(gt);
         }
 

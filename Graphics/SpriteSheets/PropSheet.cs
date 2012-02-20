@@ -68,7 +68,7 @@ namespace Hook.Graphics.SpriteSheets
                 {15, 15, 4},   //GUM0
                 {15, 15, 4},   //GUM1
                 {15, 15, 4},   //MISSLE
-                {45, 45, 1},   //SKULL
+                {45, 45, 5},   //SKULL
                 {45, 45, 1},   //SKULLAURA
                 {45, 45, 1},   //LINE
                 {45, 45, 1},   //LINEAURA

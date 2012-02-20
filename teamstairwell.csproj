@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AimSpawner.cs" />
+    <Compile Include="Audio\HenryMediaPlayer.cs" />
     <Compile Include="Bomb.cs" />
     <Compile Include="Boss.cs" />
     <Compile Include="Bullet.cs" />
@@ -126,7 +127,11 @@
     <Compile Include="Entity.cs" />
     <Compile Include="Explosion.cs" />
     <Compile Include="HenryBattlefield.cs" />
+    <Compile Include="Units\HenryBoss.cs" />
+    <Compile Include="Units\HenryBullet.cs" />
     <Compile Include="HenryEntity.cs" />
+    <Compile Include="Units\HenryPlayer.cs" />
+    <Compile Include="Units\HenrySpawner.cs" />
     <Compile Include="Interface\HenryButton.cs" />
     <Compile Include="Interface\HenryInput.cs" />
     <Compile Include="Interface\HenryMenu.cs" />
@@ -178,6 +183,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="RollSpawner.cs" />
     <Compile Include="SplitSpawner.cs" />
+    <Compile Include="Units\HenryWeapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

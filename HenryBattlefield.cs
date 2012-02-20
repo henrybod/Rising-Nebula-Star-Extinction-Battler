@@ -12,10 +12,13 @@ namespace teamstairwell.Interface {
     class HenryBattlefield {
 
         private ContentManager cm;
-        private List<HenryEntity> entities = new List<HenryEntity>();
         private HenrySprite background = new HenrySprite();
         public bool SpinBackground = false;
-        //public HenryHealthbar BossHP, ZihouHP, ZihouSP;
+        public List<HenryBullet> bullets = new List<HenryBullet>();
+        public List<HenrySpawner> spawners = new List<HenrySpawner>();
+        private HenryPlayer zihou;
+        private HenryBoss notus;
+        //public HenryHealthbar BossHP, ZihouSP;
 
         public HenryBattlefield(ContentManager cm) {
             this.cm = cm;
@@ -23,7 +26,6 @@ namespace teamstairwell.Interface {
 
         public void SetBackground(string filename) {
             background.LoadContent(cm, filename);
-            //background.Scale = (float)RNSEB.RESOLUTION.X / (float)background.Size.Width; //todo: recalc scale to hide edges
             background.Scale = (float)(2.0d * Math.Sqrt((double)RNSEB.RESOLUTION.X
                                                       * (double)RNSEB.RESOLUTION.X / 4.0d
                                                       + (double)RNSEB.RESOLUTION.Y
@@ -34,22 +36,35 @@ namespace teamstairwell.Interface {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void AddEntity(Vector2 initPos, float clipRadius, string filename) {
-            
+        public void LoadDefaults(){
+            //adds boss and player
+            zihou = new HenryPlayer(cm);
+            zihou.Position = new Vector2(600, 600);
+        }
+
+        public void AddSpawner(Vector2 initPos, Vector2 initDir, Vector2 initVel, float clipRadius, string filename) {
+            //will be called by boss
+        }
+
+        public void AddBullet(Vector2 initPos, Vector2 initDir, Vector2 initVel, float clipRadius, string filename) {
+            //will be called by spawners, player
         }
 
         public void Draw(SpriteBatch sb) {
             background.Draw(sb);
-            foreach (HenryEntity e in entities)
-                e.Draw(sb);
+            zihou.Draw(sb);
+            //notus.Update(gt);
+            foreach (HenryBullet b in bullets)
+                b.Draw(sb);
+            foreach (HenrySpawner s in spawners)
+                s.Draw(sb);
         }
 
         public void Update(GameTime gt) {
             if (SpinBackground)
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
-            foreach (HenryEntity e in entities)
-                e.Update(gt);
-
+            zihou.Update(gt);
+            //notus.Update(gt);
         }
 
 

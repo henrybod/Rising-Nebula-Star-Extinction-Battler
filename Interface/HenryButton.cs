@@ -42,20 +42,30 @@ namespace teamstairwell.Interface {
             if(HenryInput.MouseIsIn(Position, Size)){
                 if(HenryInput.M1) {
                     //mouse is pressing button
-                    if(!this.Animate) base.Frame = 2;
-                    buttonText.Color = Color.Aqua;
-                    currState = ButtonState.Pressed;
+                    if(currState != ButtonState.Pressed){
+                        if(!this.Animate) base.Frame = 2;
+                        buttonText.Color = Color.Aqua;
+                        currState = ButtonState.Pressed;
+                        RNSEB.Audio.Play("ButtonClick");
+                    }
                 } else {
                     //mouse is hovering over button
-                    if (!this.Animate) base.Frame = 1;
-                    buttonText.Color = Color.Aqua;
-                    currState = ButtonState.Highlighted;
+                    if(currState != ButtonState.Highlighted){
+                        if (!this.Animate) base.Frame = 1;
+                        buttonText.Color = Color.Aqua;
+                        if(currState != ButtonState.Pressed) RNSEB.Audio.Play("ButtonRollover");
+                        currState = ButtonState.Highlighted;
+
+                    }
                 }
             } else {
                 //mouse isn't over button
-                if(!this.Animate) base.Frame = 0;
-                buttonText.Color = Color.Red;
-                currState = ButtonState.Normal;
+                if(currState != ButtonState.Normal){
+                    if(!this.Animate) base.Frame = 0;
+                    buttonText.Color = Color.Red;
+                    currState = ButtonState.Normal;
+                    RNSEB.Audio.Play("ButtonRollover");
+                }
             }
 
             if(currState == ButtonState.Highlighted && prevState == ButtonState.Pressed)
