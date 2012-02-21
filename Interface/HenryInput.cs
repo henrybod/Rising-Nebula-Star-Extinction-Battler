@@ -13,7 +13,9 @@ namespace teamstairwell.Interface {
         public static bool M1 = false, M2 = false;
         public static bool Up = false, Down = false, Left = false, Right = false;
         public static bool One = false, Two = false, Three = false;
-        //add other keys later
+        //temporary
+        public static bool UpBoss = false, DownBoss = false, LeftBoss = false, RightBoss = false;
+        //todo: add mouse wheel
 
         public static void Update(GameTime gt){
             //check mouse
@@ -33,6 +35,11 @@ namespace teamstairwell.Interface {
             One = currKState.IsKeyDown(Keys.D1);
             Two = currKState.IsKeyDown(Keys.D2);
             Three = currKState.IsKeyDown(Keys.D3);
+            //temporary
+            UpBoss = currKState.IsKeyDown(Keys.Up);
+            DownBoss = currKState.IsKeyDown(Keys.Down);
+            LeftBoss = currKState.IsKeyDown(Keys.Left);
+            RightBoss = currKState.IsKeyDown(Keys.Right);
         }
 
         public static bool MouseIsIn(Vector2 pos, Vector2 area){

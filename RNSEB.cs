@@ -85,7 +85,7 @@ namespace teamstairwell{
         protected override void Initialize() {
             MediaPlayer.Volume = 0.1f;
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            if(HenryMode) {
+            if(HenryMode){
                 TheMouse = new HenryMouse();
                 MainMenu = new HenryMenu(this.Content);
                 UpgradeMenu = new HenryMenu(this.Content);

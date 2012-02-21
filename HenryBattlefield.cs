@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
 
-namespace teamstairwell.Interface {
+namespace teamstairwell {
 
     class HenryBattlefield {
 
@@ -16,9 +16,8 @@ namespace teamstairwell.Interface {
         public bool SpinBackground = false;
         public List<HenryBullet> bullets = new List<HenryBullet>();
         public List<HenrySpawner> spawners = new List<HenrySpawner>();
-        private HenryPlayer zihou;
-        private HenryBoss notus;
-        //public HenryHealthbar BossHP, ZihouSP;
+        public HenryPlayer Zihou;
+        public HenryBoss Notus;
 
         public HenryBattlefield(ContentManager cm) {
             this.cm = cm;
@@ -38,24 +37,16 @@ namespace teamstairwell.Interface {
 
         public void LoadDefaults(){
             //adds boss and player
-            zihou = new HenryPlayer(cm);
-            zihou.Position = new Vector2(600, 600);
-        }
-
-        public void AddSpawner(Vector2 initPos, Vector2 initDir, Vector2 initVel, float clipRadius, string filename) {
-            //will be called by boss
-        }
-
-        public void AddBullet(Vector2 initPos, Vector2 initDir, Vector2 initVel, float clipRadius, string filename) {
-            //will be called by spawners, player
+            Zihou = new HenryPlayer(cm, this);
+            Zihou.Position = new Vector2(600, 600);
+            Notus = new HenryBoss(cm, this);
+            Notus.Position = new Vector2(200, 300);
         }
 
         public void Draw(SpriteBatch sb) {
             background.Draw(sb);
-            zihou.Draw(sb);
-            //notus.Update(gt);
-            foreach (HenryBullet b in bullets)
-                b.Draw(sb);
+            Zihou.Draw(sb);
+            Notus.Draw(sb);
             foreach (HenrySpawner s in spawners)
                 s.Draw(sb);
         }
@@ -63,11 +54,9 @@ namespace teamstairwell.Interface {
         public void Update(GameTime gt) {
             if (SpinBackground)
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
-            zihou.Update(gt);
-            //notus.Update(gt);
+            Zihou.Update(gt);
+            Notus.Update(gt);
         }
-
-
 
     }
 }

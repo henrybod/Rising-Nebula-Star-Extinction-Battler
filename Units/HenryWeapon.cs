@@ -13,23 +13,24 @@ namespace teamstairwell {
         //this class holds information on a given weapon, i.e. what bullet, what dmg, ...
         //is "held" by the player
         public HenrySpawner Ship;
-        private string bulletSprite;
+        private string bulletSprite, bulletSound;
         int damage;
         float rateOfFire, bulletVelocity, timeSinceLastFired = 0;
         public Dictionary<long, HenryBullet> bullets = new Dictionary<long, HenryBullet>();
         long bulletCount = 0;
 
-        public HenryWeapon(HenrySpawner ship, string bulletSprite, int damage, float rateOfFire, float bulletVelocity){
+        public HenryWeapon(HenrySpawner ship, string bulletSprite, string bulletSound, int damage, float rateOfFire, float bulletVelocity){
             this.Ship = ship;
             this.bulletSprite = bulletSprite;
             this.damage = damage;
             this.rateOfFire = rateOfFire;
             this.bulletVelocity = bulletVelocity;
+            this.bulletSound = bulletSound;
         }
 
         public void Fire(){
             if(timeSinceLastFired >= 1/(rateOfFire * Ship.FireRateMultiplier)){
-                HenryBullet b = new HenryBullet(bulletSprite, this, bulletCount, 1, Ship.Position, Ship.Rotation, bulletVelocity);
+                HenryBullet b = new HenryBullet(bulletSprite, bulletSound, this, bulletCount, 1, Ship.Position, Ship.Rotation, bulletVelocity);
                 b.CenterOrigin();
                 b.Animate = true;
                 bullets.Add(bulletCount++, b);
@@ -40,12 +41,12 @@ namespace teamstairwell {
         public void Update(GameTime gt){
             timeSinceLastFired += (float)gt.ElapsedGameTime.TotalSeconds;
             foreach (HenryBullet b in bullets.Values)
-                b.Update(gt);
+                if(!b.Spent) b.Update(gt);
         }
 
         public void Draw(SpriteBatch sb){
             foreach (HenryBullet b in bullets.Values)
-                b.Draw(sb);
+                if(!b.Spent) b.Draw(sb);
         }
     }
 }

@@ -10,6 +10,7 @@ using Hook.Graphics.SpriteSheets;
 using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface {
+
     public class HenryButton : HenrySprite {
  
         private HenryText buttonText;

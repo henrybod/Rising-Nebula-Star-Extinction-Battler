@@ -34,6 +34,7 @@ namespace teamstairwell.Audio {
             effects.Add("ButtonRollover", cm.Load<SoundEffect>("Audio/SoundEffects/HenryButtonRollover"));
             effects.Add("Upgrade", cm.Load<SoundEffect>("Audio/SoundEffects/HenryUpgrade"));
             effects.Add("PlayerDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryPlayerDeath"));
+            effects.Add("BossDamage", cm.Load<SoundEffect>("Audio/SoundEffects/MEGAMAN!"));
         }
 
         public void Play(string name){
