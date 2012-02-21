@@ -13,7 +13,8 @@ using Microsoft.Xna.Framework.Storage;
 using Hook.Graphics.SpriteSheets;
 using teamstairwell.Interface;
 using teamstairwell.Graphics.SpriteSheets;
- 
+using teamstairwell.Audio;
+
 namespace teamstairwell{
 
     public class RNSEB : Microsoft.Xna.Framework.Game {
@@ -24,20 +25,24 @@ namespace teamstairwell{
 
         //Henry Stuff (just testin')
         bool HenryMode = false;
-        HenryMenu MainMenu, Credits;
+        HenryMenu MainMenu, Credits, UpgradeMenu;
+        HenryBattlefield TheBattlefield;
         HenryMouse TheMouse;
         public enum HenryScreen {
             MainMenu,
             Battlefield,
+            UpgradeMenu,
             PauseMenu,
             Credits,
             LoadSaveMenu,
             HowToPlay,
-            Exit
+            Exit,
+            Null
         };
-        public static HenryScreen CurrentScreen = HenryScreen.MainMenu; //start by displaying the main menu
-        public static HenrySpriteSheets HenrySprites;
+        public static HenryScreen PreviousScreen, CurrentScreen = HenryScreen.MainMenu; //start by displaying the main menu
+        public static HenrySpriteSheets HenrySprites; //a container for all spritedom
         public static SpriteFont ButtonFont, TitleFont, TextFont;
+        public static HenryMediaPlayer Audio;
 
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
@@ -78,13 +83,16 @@ namespace teamstairwell{
         }
 
         protected override void Initialize() {
-            MediaPlayer.Volume = 0.01f;
+            MediaPlayer.Volume = 0.1f;
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            if(HenryMode) {
+            if(HenryMode){
                 TheMouse = new HenryMouse();
                 MainMenu = new HenryMenu(this.Content);
+                UpgradeMenu = new HenryMenu(this.Content);
                 Credits = new HenryMenu(this.Content);
+                TheBattlefield = new HenryBattlefield(this.Content);
                 HenrySprites = new HenrySpriteSheets();
+                Audio = new HenryMediaPlayer(this.Content);
             }
 
             base.Initialize();
@@ -127,14 +135,16 @@ namespace teamstairwell{
 
             }else{
                 //Henry Stuff
-                //create main menu
+                //general setup
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
                 TextFont = this.Content.Load<SpriteFont>("TextFont");
                 TheMouse.LoadContent(this.Content, "Cursor");
+                Audio.LoadContent();
+                
+                //create main menu
                 MainMenu.SetBackground("MenuBackground");
-                MainMenu.SpinBackground = true;
                 MainMenu.AddButton(0.3f, 0.55f, "Single\nPlayer", HenryScreen.Battlefield);
                 MainMenu.AddButton(0.34f, 0.73f, "Multi-\nplayer", HenryScreen.Battlefield);
                 MainMenu.AddButton(0.7f, 0.55f, "Load /\n Save", HenryScreen.LoadSaveMenu);
@@ -145,13 +155,19 @@ namespace teamstairwell{
                 MainMenu.AddText(0.5f, 0.225f, TitleFont, TitleColor, "Extinction Battler:");
                 MainMenu.AddText(0.5f, 0.3f, TitleFont, TitleColor, "The Final Sin"); //todo: find a way to center justify text
                 MainMenu.AddButton(0.5f, 0.5f, "", HenryScreen.Credits, "PlayerIdle", 1.5f);
+                
+                //create upgrade menu
+                UpgradeMenu.SetBackground("MenuBackground");
 
                 //create credits screen
                 Credits.SetBackground("MenuBackground");
-                Credits.SpinBackground = true;
-                Credits.AddText(0.25f, 0.5f, TextFont, Color.White, "Old Credits\nEric See");
+                Credits.AddText(0.25f, 0.5f, TextFont, Color.White, "Matt Groot\nIan Wilbanks\nChris Rose\nEric See\nMatt Paniagua");
                 Credits.AddText(0.75f, 0.5f, TextFont, Color.White, "Henry Bodensteiner\nRyan Koym\nParker Leech\nEric See");
                 Credits.AddButton(0.5f, 0.75f, "Back", HenryScreen.MainMenu);
+
+                //create battlefield
+                TheBattlefield.SetBackground("BattlefieldBackground");
+                TheBattlefield.LoadDefaults();
             }
         }
 
@@ -173,6 +189,9 @@ namespace teamstairwell{
             }else{
                 teamstairwell.Interface.HenryInput.Update(gameTime);
                 TheMouse.Update(gameTime);
+                if (PreviousScreen != CurrentScreen)
+                    Audio.StopMusic();
+                PreviousScreen = CurrentScreen;
                 switch(CurrentScreen){
                     case HenryScreen.Exit:
                         this.Exit();
@@ -183,9 +202,14 @@ namespace teamstairwell{
                     case HenryScreen.Credits:
                         Credits.Update(gameTime);
                         break;
+                    case HenryScreen.UpgradeMenu:
+                        UpgradeMenu.Update(gameTime);
+                        break;
+                    case HenryScreen.Battlefield:
+                        TheBattlefield.Update(gameTime);
+                        break;
                 }
             }
-
             base.Update(gameTime);
         }
 
@@ -204,9 +228,15 @@ namespace teamstairwell{
                     case HenryScreen.Credits:
                         Credits.Draw(spriteBatch);
                         break;
+                    case HenryScreen.UpgradeMenu:
+                        UpgradeMenu.Draw(spriteBatch);
+                        break;
+                    case HenryScreen.Battlefield:
+                        TheBattlefield.Draw(spriteBatch);
+                        break;
                     //more cases later
                 }
-                TheMouse.Draw(spriteBatch); //mouse is always the last thing drawn so it appears on top
+                TheMouse.Draw(spriteBatch); //mouse is always the last thing drawn so that it appears on top
             }
             spriteBatch.End();
             base.Draw(gameTime);

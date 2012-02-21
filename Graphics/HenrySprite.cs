@@ -17,10 +17,11 @@ namespace teamstairwell.Graphics {
         public Vector2 Size = new Vector2(0, 0);
         private float scale = 1.0f;
         public float Rotation = 0.0f;
-        public bool Animate = false;
+        public bool Animate = false, Oscillate = false;
+        private bool reverseFrames = false;
         private int frame = 0, totalFrames;
         private Rectangle viewRect = new Rectangle(0, 0, 0, 0);
-        private float frameSpeed = 25.0f; //sprite frames to display per second
+        private float frameSpeed = 20.0f; //sprite frames to display per second
         private float timeSinceLastFrameChange = 0.0f;
 
         public float Scale {
@@ -66,13 +67,23 @@ namespace teamstairwell.Graphics {
             sprites.Draw(Texture, Position, viewRect, Color.White,
                 Rotation, Origin, Scale, SpriteEffects.None, 0);
         }
-
+        
         public void Update(GameTime gt) {
-            if(Animate){ //automatically change frames
+            if (Animate) { //automatically change frames
                 timeSinceLastFrameChange += (float)gt.ElapsedGameTime.TotalSeconds;
                 if(timeSinceLastFrameChange >= 1 / frameSpeed){
                     timeSinceLastFrameChange = 0;
-                    frame = (frame + 1) % totalFrames;
+                    if(Oscillate){
+                        if(!reverseFrames && frame >= totalFrames - 1)
+                            reverseFrames = true;
+                        else if(reverseFrames && frame <= 0)
+                            reverseFrames = false;
+                        if (reverseFrames)
+                            frame--;
+                        else
+                            frame++;
+                    }else
+                        frame = (frame + 1) % totalFrames;
                 }
             }
             viewRect.X = viewRect.Width * frame; //update viewRect to match frame (this is outside the loop so frame may be updated manually by a child obj)

@@ -10,12 +10,12 @@ using teamstairwell.Graphics;
 namespace teamstairwell.Interface {
 
     class HenryMenu {
-
+        private string music = "MenuMusic";
         private ContentManager cm;
         private List<HenryButton> buttons = new List<HenryButton>();
         private List<HenryText> texts = new List<HenryText>();
         private HenrySprite background = new HenrySprite();
-        public bool SpinBackground = false;
+        public bool SpinBackground = true;
         
         public HenryMenu(ContentManager cm){
             this.cm = cm;
@@ -66,7 +66,7 @@ namespace teamstairwell.Interface {
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
             foreach(HenryButton b in buttons)
                 b.Update(gt);
-            
+            RNSEB.Audio.Play(music);
         }
 
         

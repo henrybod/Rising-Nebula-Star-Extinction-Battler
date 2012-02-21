@@ -7,15 +7,17 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
 
-namespace teamstairwell.Interface {
+namespace teamstairwell {
 
     class HenryBattlefield {
 
         private ContentManager cm;
-        private List<HenryEntity> entities = new List<HenryEntity>();
         private HenrySprite background = new HenrySprite();
         public bool SpinBackground = false;
-        //public HenryHealthbar BossHP, ZihouHP, ZihouSP;
+        public List<HenryBullet> bullets = new List<HenryBullet>();
+        public List<HenrySpawner> spawners = new List<HenrySpawner>();
+        public HenryPlayer Zihou;
+        public HenryBoss Notus;
 
         public HenryBattlefield(ContentManager cm) {
             this.cm = cm;
@@ -23,7 +25,6 @@ namespace teamstairwell.Interface {
 
         public void SetBackground(string filename) {
             background.LoadContent(cm, filename);
-            //background.Scale = (float)RNSEB.RESOLUTION.X / (float)background.Size.Width; //todo: recalc scale to hide edges
             background.Scale = (float)(2.0d * Math.Sqrt((double)RNSEB.RESOLUTION.X
                                                       * (double)RNSEB.RESOLUTION.X / 4.0d
                                                       + (double)RNSEB.RESOLUTION.Y
@@ -34,25 +35,28 @@ namespace teamstairwell.Interface {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void AddEntity(Vector2 initPos, float clipRadius, string filename) {
-            
+        public void LoadDefaults(){
+            //adds boss and player
+            Zihou = new HenryPlayer(cm, this);
+            Zihou.Position = new Vector2(600, 600);
+            Notus = new HenryBoss(cm, this);
+            Notus.Position = new Vector2(200, 300);
         }
 
         public void Draw(SpriteBatch sb) {
             background.Draw(sb);
-            foreach (HenryEntity e in entities)
-                e.Draw(sb);
+            Zihou.Draw(sb);
+            Notus.Draw(sb);
+            foreach (HenrySpawner s in spawners)
+                s.Draw(sb);
         }
 
         public void Update(GameTime gt) {
             if (SpinBackground)
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
-            foreach (HenryEntity e in entities)
-                e.Update(gt);
-
+            Zihou.Update(gt);
+            Notus.Update(gt);
         }
-
-
 
     }
 }

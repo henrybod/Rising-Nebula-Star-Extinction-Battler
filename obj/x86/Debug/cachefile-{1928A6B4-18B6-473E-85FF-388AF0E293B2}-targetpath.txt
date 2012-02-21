@@ -30,10 +30,14 @@ Content\SpriteSheets\Gumball Background.xnb
 Content\SpriteSheets\Credits.xnb
 Content\SpriteSheets\InfoOne.xnb
 Content\SpriteSheets\buttonBlank.xnb
-Content\SpriteSheets\Cursor.xnb
 Content\SpriteSheets\Button.xnb
 Content\Audio\SoundEffects\Feeble Human Quote.xnb
 Content\Audio\SoundEffects\MEGAMAN!.xnb
 Content\Audio\SoundEffects\Missle.xnb
 Content\Audio\SoundEffects\Boss Death.xnb
+Content\Audio\SoundEffects\HenryBossDeath.xnb
+Content\Audio\SoundEffects\HenryButtonClick.xnb
+Content\Audio\SoundEffects\HenryButtonRollover.xnb
+Content\Audio\SoundEffects\HenryUpgrade.xnb
+Content\Audio\SoundEffects\HenryPlayerDeath.xnb
 Content\Audio\Music\teamstairwell Intro.mp3
