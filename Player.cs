@@ -71,11 +71,7 @@ namespace teamstairwell
             //Calculate ship rotation from mouse cursor position
             float angle = (float)Math.Atan2(mP.Y - pos.Y, mP.X - pos.X);
             angle = angle + MathHelper.ToRadians(90);
-            //rotTurretAngleR += angle - rot;
-            //Debug.Print("Angle: {0}", angle - rot);
             rot = angle;
-            //rot = (float)Math.Atan2(mP.Y - pos.Y, mP.X - pos.X);
-            //rot = rot + MathHelper.ToRadians(90);
 
             //Left Mouse Click Fires Primary
             if (mouseState.LeftButton == ButtonState.Pressed)
@@ -145,12 +141,10 @@ namespace teamstairwell
                     pBs.Add(new Bullet(lpos, new Vector2(-15, -15), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET), rot - 1.5f, rot));
                     pBs.Add(new Bullet(rpos, new Vector2(-15, -15), laccel, 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET), rot + 1.5f, rot));
                 }
-                //rotTurretR = true;
                 if (rotTurretR)
                 {
                     pBs.Add(turretRotR());
                 }
-                rotTurretL = true;
                 if (rotTurretL)
                 {
                     pBs.Add(turretRotL());
@@ -265,35 +259,36 @@ namespace teamstairwell
 
         internal Bullet turretRotR()
         {
-            if (rotTurretAngleR > rot + Math.PI)
-            {
+            if (rotTurretAngleR < 0)
+                rotTurretAngleR += (float)Math.PI * 2;
+            if (rotTurretAngleR > Math.PI * 2)
+                rotTurretAngleR -= (float)Math.PI * 2;
+            float temp = (rot + (float)Math.PI * 3 - rotTurretAngleR) % ((float)Math.PI * 2);
+            if (temp < 1.3)
                 rotTurretAngleR += (float)Math.PI;
-            }
             rotTurretAngleR++;
             rotTurretAngleR %= (float)Math.PI * 2;
-            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR - MathHelper.ToRadians(60)), (float)Math.Sin(rotTurretAngleR - MathHelper.ToRadians(60)));
-            //Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR), (float)Math.Sin(rotTurretAngleR));
             /*rotTurretAngleR++;
             rotTurretAngleR %= (float)Math.PI;
             Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleR + (float)Math.PI), (float)Math.Sin(rotTurretAngleR + (float)Math.PI));*/
 
-            return new Bullet(pos, veldir * -4, Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE));
+            return new Bullet(pos, new Vector2(-4, -4), Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rotTurretAngleR - MathHelper.ToRadians(70));
         }
 
         internal Bullet turretRotL()
         {
-            /*if (rotTurretAngleL < rot)
-            {
+            if (rotTurretAngleL < 0)
+                rotTurretAngleL += (float)Math.PI * 2;
+            if (rotTurretAngleL > Math.PI * 2)
+                rotTurretAngleL -= (float)Math.PI * 2;
+            float temp = (rotTurretAngleL + (float)Math.PI * 3 - rot) % ((float)Math.PI * 2);
+            if (temp < 1.3)
                 rotTurretAngleL -= (float)Math.PI;
-            }
-            rotTurretAngleL--;
+            rotTurretAngleL++;
             rotTurretAngleL %= (float)Math.PI * 2;
-            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleL), (float)Math.Sin(rotTurretAngleL));*/
-            rotTurretAngleL--;
-            rotTurretAngleL %= (float)Math.PI;
-            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleL), (float)Math.Sin(rotTurretAngleL));
+            Vector2 veldir = new Vector2((float)Math.Cos(rotTurretAngleL - MathHelper.ToRadians(60)), (float)Math.Sin(rotTurretAngleL - MathHelper.ToRadians(60)));
 
-            return new Bullet(pos, veldir * 4, Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE));
+            return new Bullet(pos, new Vector2(-4, -4), Vector2.Zero, 0f, new Sprite(RNSEB.PropSheet, PropSheet.MISSLE), rotTurretAngleL - MathHelper.ToRadians(150));
         }
     }
 }
