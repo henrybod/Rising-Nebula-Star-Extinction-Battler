@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
@@ -16,6 +17,7 @@ namespace teamstairwell.Audio {
         private ContentManager cm;
         private Dictionary<string, Song> music = new Dictionary<string,Song>();
         private Dictionary<string, SoundEffect> effects = new Dictionary<string,SoundEffect>();
+        private Dictionary<string, queueEntry> effectQueue = new Dictionary<string, queueEntry>();
         
         public HenryMediaPlayer(ContentManager cm){
             this.cm = cm;
@@ -46,11 +48,34 @@ namespace teamstairwell.Audio {
             } catch {}
         }
 
+        public void PlayFor(string name, int times, float everyThisManyMilliseconds){
+            queueEntry e = new queueEntry();
+            e.sound = effects[name].CreateInstance();
+            e.numOfTimesToPlay = times;
+            e.interval = everyThisManyMilliseconds;
+        }
+
+
         public void StopMusic(){
             MediaPlayer.Stop();
         }
         public void PauseMusic() {
             MediaPlayer.Pause();
         }
+        public void ResumeMusic() {
+            MediaPlayer.Resume();
+        }
+
+        public void Update(GameTime gt){
+            //for playing queued stuff
+
+        }
+
+    }
+
+    public struct queueEntry{
+        public SoundEffectInstance sound;
+        public int numOfTimesToPlay;
+        public float interval;
     }
 }

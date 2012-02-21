@@ -24,7 +24,7 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        bool HenryMode = false;
+        bool HenryMode = true;
         HenryMenu MainMenu, Credits, UpgradeMenu;
         HenryBattlefield TheBattlefield;
         HenryMouse TheMouse;
@@ -87,10 +87,6 @@ namespace teamstairwell{
             spriteBatch = new SpriteBatch(GraphicsDevice);
             if(HenryMode){
                 TheMouse = new HenryMouse();
-                MainMenu = new HenryMenu(this.Content);
-                UpgradeMenu = new HenryMenu(this.Content);
-                Credits = new HenryMenu(this.Content);
-                TheBattlefield = new HenryBattlefield(this.Content);
                 HenrySprites = new HenrySpriteSheets();
                 Audio = new HenryMediaPlayer(this.Content);
             }
@@ -136,6 +132,9 @@ namespace teamstairwell{
             }else{
                 //Henry Stuff
                 //general setup
+                MainMenu = new HenryMenu(this.Content, "MenuBackground");
+                UpgradeMenu = new HenryMenu(this.Content, "MenuBackground");
+                Credits = new HenryMenu(this.Content, "MenuBackground");
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
@@ -144,30 +143,28 @@ namespace teamstairwell{
                 Audio.LoadContent();
                 
                 //create main menu
-                MainMenu.SetBackground("MenuBackground");
                 MainMenu.AddButton(0.3f, 0.55f, "Single\nPlayer", HenryScreen.Battlefield);
                 MainMenu.AddButton(0.34f, 0.73f, "Multi-\nplayer", HenryScreen.Battlefield);
                 MainMenu.AddButton(0.7f, 0.55f, "Load /\n Save", HenryScreen.LoadSaveMenu);
                 MainMenu.AddButton(0.66f, 0.73f, "Quit", HenryScreen.Exit);
                 MainMenu.AddButton(0.5f, 0.8f, "How to\n  Play", HenryScreen.HowToPlay);
-                Color TitleColor = Color.HotPink;
+                Color TitleColor = Color.HotPink; //should change this. change font by editing TitleFont.spritefont under content
                 MainMenu.AddText(0.5f, 0.15f, TitleFont, TitleColor, "Rising Nebula Star");
                 MainMenu.AddText(0.5f, 0.225f, TitleFont, TitleColor, "Extinction Battler:");
                 MainMenu.AddText(0.5f, 0.3f, TitleFont, TitleColor, "The Final Sin"); //todo: find a way to center justify text
                 MainMenu.AddButton(0.5f, 0.5f, "", HenryScreen.Credits, "PlayerIdle", 1.5f);
                 
                 //create upgrade menu
-                UpgradeMenu.SetBackground("MenuBackground");
+                UpgradeMenu.AddButton(0.5f, 0.75f, "Back", HenryScreen.MainMenu);
 
                 //create credits screen
-                Credits.SetBackground("MenuBackground");
                 Credits.AddText(0.25f, 0.5f, TextFont, Color.White, "Matt Groot\nIan Wilbanks\nChris Rose\nEric See\nMatt Paniagua");
                 Credits.AddText(0.75f, 0.5f, TextFont, Color.White, "Henry Bodensteiner\nRyan Koym\nParker Leech\nEric See");
                 Credits.AddButton(0.5f, 0.75f, "Back", HenryScreen.MainMenu);
 
                 //create battlefield
-                TheBattlefield.SetBackground("BattlefieldBackground");
-                TheBattlefield.LoadDefaults();
+                TheBattlefield = new HenryBattlefield(this.Content, "BattlefieldBackground");
+
             }
         }
 
@@ -189,7 +186,7 @@ namespace teamstairwell{
             }else{
                 teamstairwell.Interface.HenryInput.Update(gameTime);
                 TheMouse.Update(gameTime);
-                if (PreviousScreen != CurrentScreen)
+                if (PreviousScreen != CurrentScreen && CurrentScreen == RNSEB.HenryScreen.Battlefield)
                     Audio.StopMusic();
                 PreviousScreen = CurrentScreen;
                 switch(CurrentScreen){

@@ -19,8 +19,10 @@ namespace teamstairwell {
         public HenryPlayer Zihou;
         public HenryBoss Notus;
 
-        public HenryBattlefield(ContentManager cm) {
+        public HenryBattlefield(ContentManager cm, string backgroundSprite) {
             this.cm = cm;
+            SetBackground(backgroundSprite);
+            LoadDefaults();
         }
 
         public void SetBackground(string filename) {

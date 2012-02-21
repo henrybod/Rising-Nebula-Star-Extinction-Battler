@@ -17,13 +17,14 @@ namespace teamstairwell.Interface {
         private HenrySprite background = new HenrySprite();
         public bool SpinBackground = true;
         
-        public HenryMenu(ContentManager cm){
+        public HenryMenu(ContentManager cm, string backgroundSprite){
             this.cm = cm;
+            this.SetBackground(backgroundSprite);
         }
 
         public void SetBackground(string spriteName){
             background.LoadContent(cm, spriteName);
-            //background.Scale = (float)RNSEB.RESOLUTION.X / (float)background.Size.Width; //todo: recalc scale to hide edges
+            //background image is scaled so as to prevent the edges from ever showing during rotation
             background.Scale = (float)(2.0d * Math.Sqrt((double)RNSEB.RESOLUTION.X
                                                       * (double)RNSEB.RESOLUTION.X / 4.0d
                                                       + (double)RNSEB.RESOLUTION.Y
