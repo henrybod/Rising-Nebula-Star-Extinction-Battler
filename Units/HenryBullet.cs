@@ -13,20 +13,20 @@ namespace teamstairwell {
         private float velocity;
         private int damage;
         public HenryWeapon WhereIWasShotFrom;
-        private long IDNumber;
         public bool Spent = false; //has bullet impacted something or left the screen?
         private string soundEffect;
 
-        public HenryBullet(string spriteName, string soundName, HenryWeapon whereIWasShotFrom, long id, int damage, Vector2 initialPosition, float rotation, float velocity){
+        public HenryBullet(string spriteName, string soundName, HenryWeapon whereIWasShotFrom, int damage, Vector2 initialPosition, float rotation, float velocity, bool manageHitRadius)
+            : base(whereIWasShotFrom.Ship.cm) {
             this.Position = initialPosition;
             this.Rotation = rotation;
             this.velocity = velocity;
             this.damage = damage;
-            this.LoadContent(whereIWasShotFrom.Ship.cm, spriteName);
+            this.ManageHitRadius = manageHitRadius;
+            this.LoadContent(spriteName, true);
             this.Animate = true;
             this.CenterOrigin();
             this.WhereIWasShotFrom = whereIWasShotFrom;
-            this.IDNumber = id;
             this.soundEffect = soundName;
         }
 
@@ -37,25 +37,20 @@ namespace teamstairwell {
                 || Position.Y > RNSEB.RESOLUTION.Y + 50)
                 Spent = true;
             if(WhereIWasShotFrom.Ship.GetType().ToString() == "teamstairwell.HenryPlayer"
-                && InHitRadius(WhereIWasShotFrom.Ship.Battlefield.Notus.Position, WhereIWasShotFrom.Ship.Battlefield.Notus.HitRadius)){
-                WhereIWasShotFrom.Ship.Battlefield.Notus.Health -= damage;
-                RNSEB.Audio.Play("BossDamage");
-                Spent = true;
+                && !WhereIWasShotFrom.Ship.Battlefield.Notus.Dead
+                && Collision(WhereIWasShotFrom.Ship.Battlefield.Notus)) {
+                    WhereIWasShotFrom.Ship.Battlefield.Notus.Damage(damage);
+                    Spent = true;
             } else if(WhereIWasShotFrom.Ship.GetType().ToString() == "teamstairwell.HenrySpawner"
-                && InHitRadius(WhereIWasShotFrom.Ship.Battlefield.Zihou.Position, WhereIWasShotFrom.Ship.Battlefield.Zihou.HitRadius)){
-                WhereIWasShotFrom.Ship.Battlefield.Zihou.Shield -= damage;
-                Spent = true;
+                && !WhereIWasShotFrom.Ship.Battlefield.Zihou.Dead
+                && Collision(WhereIWasShotFrom.Ship.Battlefield.Zihou)) {
+                    WhereIWasShotFrom.Ship.Battlefield.Zihou.Damage(damage);
+                    Spent = true;
             }
+
             Position.X += (float)Math.Cos(Rotation-(float)Math.PI/2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
             Position.Y += (float)Math.Sin(Rotation-(float)Math.PI/2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
             base.Update(gt);
-        }
-
-        private bool InHitRadius(Vector2 center, float radius){
-            if(Math.Pow(this.Position.X-center.X, 2) + Math.Pow(this.Position.Y-center.Y, 2) < Math.Pow(radius, 2))
-                return true;
-            else
-                return false;
         }
     }
 }

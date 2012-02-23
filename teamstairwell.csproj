@@ -129,9 +129,9 @@
     <Compile Include="HenryBattlefield.cs" />
     <Compile Include="Interface\HenryHealthBar.cs" />
     <Compile Include="Interface\HenryShieldBar.cs" />
+    <Compile Include="Units\BossAI.cs" />
     <Compile Include="Units\HenryBoss.cs" />
     <Compile Include="Units\HenryBullet.cs" />
-    <Compile Include="HenryEntity.cs" />
     <Compile Include="Units\HenryPlayer.cs" />
     <Compile Include="Units\HenrySpawner.cs" />
     <Compile Include="Interface\HenryButton.cs" />
@@ -187,6 +187,7 @@
     <Compile Include="SplitSpawner.cs" />
     <Compile Include="Units\HenrySpawnerBay.cs" />
     <Compile Include="Units\HenryWeapon.cs" />
+    <Compile Include="Units\SpawnerAI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

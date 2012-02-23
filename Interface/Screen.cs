@@ -150,7 +150,7 @@ namespace teamstairwell.Interface
             }
         }
 
-        public new void Update(GameTime gt)
+        public void Update(GameTime gt)
         {
             HandleInput();
 
@@ -195,7 +195,7 @@ namespace teamstairwell.Interface
             
         }
 
-        public new void Draw( SpriteBatch sb)
+        public void Draw( SpriteBatch sb)
         {
             if (MenuBack != null)
             {

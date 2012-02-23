@@ -28,6 +28,7 @@ namespace teamstairwell{
         HenryMenu MainMenu, Credits, UpgradeMenu;
         HenryBattlefield TheBattlefield;
         HenryMouse TheMouse;
+        
         public enum HenryScreen {
             MainMenu,
             Battlefield,
@@ -43,6 +44,7 @@ namespace teamstairwell{
         public static HenrySpriteSheets HenrySprites; //a container for all spritedom
         public static SpriteFont ButtonFont, TitleFont, TextFont;
         public static HenryMediaPlayer Audio;
+        public static HenryInput Input;
 
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
@@ -86,9 +88,9 @@ namespace teamstairwell{
             MediaPlayer.Volume = 0.1f;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             if(HenryMode){
-                TheMouse = new HenryMouse();
                 HenrySprites = new HenrySpriteSheets();
                 Audio = new HenryMediaPlayer(this.Content);
+                Input = new HenryInput();
             }
 
             base.Initialize();
@@ -139,7 +141,7 @@ namespace teamstairwell{
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
                 TextFont = this.Content.Load<SpriteFont>("TextFont");
-                TheMouse.LoadContent(this.Content, "Cursor");
+                TheMouse = new HenryMouse(this.Content);
                 Audio.LoadContent();
                 
                 //create main menu
@@ -148,14 +150,14 @@ namespace teamstairwell{
                 MainMenu.AddButton(0.7f, 0.55f, "Load /\n Save", HenryScreen.LoadSaveMenu);
                 MainMenu.AddButton(0.66f, 0.73f, "Quit", HenryScreen.Exit);
                 MainMenu.AddButton(0.5f, 0.8f, "How to\n  Play", HenryScreen.HowToPlay);
-                Color TitleColor = Color.HotPink; //should change this. change font by editing TitleFont.spritefont under content
+                Color TitleColor = Color.White;
                 MainMenu.AddText(0.5f, 0.15f, TitleFont, TitleColor, "Rising Nebula Star");
                 MainMenu.AddText(0.5f, 0.225f, TitleFont, TitleColor, "Extinction Battler:");
                 MainMenu.AddText(0.5f, 0.3f, TitleFont, TitleColor, "The Final Sin"); //todo: find a way to center justify text
                 MainMenu.AddButton(0.5f, 0.5f, "", HenryScreen.Credits, "PlayerIdle", 1.5f);
                 
                 //create upgrade menu
-                UpgradeMenu.AddButton(0.5f, 0.75f, "Back", HenryScreen.MainMenu);
+                UpgradeMenu.AddButton(0.5f, 0.75f, "Back", HenryScreen.Battlefield);
 
                 //create credits screen
                 Credits.AddText(0.25f, 0.5f, TextFont, Color.White, "Matt Groot\nIan Wilbanks\nChris Rose\nEric See\nMatt Paniagua");
@@ -184,11 +186,9 @@ namespace teamstairwell{
                     ScreenManager.Update(gameTime);
 
             }else{
-                teamstairwell.Interface.HenryInput.Update(gameTime);
+                Input.Update(gameTime);
                 TheMouse.Update(gameTime);
-                if (PreviousScreen != CurrentScreen && CurrentScreen == RNSEB.HenryScreen.Battlefield)
-                    Audio.StopMusic();
-                PreviousScreen = CurrentScreen;
+
                 switch(CurrentScreen){
                     case HenryScreen.Exit:
                         this.Exit();
@@ -205,6 +205,15 @@ namespace teamstairwell{
                     case HenryScreen.Battlefield:
                         TheBattlefield.Update(gameTime);
                         break;
+                    case HenryScreen.HowToPlay:
+                        TheBattlefield.Update(gameTime);
+                        break;
+                    case HenryScreen.LoadSaveMenu:
+                        TheBattlefield.Update(gameTime);
+                        break;
+                    case HenryScreen.PauseMenu:
+                        TheBattlefield.Update(gameTime);
+                        break;
                 }
             }
             base.Update(gameTime);
@@ -219,6 +228,9 @@ namespace teamstairwell{
             }else{
                 //Henry Stuff
                 switch(CurrentScreen){
+                    case HenryScreen.Exit:
+                        this.Exit();
+                        break;
                     case HenryScreen.MainMenu:
                         MainMenu.Draw(spriteBatch);
                         break;
@@ -229,6 +241,15 @@ namespace teamstairwell{
                         UpgradeMenu.Draw(spriteBatch);
                         break;
                     case HenryScreen.Battlefield:
+                        TheBattlefield.Draw(spriteBatch);
+                        break;
+                    case HenryScreen.HowToPlay:
+                        TheBattlefield.Draw(spriteBatch);
+                        break;
+                    case HenryScreen.LoadSaveMenu:
+                        TheBattlefield.Draw(spriteBatch);
+                        break;
+                    case HenryScreen.PauseMenu:
                         TheBattlefield.Draw(spriteBatch);
                         break;
                     //more cases later

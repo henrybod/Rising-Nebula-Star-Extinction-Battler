@@ -25,14 +25,14 @@ namespace teamstairwell.Interface
             MenuBack = new Sprite(RNSEB.TitleBackground, TitleBackground.TITLEBACKGROUND);
         }
 
-        public void Update(GameTime gt)
+        public new void Update(GameTime gt)
         {
             PTVictory.Update(gt);
             ChallengeAgain.Update(gt);
             base.Update(gt);
         }
 
-        public void Draw(SpriteBatch sb)
+        public new void Draw(SpriteBatch sb)
         {
             
             base.Draw(sb);

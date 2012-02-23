@@ -13,7 +13,8 @@ namespace teamstairwell.Audio {
         //todo: implement fade on stop/start (music)
         private float musicVolume = 0.1f;
         private float effectVolume = 0.5f;
-        
+
+        private string currentlyPlaying = "";
         private ContentManager cm;
         private Dictionary<string, Song> music = new Dictionary<string,Song>();
         private Dictionary<string, SoundEffect> effects = new Dictionary<string,SoundEffect>();
@@ -28,20 +29,33 @@ namespace teamstairwell.Audio {
         public void LoadContent(){
             music.Add("ForestMusic", cm.Load<Song>("Audio/Music/Forest Theme"));
             music.Add("ForestBoss", cm.Load<Song>("Audio/Music/Forest Boss"));
-            music.Add("MenuMusic", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
-            music.Add("GameMusic", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("MenuMusic", cm.Load<Song>("Audio/Music/teamstairwell Intro"));
+            music.Add("Level1Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("Level2Music", cm.Load<Song>("Audio/Music/Forest Theme"));
+            music.Add("Level3Music", cm.Load<Song>("Audio/Music/Forest Boss"));
+            music.Add("Level4Music", cm.Load<Song>("Audio/Music/StarWars1"));
+            music.Add("Level5Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("Level6Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("Level7Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("Level8Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("Level9Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("Level10Music", cm.Load<Song>("Audio/Music/StarTrek1"));
 
             effects.Add("BossDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryBossDeath"));
             effects.Add("ButtonClick", cm.Load<SoundEffect>("Audio/SoundEffects/HenryButtonClick"));
             effects.Add("ButtonRollover", cm.Load<SoundEffect>("Audio/SoundEffects/HenryButtonRollover"));
             effects.Add("Upgrade", cm.Load<SoundEffect>("Audio/SoundEffects/HenryUpgrade"));
             effects.Add("PlayerDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryPlayerDeath"));
-            effects.Add("BossDamage", cm.Load<SoundEffect>("Audio/SoundEffects/MEGAMAN!"));
+            effects.Add("BossHit", cm.Load<SoundEffect>("Audio/SoundEffects/Boss Hit"));
+            effects.Add("PlayerHit", cm.Load<SoundEffect>("Audio/SoundEffects/Shield Zap"));
         }
 
         public void Play(string name){
             try {
-                if(MediaPlayer.State == MediaState.Stopped) MediaPlayer.Play(music[name]);
+                if(name != currentlyPlaying){
+                    MediaPlayer.Play(music[name]);
+                    currentlyPlaying = name;
+                }
             } catch {}
             try {
                 effects[name].Play();
@@ -53,8 +67,8 @@ namespace teamstairwell.Audio {
             e.sound = effects[name].CreateInstance();
             e.numOfTimesToPlay = times;
             e.interval = everyThisManyMilliseconds;
+            //this function is unfinished and unused
         }
-
 
         public void StopMusic(){
             MediaPlayer.Stop();

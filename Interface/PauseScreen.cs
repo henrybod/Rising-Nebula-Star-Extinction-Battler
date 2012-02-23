@@ -18,12 +18,12 @@ namespace teamstairwell.Interface
             Paused.Position = new Vector3(RNSEB.RESOLUTION.X / 2 - 40, RNSEB.RESOLUTION.Y / 2 - 60, 0);
         }
 
-        public void Update(GameTime gt)
+        public new void Update(GameTime gt)
         {
             base.Update(gt);
         }
 
-        public void Draw(SpriteBatch sb )
+        public new void Draw(SpriteBatch sb )
         {
             base.Draw(sb);
             Paused.Draw(sb);

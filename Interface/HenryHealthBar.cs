@@ -11,7 +11,7 @@ namespace teamstairwell.Interface {
     class HenryHealthBar {
 
         private ContentManager cm;
-        private HenrySprite healthTick = new HenrySprite();
+        private HenrySprite healthTick;
         private HenryBoss ship;
         private float healthAmount = 0.0f;
         public float HealthAmount{
@@ -28,9 +28,11 @@ namespace teamstairwell.Interface {
         public HenryHealthBar(ContentManager cm, HenryBoss ship){
             this.cm = cm;
             this.ship = ship;
-            healthTick.LoadContent(cm, "HealthTick");
+            healthTick = new HenrySprite(cm);
+            healthTick.LoadContent("HealthTick", true);
             healthTick.Position.Y = 0;
         }
+
         public void Draw(SpriteBatch sb){
             float ticks = RNSEB.RESOLUTION.X * (ship.Health / (float)ship.HealthMax);
             ticks = (int)(ticks/3);

@@ -14,16 +14,17 @@ namespace teamstairwell.Interface {
         private ContentManager cm;
         private List<HenryButton> buttons = new List<HenryButton>();
         private List<HenryText> texts = new List<HenryText>();
-        private HenrySprite background = new HenrySprite();
+        private HenrySprite background;
         public bool SpinBackground = true;
         
         public HenryMenu(ContentManager cm, string backgroundSprite){
             this.cm = cm;
+            this.background = new HenrySprite(cm);
             this.SetBackground(backgroundSprite);
         }
 
         public void SetBackground(string spriteName){
-            background.LoadContent(cm, spriteName);
+            background.LoadContent(spriteName, false);
             //background image is scaled so as to prevent the edges from ever showing during rotation
             background.Scale = (float)(2.0d * Math.Sqrt((double)RNSEB.RESOLUTION.X
                                                       * (double)RNSEB.RESOLUTION.X / 4.0d
@@ -35,13 +36,11 @@ namespace teamstairwell.Interface {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void AddButton(float percentX, float percentY, string text, RNSEB.HenryScreen link, string spriteName = "Button", float scale = 0.6f) {
+        public void AddButton(float percentX, float percentY, string text, RNSEB.HenryScreen link, string spriteName = "ButtonNormal", float scale = 0.6f) {
             int x = (int)(percentX * RNSEB.RESOLUTION.X);
             int y = (int)(percentY * RNSEB.RESOLUTION.Y);
             HenryButton b = new HenryButton(x, y, text, link, cm, spriteName);
             b.Scale = scale;
-            if (spriteName != "Button")
-                b.Animate = true;
             
             buttons.Add(b);
         }

@@ -9,43 +9,60 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell {
     class HenryBoss : HenrySpawner {
-        public int HealthMax = 10000;
-        public float Health = 10000;
+
+        public int HealthMax = 1000, UpgradePoints = 0;
+        public float Health;
+        private float healthOld;
         private HenryHealthBar healthBar;
         private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
 
         public HenryBoss(ContentManager cm, HenryBattlefield b) : base(cm, b){
-            this.LoadContent(cm, "BossIdle"); //initally idle
+            this.LoadContent("BossIdle", true); //initally idle
             this.CenterOrigin();
             this.MovementSpeed = 30.0f; //in km/s (lol)
             this.Animate = true;
             this.healthBar = new HenryHealthBar(cm, this);
             this.HitRadius = 70;
+            Health = healthOld = HealthMax;
+            spawnerBays.Add(new HenrySpawnerBay(this, "MarbleSpawner", "Marble", 1, 0.5f, 100));
         }
 
         public new void Update(GameTime gt) {
-            //move according to input
-            float delta = this.MovementSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
-            if ((HenryInput.Up || HenryInput.Down) && (HenryInput.Right || HenryInput.Left))
-                delta /= (float)Math.Sqrt(2);
-            if (HenryInput.UpBoss && Position.Y - delta >= 0)
-                this.Position.Y -= delta;
-            if (HenryInput.DownBoss && Position.Y + delta <= RNSEB.RESOLUTION.Y)
-                this.Position.Y += delta;
-            if (HenryInput.LeftBoss && Position.X - delta >= 0)
-                this.Position.X -= delta;
-            if (HenryInput.RightBoss && Position.X + delta <= RNSEB.RESOLUTION.X)
-                this.Position.X += delta;
+            if(!Dead){
+                if(healthOld != Health){
+                    //i've been damaged!
+                    LoadContent("BossHit", false, 6);
+                    RNSEB.Audio.Play("BossHit");
+                } else {
+                    LoadContent("BossIdle", true);
+                }
+                //move according to input
+                float delta = this.MovementSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
+                if ((RNSEB.Input.GetKey("BossUp") || RNSEB.Input.GetKey("BossDown")) && (RNSEB.Input.GetKey("BossRight") || RNSEB.Input.GetKey("BossLeft")))
+                    delta /= (float)Math.Sqrt(2);
+                if (RNSEB.Input.GetKey("BossUp") && Position.Y - delta >= 0)
+                    this.Position.Y -= delta;
+                if (RNSEB.Input.GetKey("BossDown") && Position.Y + delta <= RNSEB.RESOLUTION.Y)
+                    this.Position.Y += delta;
+                if (RNSEB.Input.GetKey("BossLeft") && Position.X - delta >= 0)
+                    this.Position.X -= delta;
+                if (RNSEB.Input.GetKey("BossRight") && Position.X + delta <= RNSEB.RESOLUTION.X)
+                    this.Position.X += delta;
 
-            //spawn spawners
-            if (HenryInput.M1) {
-                //todo
+                //activate spawner bays!
+                if (RNSEB.Input.GetKey("BossFire1"))
+                    foreach (HenrySpawnerBay bay in spawnerBays)
+                        bay.Fire();
+
+                //update all spawner bays
+                foreach (HenrySpawnerBay bay in spawnerBays)
+                    bay.Update(gt);
+            
+                healthOld = Health;
+
             }
-
-            //update all spawners
-            //todo
-
             base.Update(gt);
+            
         }
 
         public new void Draw(SpriteBatch sb) {
@@ -58,6 +75,18 @@ namespace teamstairwell {
 
         public void AddSpawnerBay(HenrySpawner s) {
             //todo
+        }
+
+        public new void Damage(int amount){
+            if (Health <= 0)
+                Dead = true;
+
+            if (Dead){
+                LoadContent("BossDeath", false, 0.75f); //dieeeee!
+                RNSEB.Audio.Play("BossDeath");
+            } else {
+                Health -= amount;
+            }
         }
     }
 }
