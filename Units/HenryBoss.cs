@@ -65,7 +65,7 @@ namespace teamstairwell {
             base.Update(gt);
             
             if (Dead && !Animate) //wait to finish death animation
-                RNSEB.CurrentScreen = "PlayerVictory";
+                RNSEB.CurrentScreen = "MainMenu";
         }
 
         public new void Draw(SpriteBatch sb) {

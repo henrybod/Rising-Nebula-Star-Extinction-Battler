@@ -145,6 +145,7 @@ namespace teamstairwell{
             }else{
                 //Henry Stuff
                 //general setup
+                screens.Add("Exit", new HenryMenu(this.Content));
                 screens.Add("MainMenu", new HenryMenu(this.Content));
                 screens.Add("PlayerUpgradeMenu", new HenryMenu(this.Content));
                 screens.Add("BossUpradeMenu", new HenryMenu(this.Content));
@@ -210,8 +211,10 @@ namespace teamstairwell{
             }else{
                 Input.Update(gameTime);
                 TheMouse.Update(gameTime);
-                if(CurrentScreen == "Battlefield")
+                if (CurrentScreen == "Battlefield")
                     ((HenryBattlefield)(screens[CurrentScreen])).Update(gameTime);
+                else if (CurrentScreen == "Exit")
+                    this.Exit();
                 else
                     ((HenryMenu)(screens[CurrentScreen])).Update(gameTime);
             }
