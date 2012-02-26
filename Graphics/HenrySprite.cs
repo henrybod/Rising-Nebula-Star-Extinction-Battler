@@ -11,6 +11,7 @@ namespace teamstairwell.Graphics {
 
     public class HenrySprite {
 
+        //data members
         public ContentManager cm;
         public Vector2 Position = new Vector2(0, 0);
         public Vector2 Origin = new Vector2(0, 0);
@@ -31,7 +32,7 @@ namespace teamstairwell.Graphics {
                 scale = value;
                 Size.X = (int)(viewRect.Width * scale);
                 Size.Y = (int)(viewRect.Height * scale);
-                if(ManageHitRadius) HitRadius = Size.Length() / 2;
+                if(ManageHitRadius) HitRadius = CalcHitRadius();
             }
         }
         public float FrameSpeed {
@@ -53,12 +54,12 @@ namespace teamstairwell.Graphics {
 
 
 
-
-        public HenrySprite(ContentManager cm){
+        //functions
+        public HenrySprite(ContentManager cm) {
             this.cm = cm;
         }
 
-        public void CenterOrigin(){
+        public void CenterOrigin() {
             Origin = new Vector2(viewRect.Width/2.0f, viewRect.Height/2.0f);
         }
 
@@ -69,7 +70,7 @@ namespace teamstairwell.Graphics {
             currentSprite = spriteName;
             Size.X = (int)(s.Width * scale);
             Size.Y = (int)(s.Height * scale);
-            if(ManageHitRadius) HitRadius = Size.Length() / 2;
+            if(ManageHitRadius) HitRadius = CalcHitRadius();
             viewRect.Width = s.Width;
             viewRect.Height = s.Height;
             viewRect.Y = s.Y;
@@ -84,13 +85,10 @@ namespace teamstairwell.Graphics {
         }
         
         public void Update(GameTime gt) {
-            //anything else?//
             if (Loop || Frame < TotalFrames - 1)
                 Animate = true;
             else
                 Animate = false;
-                
-            //moar lojik hear
 
             if(Animate) ChangeFrame(gt); //automatically change frames
         }
@@ -121,6 +119,13 @@ namespace teamstairwell.Graphics {
                 return true;
             else
                 return false;
+        }
+
+        private float CalcHitRadius(){
+            if (Size.X >= Size.Y)
+                return Size.Y / 2.0f;
+            else
+                return Size.X / 2.0f;
         }
     }
 }

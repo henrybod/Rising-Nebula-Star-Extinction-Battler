@@ -48,6 +48,7 @@ namespace teamstairwell.Audio {
             effects.Add("PlayerDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryPlayerDeath"));
             effects.Add("BossHit", cm.Load<SoundEffect>("Audio/SoundEffects/Boss Hit"));
             effects.Add("PlayerHit", cm.Load<SoundEffect>("Audio/SoundEffects/Shield Zap"));
+            effects.Add("PlayerGoldLaser", cm.Load<SoundEffect>("Audio/SoundEffects/GoldLaser"));
         }
 
         public void Play(string name){

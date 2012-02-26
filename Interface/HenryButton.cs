@@ -14,7 +14,7 @@ namespace teamstairwell.Interface {
     public class HenryButton : HenrySprite {
  
         private HenryText buttonText;
-        private RNSEB.HenryScreen link;
+        private string link;
         private enum ButtonState {
             Normal,
             Highlighted,
@@ -25,7 +25,7 @@ namespace teamstairwell.Interface {
         private bool isGraphicalButton = false;
 
 
-        public HenryButton(int x, int y, string text, RNSEB.HenryScreen link, ContentManager cm, string spriteName) : base(cm) {
+        public HenryButton(int x, int y, string text, string link, ContentManager cm, string spriteName) : base(cm) {
             if(spriteName != "ButtonNormal")
                 isGraphicalButton = true;
             base.LoadContent(spriteName, true); //load the button background

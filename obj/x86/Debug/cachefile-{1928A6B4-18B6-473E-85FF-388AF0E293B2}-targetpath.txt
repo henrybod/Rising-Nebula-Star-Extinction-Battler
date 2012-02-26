@@ -46,4 +46,5 @@ Content\Audio\Music\StarTrek1.xnb
 Content\Audio\Music\StarTrek1.wma
 Content\Audio\Music\StarWars1.xnb
 Content\Audio\Music\StarWars1.wma
+Content\Audio\SoundEffects\GoldLaser.xnb
 Content\Audio\Music\teamstairwell Intro.mp3

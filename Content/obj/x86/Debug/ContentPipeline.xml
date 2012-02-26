@@ -365,7 +365,7 @@
       <Options>None</Options>
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\StarTrek1.xnb</Output>
       <Extra>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\StarTrek1.wma</Extra>
-      <Time>2012-02-23T13:13:19.581116-06:00</Time>
+      <Time>2012-02-23T17:24:02.9805492-06:00</Time>
     </Item>
     <Item>
       <Source>Audio\Music\StarWars1.mp3</Source>
@@ -376,6 +376,15 @@
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\StarWars1.xnb</Output>
       <Extra>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\Music\StarWars1.wma</Extra>
       <Time>2012-02-23T13:12:58.0738858-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\GoldLaser.wav</Source>
+      <Name>Audio\SoundEffects\GoldLaser</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\GoldLaser.xnb</Output>
+      <Time>2005-08-01T16:06:42-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

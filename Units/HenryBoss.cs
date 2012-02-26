@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace teamstairwell {
     class HenryBoss : HenrySpawner {
 
-        public int HealthMax = 1000, UpgradePoints = 0;
+        public int HealthMax = 10;
         public float Health;
         private float healthOld;
         private HenryHealthBar healthBar;
@@ -29,7 +29,7 @@ namespace teamstairwell {
 
         public new void Update(GameTime gt) {
             if(!Dead){
-                if(healthOld != Health){
+                if(healthOld > Health){
                     //i've been damaged!
                     LoadContent("BossHit", false, 6);
                     RNSEB.Audio.Play("BossHit");
@@ -61,12 +61,14 @@ namespace teamstairwell {
                 healthOld = Health;
 
             }
+
             base.Update(gt);
             
+            if (Dead && !Animate) //wait to finish death animation
+                RNSEB.CurrentScreen = "PlayerVictory";
         }
 
         public new void Draw(SpriteBatch sb) {
-            //todo: draw spawners
             foreach(HenrySpawnerBay bay in spawnerBays)
                 bay.Draw(sb);
             base.Draw(sb);
@@ -82,7 +84,7 @@ namespace teamstairwell {
                 Dead = true;
 
             if (Dead){
-                LoadContent("BossDeath", false, 0.75f); //dieeeee!
+                LoadContent("BossDeath", false, 1.0f); //dieeeee!
                 RNSEB.Audio.Play("BossDeath");
             } else {
                 Health -= amount;

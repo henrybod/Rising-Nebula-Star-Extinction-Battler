@@ -6,10 +6,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
+using teamstairwell.Interface;
 
 namespace teamstairwell {
 
-    class HenryBattlefield {
+    class HenryBattlefield : HenryScreen {
 
         private string music = "Level1Music";
         private ContentManager cm;
@@ -49,7 +50,7 @@ namespace teamstairwell {
             Notus.Position = new Vector2(200, 300);
         }
 
-        public void Draw(SpriteBatch sb) {
+        public override void Draw(SpriteBatch sb) {
             background.Draw(sb);
             Notus.Draw(sb);
             Zihou.Draw(sb);
@@ -57,49 +58,14 @@ namespace teamstairwell {
                 s.Draw(sb);
         }
 
-        public void Update(GameTime gt) {
+        public override void Update(GameTime gt) {
             //link to upgrade, pause menus
             if (RNSEB.Input.GetKey("Pause"))
-                RNSEB.CurrentScreen = RNSEB.HenryScreen.PauseMenu;
-            if (1 - Notus.Health/(float)Notus.HealthMax > LevelNumber/10.0f){
+                RNSEB.CurrentScreen = "PauseMenu";
+            if (1 - Notus.Health/(float)Notus.HealthMax > LevelNumber/10.0f) {
                 LevelNumber++;
-                Zihou.UpgradePoints++;
-                Notus.UpgradePoints++;
-                RNSEB.CurrentScreen = RNSEB.HenryScreen.UpgradeMenu;
-            }
-
-            //change music as levels progress
-            switch(LevelNumber){
-                case 1:
-                    music = "Level1Music";
-                    break;
-                case 2:
-                    music = "Level2Music";
-                    break;
-                case 3:
-                    music = "Level3Music";
-                    break;
-                case 4:
-                    music = "Level4Music";
-                    break;
-                case 5:
-                    music = "Level5Music";
-                    break;
-                case 6:
-                    music = "Level6Music";
-                    break;
-                case 7:
-                    music = "Level7Music";
-                    break;
-                case 8:
-                    music = "Level8Music";
-                    break;
-                case 9:
-                    music = "Level9Music";
-                    break;
-                case 10:
-                    music = "Level10Music";
-                    break;
+                music = "Level" + LevelNumber.ToString() + "Music";
+                RNSEB.CurrentScreen = "PlayerUpgradeMenu";
             }
 
             if (SpinBackground)

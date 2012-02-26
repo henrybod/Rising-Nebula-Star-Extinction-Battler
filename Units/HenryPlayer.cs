@@ -138,5 +138,13 @@ namespace teamstairwell {
                 }
             }
         }
+
+        public void AddUpgrade(RNSEB.HenryUpgrade upgrade){
+            switch(upgrade){
+                case RNSEB.HenryUpgrade.PlayerSuperLaser:
+                    installedWeapons.Add(new HenryWeapon(this, "BulletGoldLaser", "BulletLaser", 1, 30, 600));
+                    break;
+            }
+        }
     }
 }

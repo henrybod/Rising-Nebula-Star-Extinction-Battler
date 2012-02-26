@@ -22,7 +22,7 @@ namespace teamstairwell.Interface {
             base.Position = RNSEB.Input.GetCursor();
 
             //change to target cursor on battlefield
-            if (RNSEB.CurrentScreen == RNSEB.HenryScreen.Battlefield){
+            if (RNSEB.CurrentScreen == "Battlefield"){
                 targeting = true;
                 Oscillate = true;
             }else{
