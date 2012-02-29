@@ -12,7 +12,7 @@ namespace teamstairwell {
     class HenryPlayer : HenrySpawner {
 
         public int UpgradePoints = 0;
-        private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity, damping;
+        private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
         private int shieldMax;
         private HenryShieldBar shieldBar;
         private bool shieldIsUp = true;
@@ -36,32 +36,33 @@ namespace teamstairwell {
             set { shieldRegenRate = (value < 0)?0:value; }
         }
 
-        public HenryPlayer(ContentManager cm, HenryBattlefield b) : base(cm, b) {
+        public HenryPlayer(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
+            : base(cm, b, mass, initPos, initVel, damping) {
             LoadContent("PlayerIdle", true); //initally idle
             CenterOrigin();
             ShieldMax = 2; //just a random starting value (upgrades will increment this)
             Shield = 2; //starting shield charge
-            shieldDownTime = 10.0f; //how many seconds should the shield stay offline when brought to 0?
+            shieldDownTime = 8.0f; //how many seconds should the shield stay offline when brought to 0?
             shieldReturnCapacity = 0.2f; //what percentage of the shield should be instantly restored when shield comes back online?
-            ShieldRegenRate = 0.3f; //this many shield hitpoints regen per second (1 bullet takes 1 point)
-            MovementSpeed = 300.0f; //in km/s (lol)
-            damping = 0.98f; //the damping coefficient (how quickly should the player decelerate when not pressing any keys?)
+            ShieldRegenRate = 0.2f; //this many shield hitpoints regen per second (1 bullet takes 1 point)
+            EnginePower = 1000.0f; //in km/s (lol)
             HitRadius = 20;
-            AddWeapon(new HenryWeapon(this, "BulletLaser", "BulletLaser", 1, 20, 600));
+            focusedWeapon = new HenryWeapon(this, "BulletLaser", "BulletLaser", 1, 20, 1000);
             shieldBar = new HenryShieldBar(cm, this);
         }
 
         public new void Update(GameTime gt){
-            if(!Dead){
+
+            if (!Dead) {
                 //play anim
                 LoadContent("PlayerIdle", true);
-                
+
                 //update shield
                 if (shieldIsUp)
                     Shield += (float)gt.ElapsedGameTime.TotalSeconds * ShieldRegenRate;
                 else {
                     shieldDownTimeCounter += (float)gt.ElapsedGameTime.TotalSeconds;
-                    if(shieldDownTimeCounter >= shieldDownTime){
+                    if (shieldDownTimeCounter >= shieldDownTime) {
                         Shield = shieldReturnCapacity * ShieldMax;
                         shieldIsUp = true;
                         //RNSEB.Audio.Play("PlayerShieldUp"); <-- todo: find sound effect
@@ -69,7 +70,7 @@ namespace teamstairwell {
                     }
                 }
 
-                //movement
+                //movement (anachronous)
                 /*
                 float delta = this.MovementSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
                 if ((RNSEB.Input.GetKey("PlayerUp") || RNSEB.Input.GetKey("PlayerDown"))
@@ -84,30 +85,30 @@ namespace teamstairwell {
                 if (RNSEB.Input.GetKey("PlayerRight") && Position.X + delta <= RNSEB.RESOLUTION.X)
                     this.Position.X += delta;
                 */
-                Vector2 accelDir = Vector2.Zero, accel = Vector2.Zero;
-                float time = (float)gt.ElapsedGameTime.TotalSeconds;
+
+                //calculate acceleration (the rest is handled in Mass class)
+                Vector2 forceDirection = new Vector2(0, 0);
                 if (RNSEB.Input.GetKey("PlayerUp"))
-                    accelDir.Y = -1;
+                    forceDirection.Y = -1;
                 if (RNSEB.Input.GetKey("PlayerDown"))
-                    accelDir.Y = 1;
+                    forceDirection.Y = 1;
                 if (RNSEB.Input.GetKey("PlayerLeft"))
-                    accelDir.X = -1;
+                    forceDirection.X = -1;
                 if (RNSEB.Input.GetKey("PlayerRight"))
-                    accelDir.X = 1;
+                    forceDirection.X = 1;
+                if (forceDirection.Length() > 0)
+                    forceDirection.Normalize(); //hmm
+                acceleration = forceDirection * EnginePower;
 
-                //physics!!!
-                Velocity += 1000 * accelDir * time;
-                Velocity *= (1 - damping * time); //damping
-                Position += Velocity * time;
-
-                //Calculate ship rotation from mouse cursor position (props to ryan)
-                Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI/2);
+                //calculate ship rotation from mouse cursor position (props to ryan)
+                Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
 
                 //fire weapons!
-                if (RNSEB.Input.GetKey("PlayerFire1"))
-                    foreach (HenryWeapon w in installedWeapons)
-                        w.Fire();
-            }
+                FiringFocused = RNSEB.Input.GetKey("PlayerFire1");
+                FiringDiffuse = RNSEB.Input.GetKey("PlayerFire2");
+
+            } else if (!Animate)
+                RNSEB.CurrentScreen = "BossVictory";
 
             base.Update(gt);
         }
@@ -120,12 +121,11 @@ namespace teamstairwell {
         public new void Damage(int amount){
 
             if (!shieldIsUp)
-                Dead = true;
+                Dead = true; //if no shield and be damage equal deddify j00!
 
             if (Dead) {
-                LoadContent("PlayerDeath", false, 1.0f); //you be ded!
-                RNSEB.Audio.Play("PlayerDeath"); // you soun ded 2!
-                //todo: end the game w/ notus victory
+                LoadContent("PlayerDeath", false, 1.0f); //u b ded!
+                RNSEB.Audio.PlayEffect("PlayerDeath"); //u sounds ded 2!
             } else {
                 //not dead yet
                 Shield -= amount;
@@ -134,7 +134,7 @@ namespace teamstairwell {
                     //RNSEB.Audio.Play("PlayerShieldDown"); <-- todo: find sound effect
                 } else {
                     LoadContent("PlayerHit", false, 3);
-                    RNSEB.Audio.Play("PlayerHit");
+                    RNSEB.Audio.PlayEffect("PlayerHit");
                 }
             }
         }
@@ -142,8 +142,10 @@ namespace teamstairwell {
         public void AddUpgrade(RNSEB.HenryUpgrade upgrade){
             switch(upgrade){
                 case RNSEB.HenryUpgrade.PlayerSuperLaser:
-                    installedWeapons.Add(new HenryWeapon(this, "BulletGoldLaser", "BulletLaser", 1, 30, 600));
+                    focusedWeapon = new HenryWeapon(this, "BulletGoldLaser", "BulletLaser", 1, 30, 600);
                     break;
+
+                //every player upgrade here!
             }
         }
     }

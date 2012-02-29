@@ -10,33 +10,34 @@ using Microsoft.Xna.Framework.Graphics;
 namespace teamstairwell {
     class HenryBoss : HenrySpawner {
 
-        public int HealthMax = 10;
-        public float Health;
-        private float healthOld;
+        new public int HealthMax = 100;
         private HenryHealthBar healthBar;
         private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
 
-        public HenryBoss(ContentManager cm, HenryBattlefield b) : base(cm, b){
+        public HenryBoss(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
+            : base(cm, b, mass, initPos, initVel, damping) {
             this.LoadContent("BossIdle", true); //initally idle
             this.CenterOrigin();
-            this.MovementSpeed = 30.0f; //in km/s (lol)
             this.Animate = true;
             this.healthBar = new HenryHealthBar(cm, this);
             this.HitRadius = 70;
+            EnginePower = 30.0f;
             Health = healthOld = HealthMax;
             spawnerBays.Add(new HenrySpawnerBay(this, "MarbleSpawner", "Marble", 1, 0.5f, 100));
         }
 
         public new void Update(GameTime gt) {
-            if(!Dead){
+
+            if (!Dead) {
                 if(healthOld > Health){
                     //i've been damaged!
                     LoadContent("BossHit", false, 6);
-                    RNSEB.Audio.Play("BossHit");
+                    RNSEB.Audio.PlayEffect("BossHit");
                 } else {
                     LoadContent("BossIdle", true);
                 }
                 //move according to input
+                /*
                 float delta = this.MovementSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
                 if ((RNSEB.Input.GetKey("BossUp") || RNSEB.Input.GetKey("BossDown")) && (RNSEB.Input.GetKey("BossRight") || RNSEB.Input.GetKey("BossLeft")))
                     delta /= (float)Math.Sqrt(2);
@@ -48,6 +49,19 @@ namespace teamstairwell {
                     this.Position.X -= delta;
                 if (RNSEB.Input.GetKey("BossRight") && Position.X + delta <= RNSEB.RESOLUTION.X)
                     this.Position.X += delta;
+                */
+                //calculate force direction
+                Vector2 forceDirection = new Vector2(0, 0);
+                if (RNSEB.Input.GetKey("BossUp"))
+                    forceDirection.Y = -1;
+                if (RNSEB.Input.GetKey("BossDown"))
+                    forceDirection.Y = 1;
+                if (RNSEB.Input.GetKey("BossLeft"))
+                    forceDirection.X = -1;
+                if (RNSEB.Input.GetKey("BossRight"))
+                    forceDirection.X = 1;
+                if(forceDirection.Length() > 0) forceDirection.Normalize();
+                acceleration = forceDirection * EnginePower;
 
                 //activate spawner bays!
                 if (RNSEB.Input.GetKey("BossFire1"))
@@ -59,13 +73,11 @@ namespace teamstairwell {
                     bay.Update(gt);
             
                 healthOld = Health;
-
-            }
+            } else if (!Animate)
+                RNSEB.CurrentScreen = "PlayerVictory";
 
             base.Update(gt);
-            
-            if (Dead && !Animate) //wait to finish death animation
-                RNSEB.CurrentScreen = "MainMenu";
+
         }
 
         public new void Draw(SpriteBatch sb) {
@@ -79,13 +91,13 @@ namespace teamstairwell {
             //todo
         }
 
-        public new void Damage(int amount){
+        new public void Damage(int amount){
             if (Health <= 0)
                 Dead = true;
 
             if (Dead){
                 LoadContent("BossDeath", false, 1.0f); //dieeeee!
-                RNSEB.Audio.Play("BossDeath");
+                RNSEB.Audio.PlayEffect("BossDeath");
             } else {
                 Health -= amount;
             }

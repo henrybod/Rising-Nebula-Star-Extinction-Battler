@@ -128,12 +128,13 @@
     <Compile Include="Explosion.cs" />
     <Compile Include="HenryBattlefield.cs" />
     <Compile Include="Interface\HenryScreen.cs" />
-    <Compile Include="Interface\HenryUpgradeButton.cs" />
     <Compile Include="Interface\HenryHealthBar.cs" />
     <Compile Include="Interface\HenryShieldBar.cs" />
+    <Compile Include="Interface\HenryUpgradeButton.cs" />
     <Compile Include="Units\BossAI.cs" />
     <Compile Include="Units\HenryBoss.cs" />
     <Compile Include="Units\HenryBullet.cs" />
+    <Compile Include="Units\HenryMass.cs" />
     <Compile Include="Units\HenryPlayer.cs" />
     <Compile Include="Units\HenrySpawner.cs" />
     <Compile Include="Interface\HenryButton.cs" />

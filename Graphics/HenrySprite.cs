@@ -110,7 +110,7 @@ namespace teamstairwell.Graphics {
                 }else
                     frame = (frame + 1) % totalFrames;
                     
-                viewRect.X = viewRect.Width * frame; //update viewRect to match frame (this is outside the loop so frame may be updated manually by a child obj)
+                viewRect.X = viewRect.Width * frame; //update viewRect to match frame
             }
         }
 

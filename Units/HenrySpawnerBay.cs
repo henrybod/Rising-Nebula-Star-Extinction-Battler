@@ -28,14 +28,13 @@ namespace teamstairwell {
 
         public void Fire(){
             if(timeSinceLastFired >= 1/(rateOfFire * Ship.FireRateMultiplier)){
-                HenrySpawner s = new HenrySpawner(Ship.cm, Ship.Battlefield);
+                HenrySpawner s = new HenrySpawner(Ship.cm, Ship.Battlefield, 100, Ship.Position, Ship.Velocity, 0.5f);
                 s.LoadContent(spawnerSprite, true);
                 s.CenterOrigin();
-                s.MovementSpeed = 60;
                 s.Position = Ship.Position;
                 s.Oscillate = true;
                 s.Automated = true;
-                s.AddWeapon(new HenryWeapon(s, bulletSprite, "Impact", damage, rateOfFire, bulletVelocity));
+                s.focusedWeapon = new HenryWeapon(s, bulletSprite,"Impact", damage, rateOfFire, bulletVelocity);
                 spawners.Add(s);
                 timeSinceLastFired = 0;
             }

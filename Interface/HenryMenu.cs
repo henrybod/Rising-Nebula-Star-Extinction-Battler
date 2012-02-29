@@ -37,10 +37,10 @@ namespace teamstairwell.Interface {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void AddButton(float percentX, float percentY, string text, string link, string spriteName = "ButtonNormal", float scale = 0.6f) {
+        public void AddButton(float percentX, float percentY, string text, string link, string spriteNormal = "ButtonNormal", string spriteHighlight = "ButtonHighlight", string spritePress = "ButtonClick", float scale = 0.6f) {
             int x = (int)(percentX * RNSEB.RESOLUTION.X);
             int y = (int)(percentY * RNSEB.RESOLUTION.Y);
-            HenryButton b = new HenryButton(x, y, text, link, cm, spriteName);
+            HenryButton b = new HenryButton(x, y, text, link, cm, spriteNormal, spriteHighlight, spritePress);
             b.Scale = scale;
             
             buttons.Add(b);
@@ -49,7 +49,7 @@ namespace teamstairwell.Interface {
         public void AddUpgradeButton(float percentX, float percentY, HenryBattlefield batt, ContentManager cm, string normalSprite, string highlightedSprite, RNSEB.HenryUpgrade up, string description) {
             int x = (int)(percentX * RNSEB.RESOLUTION.X);
             int y = (int)(percentY * RNSEB.RESOLUTION.Y);
-            HenryUpgradeButton b = new HenryUpgradeButton(x, y, batt, cm, normalSprite, highlightedSprite, up, description);
+            HenryUpgradeButton b = new HenryUpgradeButton(x, y, description, cm, batt, normalSprite, highlightedSprite, highlightedSprite, up);
             b.Scale = 1.5f;
             upgradeButtons.Add(b);
         }
@@ -79,7 +79,7 @@ namespace teamstairwell.Interface {
                 b.Update(gt);
             foreach (HenryUpgradeButton u in upgradeButtons)
                 u.Update(gt);
-            RNSEB.Audio.Play(music);
+            RNSEB.Audio.PlayMusic(music);
         }
 
         

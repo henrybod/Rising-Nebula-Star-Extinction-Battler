@@ -42,14 +42,14 @@ namespace teamstairwell {
                     WhereIWasShotFrom.Ship.Battlefield.Notus.Damage(damage);
                     Spent = true;
             } else if(WhereIWasShotFrom.Ship.GetType().ToString() == "teamstairwell.HenrySpawner"
-                && !WhereIWasShotFrom.Ship.Battlefield.Zihou.Dead
-                && Collision(WhereIWasShotFrom.Ship.Battlefield.Zihou)) {
-                    WhereIWasShotFrom.Ship.Battlefield.Zihou.Damage(damage);
+                && !WhereIWasShotFrom.Ship.Battlefield.Zihao.Dead
+                && Collision(WhereIWasShotFrom.Ship.Battlefield.Zihao)) {
+                    WhereIWasShotFrom.Ship.Battlefield.Zihao.Damage(damage);
                     Spent = true;
             }
 
-            Position.X += (float)Math.Cos(Rotation-(float)Math.PI/2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
-            Position.Y += (float)Math.Sin(Rotation-(float)Math.PI/2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
+            Position.X += (float)Math.Cos(Rotation - (float)Math.PI / 2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
+            Position.Y += (float)Math.Sin(Rotation - (float)Math.PI / 2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
             base.Update(gt);
         }
     }

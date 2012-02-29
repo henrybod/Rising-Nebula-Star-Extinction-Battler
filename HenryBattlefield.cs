@@ -18,7 +18,7 @@ namespace teamstairwell {
         public bool SpinBackground = false;
         public List<HenryBullet> bullets = new List<HenryBullet>();
         public List<HenrySpawner> spawners = new List<HenrySpawner>();
-        public HenryPlayer Zihou;
+        public HenryPlayer Zihao;
         public HenryBoss Notus;
         public int LevelNumber = 1;
 
@@ -44,16 +44,14 @@ namespace teamstairwell {
 
         public void LoadDefaults(){
             //adds boss and player
-            Zihou = new HenryPlayer(cm, this);
-            Zihou.Position = new Vector2(600, 600);
-            Notus = new HenryBoss(cm, this);
-            Notus.Position = new Vector2(200, 300);
+            Zihao = new HenryPlayer(cm, this, 100, new Vector2(600, 600), new Vector2(0,0), 0.9999999999999f);
+            Notus = new HenryBoss(cm, this, 1000,new Vector2(200, 300), new Vector2(0,0), 0.5f);
         }
 
         public override void Draw(SpriteBatch sb) {
             background.Draw(sb);
             Notus.Draw(sb);
-            Zihou.Draw(sb);
+            Zihao.Draw(sb);
             foreach (HenrySpawner s in spawners)
                 s.Draw(sb);
         }
@@ -70,9 +68,9 @@ namespace teamstairwell {
 
             if (SpinBackground)
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
-            Zihou.Update(gt);
+            Zihao.Update(gt);
             Notus.Update(gt);
-            RNSEB.Audio.Play(music);
+            RNSEB.Audio.PlayMusic(music);
         }
 
     }

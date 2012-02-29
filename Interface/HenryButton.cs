@@ -5,8 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using Hook.Graphics;
-using Hook.Graphics.SpriteSheets;
 using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface {
@@ -22,13 +20,16 @@ namespace teamstairwell.Interface {
         };
         private ButtonState prevState;
         private ButtonState currState;
-        private bool isGraphicalButton = false;
+        private string buttonNormal, buttonHighlight, buttonClick;
 
 
-        public HenryButton(int x, int y, string text, string link, ContentManager cm, string spriteName) : base(cm) {
-            if(spriteName != "ButtonNormal")
-                isGraphicalButton = true;
-            base.LoadContent(spriteName, true); //load the button background
+        public HenryButton(int x, int y, string text, string link, ContentManager cm, string spriteNormal, string spriteHighlight, string spritePress) : base(cm) {
+
+            buttonNormal = spriteNormal;
+            buttonHighlight = spriteHighlight;
+            buttonClick = spritePress;
+
+            base.LoadContent(buttonNormal, true); //load the button background
             this.Position = new Vector2(x, y); //set the button position where specified
             this.CenterOrigin(); //draw button measuring from center of texture
 
@@ -46,27 +47,27 @@ namespace teamstairwell.Interface {
                 if(RNSEB.Input.GetKey("Mouse1")) {
                     //mouse is pressing button
                     if(currState != ButtonState.Pressed){
-                        if(!isGraphicalButton) LoadContent("ButtonClick", true);
+                        LoadContent(buttonClick, true);
                         buttonText.Color = Color.Aqua;
                         currState = ButtonState.Pressed;
-                        RNSEB.Audio.Play("ButtonClick");
+                        RNSEB.Audio.PlayEffect("ButtonClick");
                     }
                 } else {
                     //mouse is hovering over button
                     if(currState != ButtonState.Highlighted){
-                        if(!isGraphicalButton) LoadContent("ButtonHighlight", true);
+                        LoadContent(buttonHighlight, true);
                         buttonText.Color = Color.Aqua;
-                        if(currState != ButtonState.Pressed) RNSEB.Audio.Play("ButtonRollover");
+                        if(currState != ButtonState.Pressed) RNSEB.Audio.PlayEffect("ButtonRollover");
                         currState = ButtonState.Highlighted;
                     }
                 }
             } else {
                 //mouse isn't over button
                 if(currState != ButtonState.Normal){
-                    if(!isGraphicalButton) LoadContent("ButtonNormal", true);
+                    LoadContent(buttonNormal, true);
                     buttonText.Color = Color.Red;
                     currState = ButtonState.Normal;
-                    RNSEB.Audio.Play("ButtonRollover");
+                    RNSEB.Audio.PlayEffect("ButtonRollover");
                 }
             }
 
