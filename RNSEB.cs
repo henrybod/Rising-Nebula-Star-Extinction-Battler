@@ -24,25 +24,38 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        bool HenryMode = false;
-        HenryMenu MainMenu, Credits, UpgradeMenu;
-        HenryBattlefield TheBattlefield;
+        bool HenryMode = true;
         HenryMouse TheMouse;
-        public enum HenryScreen {
-            MainMenu,
-            Battlefield,
-            UpgradeMenu,
-            PauseMenu,
-            Credits,
-            LoadSaveMenu,
-            HowToPlay,
-            Exit,
-            Null
-        };
-        public static HenryScreen PreviousScreen, CurrentScreen = HenryScreen.MainMenu; //start by displaying the main menu
+        Dictionary<string, HenryScreen> screens = new Dictionary<string, HenryScreen>();
+        
+        public enum HenryUpgrade {
+            PlayerSuperLaser, //focused offense
+            PlayerQuadLaser, //mostly focused but a little diffuse offense
+            PlayerTwinMissles, //focused offense
+            PlayerDeathLotus, //diffuse offense
+            PlayerEnergyBomb, //diffuse offense
+            PlayerShieldRecharge, //defense: increase rate of shield recharge
+            PlayerShieldCapacity1, //defense: increase total shield capacity
+            PlayerShieldCapacity2, //defense: increase total shield capacity
+            PlayerShieldRecovery, //defense: decrease shield downtime
+            PlayerSpeed, //increase player's maximum velocity
+            BossLineSpawner, //offense: I'm not sure what all these do yet
+            BossRollSpawner, //offense
+            BossSplitSpawner, //offense
+            BossBurstSpawner, //offense
+            BossMarbleSpawner, //offense
+            BossGravityWellSpawner, //offense: will be perhaps the last boss offensive upgrade
+            BossAttritionField, //defense: damage the player while he is in the blue bubble
+            BossAutoRepair, //defense: the boss regains health slowly
+            BossPlating, //damage to boss reduced 50%
+            BossEMP, //offense: (concept) manually target weapon that takes out all shields
+            //feel free to add ideas
+        }
+        public static string PreviousScreen, CurrentScreen = "MainMenu"; //start by displaying the main menu
         public static HenrySpriteSheets HenrySprites; //a container for all spritedom
         public static SpriteFont ButtonFont, TitleFont, TextFont;
         public static HenryMediaPlayer Audio;
+        public static HenryInput Input;
 
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
@@ -86,13 +99,9 @@ namespace teamstairwell{
             MediaPlayer.Volume = 0.1f;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             if(HenryMode){
-                TheMouse = new HenryMouse();
-                MainMenu = new HenryMenu(this.Content);
-                UpgradeMenu = new HenryMenu(this.Content);
-                Credits = new HenryMenu(this.Content);
-                TheBattlefield = new HenryBattlefield(this.Content);
                 HenrySprites = new HenrySpriteSheets();
                 Audio = new HenryMediaPlayer(this.Content);
+                Input = new HenryInput();
             }
 
             base.Initialize();
@@ -136,38 +145,51 @@ namespace teamstairwell{
             }else{
                 //Henry Stuff
                 //general setup
+                screens.Add("Exit", new HenryMenu(this.Content));
+                screens.Add("MainMenu", new HenryMenu(this.Content));
+                screens.Add("PlayerUpgradeMenu", new HenryMenu(this.Content));
+                screens.Add("BossUpradeMenu", new HenryMenu(this.Content));
+                screens.Add("SaveMenu", new HenryMenu(this.Content));
+                screens.Add("LoadMenu", new HenryMenu(this.Content));
+                screens.Add("PlayerVictory", new HenryMenu(this.Content));
+                screens.Add("BossVictory", new HenryMenu(this.Content));
+                screens.Add("Credits", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
                 TextFont = this.Content.Load<SpriteFont>("TextFont");
-                TheMouse.LoadContent(this.Content, "Cursor");
+                TheMouse = new HenryMouse(this.Content);
                 Audio.LoadContent();
                 
                 //create main menu
-                MainMenu.SetBackground("MenuBackground");
-                MainMenu.AddButton(0.3f, 0.55f, "Single\nPlayer", HenryScreen.Battlefield);
-                MainMenu.AddButton(0.34f, 0.73f, "Multi-\nplayer", HenryScreen.Battlefield);
-                MainMenu.AddButton(0.7f, 0.55f, "Load /\n Save", HenryScreen.LoadSaveMenu);
-                MainMenu.AddButton(0.66f, 0.73f, "Quit", HenryScreen.Exit);
-                MainMenu.AddButton(0.5f, 0.8f, "How to\n  Play", HenryScreen.HowToPlay);
-                Color TitleColor = Color.HotPink;
+                HenryMenu MainMenu = (HenryMenu)screens["MainMenu"];
+                MainMenu.AddButton(0.3f, 0.55f, "Single\nPlayer", "Battlefield");
+                MainMenu.AddButton(0.34f, 0.73f, "Multi-\nplayer", "Battlefield");
+                MainMenu.AddButton(0.7f, 0.55f, "Load /\n Save", "LoadMenu");
+                MainMenu.AddButton(0.66f, 0.73f, "Quit", "Exit");
+                MainMenu.AddButton(0.5f, 0.8f, "How to\n  Play", "HowToPlay");
+                Color TitleColor = Color.White;
                 MainMenu.AddText(0.5f, 0.15f, TitleFont, TitleColor, "Rising Nebula Star");
                 MainMenu.AddText(0.5f, 0.225f, TitleFont, TitleColor, "Extinction Battler:");
                 MainMenu.AddText(0.5f, 0.3f, TitleFont, TitleColor, "The Final Sin"); //todo: find a way to center justify text
-                MainMenu.AddButton(0.5f, 0.5f, "", HenryScreen.Credits, "PlayerIdle", 1.5f);
+                MainMenu.AddButton(0.5f, 0.5f, "", "Credits", "PlayerIdle", 1.5f);
                 
-                //create upgrade menu
-                UpgradeMenu.SetBackground("MenuBackground");
+                //create player's upgrade menu
+                HenryMenu PlayerUpgradeMenu = (HenryMenu)screens["PlayerUpgradeMenu"];
+                PlayerUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
+                PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", "Battlefield");
+                //PlayerUpgradeMenu.AddUpgradeButton(0.5f, 0.5f, TheBattlefield, Content, "Skull", "SkullAura", HenryUpgrade.BossLineSpawner, "Gives skull thing");
+                //todo: make semi-transparent background for upgrade & pause menu
 
                 //create credits screen
-                Credits.SetBackground("MenuBackground");
+                HenryMenu Credits = (HenryMenu)screens["Credits"];
                 Credits.AddText(0.25f, 0.5f, TextFont, Color.White, "Matt Groot\nIan Wilbanks\nChris Rose\nEric See\nMatt Paniagua");
                 Credits.AddText(0.75f, 0.5f, TextFont, Color.White, "Henry Bodensteiner\nRyan Koym\nParker Leech\nEric See");
-                Credits.AddButton(0.5f, 0.75f, "Back", HenryScreen.MainMenu);
+                Credits.AddButton(0.5f, 0.75f, "Back", "MainMenu");
 
                 //create battlefield
-                TheBattlefield.SetBackground("BattlefieldBackground");
-                TheBattlefield.LoadDefaults();
+                screens.Add("Battlefield", new HenryBattlefield(this.Content, "BattlefieldBackground"));
+
             }
         }
 
@@ -187,28 +209,14 @@ namespace teamstairwell{
                     ScreenManager.Update(gameTime);
 
             }else{
-                teamstairwell.Interface.HenryInput.Update(gameTime);
+                Input.Update(gameTime);
                 TheMouse.Update(gameTime);
-                if (PreviousScreen != CurrentScreen)
-                    Audio.StopMusic();
-                PreviousScreen = CurrentScreen;
-                switch(CurrentScreen){
-                    case HenryScreen.Exit:
-                        this.Exit();
-                        break;
-                    case HenryScreen.MainMenu:
-                        MainMenu.Update(gameTime);
-                        break;
-                    case HenryScreen.Credits:
-                        Credits.Update(gameTime);
-                        break;
-                    case HenryScreen.UpgradeMenu:
-                        UpgradeMenu.Update(gameTime);
-                        break;
-                    case HenryScreen.Battlefield:
-                        TheBattlefield.Update(gameTime);
-                        break;
-                }
+                if (CurrentScreen == "Battlefield")
+                    ((HenryBattlefield)(screens[CurrentScreen])).Update(gameTime);
+                else if (CurrentScreen == "Exit")
+                    this.Exit();
+                else
+                    ((HenryMenu)(screens[CurrentScreen])).Update(gameTime);
             }
             base.Update(gameTime);
         }
@@ -221,21 +229,11 @@ namespace teamstairwell{
                 ScreenManager.Draw(spriteBatch);
             }else{
                 //Henry Stuff
-                switch(CurrentScreen){
-                    case HenryScreen.MainMenu:
-                        MainMenu.Draw(spriteBatch);
-                        break;
-                    case HenryScreen.Credits:
-                        Credits.Draw(spriteBatch);
-                        break;
-                    case HenryScreen.UpgradeMenu:
-                        UpgradeMenu.Draw(spriteBatch);
-                        break;
-                    case HenryScreen.Battlefield:
-                        TheBattlefield.Draw(spriteBatch);
-                        break;
-                    //more cases later
-                }
+                if(CurrentScreen == "Battlefield")
+                    ((HenryBattlefield)(screens[CurrentScreen])).Draw(spriteBatch);
+                else
+                    ((HenryMenu)(screens[CurrentScreen])).Draw(spriteBatch);
+
                 TheMouse.Draw(spriteBatch); //mouse is always the last thing drawn so that it appears on top
             }
             spriteBatch.End();

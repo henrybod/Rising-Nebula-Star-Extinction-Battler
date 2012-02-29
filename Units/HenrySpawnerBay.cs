@@ -4,22 +4,23 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace teamstairwell {
 
     class HenrySpawnerBay {
-        //this class holds information on a given weapon, i.e. what bullet, what dmg, ...
+        //this class holds information on a given bay, e.g. what spawners it launches
         //is "held" by the boss
         public HenrySpawner Ship;
-        private string spawnerSprite;
+        private string spawnerSprite, bulletSprite;
         int damage;
         float rateOfFire, bulletVelocity, timeSinceLastFired = 0;
         public List<HenrySpawner> spawners = new List<HenrySpawner>();
-        long bulletCount = 0;
 
-        public HenrySpawnerBay(HenrySpawner ship, string spawnerSprite, int damage, float rateOfFire, float bulletVelocity){
+        public HenrySpawnerBay(HenrySpawner ship, string spawnerSprite, string bulletSprite, int damage, float rateOfFire, float bulletVelocity){
             this.Ship = ship;
             this.spawnerSprite = spawnerSprite;
+            this.bulletSprite = bulletSprite;
             this.damage = damage;
             this.rateOfFire = rateOfFire;
             this.bulletVelocity = bulletVelocity;
@@ -28,8 +29,13 @@ namespace teamstairwell {
         public void Fire(){
             if(timeSinceLastFired >= 1/(rateOfFire * Ship.FireRateMultiplier)){
                 HenrySpawner s = new HenrySpawner(Ship.cm, Ship.Battlefield);
+                s.LoadContent(spawnerSprite, true);
                 s.CenterOrigin();
-                s.Animate = true;
+                s.MovementSpeed = 60;
+                s.Position = Ship.Position;
+                s.Oscillate = true;
+                s.Automated = true;
+                s.AddWeapon(new HenryWeapon(s, bulletSprite, "Impact", damage, rateOfFire, bulletVelocity));
                 spawners.Add(s);
                 timeSinceLastFired = 0;
             }

@@ -11,7 +11,7 @@ namespace teamstairwell.Interface {
     class HenryShieldBar {
 
         private ContentManager cm;
-        private HenrySprite shieldTick = new HenrySprite();
+        private HenrySprite shieldTick;
         private HenryPlayer ship;
         private float shieldAmount = 0.0f;
         public float ShieldAmount{
@@ -28,7 +28,8 @@ namespace teamstairwell.Interface {
         public HenryShieldBar(ContentManager cm, HenryPlayer ship){
             this.cm = cm;
             this.ship = ship;
-            shieldTick.LoadContent(cm, "ShieldTick");
+            shieldTick = new HenrySprite(cm);
+            shieldTick.LoadContent("ShieldTick", true);
             shieldTick.Position.Y = RNSEB.RESOLUTION.Y - 20;
         }
         public void Draw(SpriteBatch sb){

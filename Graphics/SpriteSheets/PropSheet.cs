@@ -82,7 +82,7 @@ namespace Hook.Graphics.SpriteSheets
                 {25, 25, 4},   //BombGet
                 { 3, 20, 1},   //HealthTick
                 { 5,  5, 1},   //TinyReticle
-                {20, 20, 1},   //DoomCursor
+                {10, 20, 1},   //DoomCursor
                 {50, 50, 4},   //SourceExplosion
                 {15, 15, 4},   //BulletA
                 {15, 15, 4},   //BulletB

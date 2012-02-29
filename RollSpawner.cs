@@ -11,7 +11,7 @@ namespace teamstairwell
     class RollSpawner : BulletSpawner
     {
         List<Bullet> bullets;
-        Player p;
+        //Player p;
 
         public RollSpawner(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, float rotation, float rotationVelocity, List<Bullet> bossBullets, Boolean retract, int numberofshots, double rateoffire, Player pl)
             : base(position, velocity, acceleration, radius, rotation, rotationVelocity, bossBullets, retract, numberofshots, rateoffire)

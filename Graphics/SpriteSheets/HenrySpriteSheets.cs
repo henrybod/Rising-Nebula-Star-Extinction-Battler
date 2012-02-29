@@ -15,7 +15,9 @@ namespace teamstairwell.Graphics.SpriteSheets {
             //they must be defined in the order they are drawn on their respective sheet!!!
 
             //interface
-            AddSprite(ref All, "SpriteSheets/Button", "Button", 229, 130, 3);
+            AddSprite(ref All, "SpriteSheets/Button", "ButtonNormal", 229, 130, 1);
+            AddSprite(ref All, "SpriteSheets/Button", "ButtonHighlight", 229, 130, 1);
+            AddSprite(ref All, "SpriteSheets/Button", "ButtonClick", 229, 130, 1);
             AddSprite(ref All, "SpriteSheets/TitleBackground", "MenuBackground", 1750, 1454, 1);
             AddSprite(ref All, "SpriteSheets/Background", "BattlefieldBackground", 1500, 1500, 1);
 
@@ -28,7 +30,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 //boss
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossIdle", 200, 200, 2);
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossHit", 200, 200, 3);
-                AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossDeath", 200, 200, 5);
+                AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossDeath", 200, 200, 6);
 
                 //zihou
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerShiftLeft", 40, 40, 3);
