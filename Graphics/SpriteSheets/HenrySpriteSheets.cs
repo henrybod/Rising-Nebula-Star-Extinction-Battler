@@ -22,7 +22,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
             AddSprite(ref All, "SpriteSheets/Background", "BattlefieldBackground", 1500, 1500, 1);
 
             //Player Sheet
-                //zihou
+                //Zihao
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerIdle", 40, 40, 4);
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerHit", 40, 40, 4);
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerDeath", 40, 40, 6);
@@ -32,7 +32,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossHit", 200, 200, 3);
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossDeath", 200, 200, 6);
 
-                //zihou
+                //Zihao
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerShiftLeft", 40, 40, 3);
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerGoLeft", 40, 40, 2);
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerShiftRight", 40, 40, 3);

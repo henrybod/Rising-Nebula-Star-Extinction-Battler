@@ -51,16 +51,15 @@ namespace teamstairwell.Audio {
             effects.Add("PlayerGoldLaser", cm.Load<SoundEffect>("Audio/SoundEffects/GoldLaser"));
         }
 
-        public void Play(string name){
-            try {
-                if(name != currentlyPlaying){
-                    MediaPlayer.Play(music[name]);
-                    currentlyPlaying = name;
-                }
-            } catch {}
-            try {
-                effects[name].Play();
-            } catch {}
+        public void PlayMusic(string name){
+            if(name != currentlyPlaying){
+                MediaPlayer.Play(music[name]);
+                currentlyPlaying = name;
+            }
+        }
+
+        public void PlayEffect(string name){
+            effects[name].Play();
         }
 
         public void PlayFor(string name, int times, float everyThisManyMilliseconds){

@@ -28,21 +28,22 @@ namespace teamstairwell {
             this.bulletSound = bulletSound;
         }
 
-        public void Fire(){
-            if(timeSinceLastFired >= 1/(rateOfFire * Ship.FireRateMultiplier)){
+        public void Update(GameTime gt) {
+            //fire weapon
+            timeSinceLastFired += (float)gt.ElapsedGameTime.TotalSeconds;
+            if (Ship.FiringFocused && timeSinceLastFired >= 1 / (rateOfFire * Ship.FireRateMultiplier)) {
                 HenryBullet b = new HenryBullet(bulletSprite, bulletSound, this, 1, Ship.Position, Ship.Rotation, bulletVelocity, true);
                 bullets.Add(b);
                 timeSinceLastFired = 0;
             }
-        }
 
-        public void Update(GameTime gt){
-            timeSinceLastFired += (float)gt.ElapsedGameTime.TotalSeconds;
+            //update all my bullets
             foreach (HenryBullet b in bullets)
                 if(!b.Spent) b.Update(gt);
         }
 
         public void Draw(SpriteBatch sb){
+            //draw all my bullets
             foreach (HenryBullet b in bullets)
                 if(!b.Spent) b.Draw(sb);
         }
