@@ -7,6 +7,8 @@ Content\Audio\Music\Forest Theme.xnb
 Content\Audio\Music\teamstairwell Intro.xnb
 Content\Audio\Music\teamstairwell Theme.xnb
 Content\Audio\Music\04 - Boogie Wonderland.xnb
+Content\Audio\Music\StarTrek1.xnb
+Content\Audio\Music\StarWars1.xnb
 Content\SpriteSheets\CyberSheet.xnb
 Content\SpriteSheets\EffectSheet.xnb
 Content\SpriteSheets\EnvironmentSheet.xnb
@@ -37,8 +39,6 @@ Content\Audio\SoundEffects\HenryUpgrade.xnb
 Content\Audio\SoundEffects\HenryPlayerDeath.xnb
 Content\Audio\SoundEffects\Shield Zap.xnb
 Content\Audio\SoundEffects\Boss Hit.xnb
-Content\Audio\Music\StarTrek1.xnb
-Content\Audio\Music\StarWars1.xnb
 Content\Audio\SoundEffects\GoldLaser.xnb
 Content\Audio\SoundEffects\BossLaunchSpawner.xnb
 Content\Audio\SoundEffects\Explosion medium.xnb

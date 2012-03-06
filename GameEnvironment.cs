@@ -164,6 +164,12 @@ namespace teamstairwell
                 }
                 for (int n = 0; n < playerBullets.Count; n++)
                 {
+                    if (playerBullets[n] is Seeker)
+                    {
+                        Seeker mySeek;
+                        mySeek = (Seeker)playerBullets[n];
+                        mySeek.lockOn(b.pos);
+                    }
                     playerBullets[n].update(gt);
                     if (playerBullets[n] is Bomb)
                     {
@@ -227,6 +233,10 @@ namespace teamstairwell
                 for (int n = 0; n < bulletSpawners.Count; n++)
                 {
                     bulletSpawners[n].draw(sb);
+                }
+                for (int i = 0; i < p.pDs.Count; i++)
+                {
+                    p.pDs[i].draw(sb);
                 }
 
                 if (textBombs != null)
