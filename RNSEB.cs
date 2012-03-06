@@ -158,6 +158,7 @@ namespace teamstairwell{
                 screens.Add("Credits", new HenryMenu(this.Content));
                 screens.Add("HowToPlay", new HenryMenu(this.Content));
                 screens.Add("Battlefield", new HenryBattlefield(this.Content, "BattlefieldBackground"));
+                screens.Add("PauseMenu", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
@@ -201,10 +202,13 @@ namespace teamstairwell{
 
                 //create boss's upgrade menu
                 HenryMenu BossUpgradeMenu = (HenryMenu)screens["BossUpgradeMenu"];
-                PlayerUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
-                PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", "Battlefield");
+                BossUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
+                BossUpgradeMenu.AddButton(0.9f, 0.9f, "Done", "Battlefield");
 
                 //create pause menu
+                HenryMenu PauseMenu = (HenryMenu)screens["PauseMenu"];
+                PauseMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Paused");
+                PauseMenu.AddButton(0.5f, 0.5f, "Back", "Battlefield");
 
                 //create credits screen
                 HenryMenu Credits = (HenryMenu)screens["Credits"];

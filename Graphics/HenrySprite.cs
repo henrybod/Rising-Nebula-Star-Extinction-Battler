@@ -77,6 +77,7 @@ namespace teamstairwell.Graphics {
             totalFrames = s.FrameCount;
             Loop = loop;
             FrameSpeed = frameSpeed;
+            Frame = 0;
         }
 
         public void Draw(SpriteBatch sprites) {

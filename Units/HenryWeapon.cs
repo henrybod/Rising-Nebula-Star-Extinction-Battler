@@ -12,30 +12,32 @@ namespace teamstairwell {
     class HenryWeapon {
         //this class holds information on a given weapon, i.e. what bullet, what dmg, ...
         //is "held" by the player
-        private ContentManager cm;
+
         public HenrySpawner Ship;
         private string bulletSprite, bulletSound;
         int damage;
-        float rateOfFire, bulletVelocity, timeSinceLastFired = 100;
+        float rateOfFire, bulletVelocity;
+        public float timeSinceLastFired = 100;
         public List<HenryBullet> bullets = new List<HenryBullet>();
 
-        public HenryWeapon(HenrySpawner ship, string bulletSprite, string bulletSound, int damage, float rateOfFire, float bulletVelocity){
+        public HenryWeapon(HenrySpawner ship, float rateOfFire) {
             this.Ship = ship;
-            this.bulletSprite = bulletSprite;
-            this.damage = damage;
             this.rateOfFire = rateOfFire;
-            this.bulletVelocity = bulletVelocity;
-            this.bulletSound = bulletSound;
+        }
+
+        public virtual void SpawnBullets() {}
+
+        public void Fire() {
+
+            if (!Ship.Dead && timeSinceLastFired >= 1 / (rateOfFire * Ship.FireRateMultiplier)) {
+                SpawnBullets();
+                timeSinceLastFired = 0;
+            }
         }
 
         public void Update(GameTime gt) {
             //fire weapon
             timeSinceLastFired += (float)gt.ElapsedGameTime.TotalSeconds;
-            if (Ship.FiringFocused && timeSinceLastFired >= 1 / (rateOfFire * Ship.FireRateMultiplier)) {
-                HenryBullet b = new HenryBullet(bulletSprite, bulletSound, this, 1, Ship.Position, Ship.Rotation, bulletVelocity, true);
-                bullets.Add(b);
-                timeSinceLastFired = 0;
-            }
 
             //update all my bullets
             foreach (HenryBullet b in bullets)

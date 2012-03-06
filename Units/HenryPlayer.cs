@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Interface;
+using teamstairwell.Weapons;
 
 namespace teamstairwell {
 
     class HenryPlayer : HenrySpawner {
 
-        public int UpgradePoints = 0;
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
         private int shieldMax;
         private HenryShieldBar shieldBar;
@@ -37,7 +37,8 @@ namespace teamstairwell {
         }
 
         public HenryPlayer(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
-            : base(cm, b, mass, initPos, initVel, damping) {
+            : base(cm, b, 1, mass, initPos, initVel, damping) {
+            spawnerType = "Player";
             LoadContent("PlayerIdle", true); //initally idle
             CenterOrigin();
             ShieldMax = 2; //just a random starting value (upgrades will increment this)
@@ -47,8 +48,10 @@ namespace teamstairwell {
             ShieldRegenRate = 0.2f; //this many shield hitpoints regen per second (1 bullet takes 1 point)
             EnginePower = 1000.0f; //in km/s (lol)
             HitRadius = 20;
-            focusedWeapon = new HenryWeapon(this, "BulletLaser", "BulletLaser", 1, 20, 1000);
             shieldBar = new HenryShieldBar(cm, this);
+            
+            //starter weapon
+            FocusedWeapon = new SpiralRockets(this);
         }
 
         public new void Update(GameTime gt){
@@ -70,22 +73,6 @@ namespace teamstairwell {
                     }
                 }
 
-                //movement (anachronous)
-                /*
-                float delta = this.MovementSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
-                if ((RNSEB.Input.GetKey("PlayerUp") || RNSEB.Input.GetKey("PlayerDown"))
-                    && (RNSEB.Input.GetKey("PlayerRight") || RNSEB.Input.GetKey("PlayerLeft")))
-                    delta /= (float)Math.Sqrt(2);
-                if (RNSEB.Input.GetKey("PlayerUp") && Position.Y - delta >= 0)
-                    this.Position.Y -= delta;
-                if (RNSEB.Input.GetKey("PlayerDown") && Position.Y + delta <= RNSEB.RESOLUTION.Y)
-                    this.Position.Y += delta;
-                if (RNSEB.Input.GetKey("PlayerLeft") && Position.X - delta >= 0)
-                    this.Position.X -= delta;
-                if (RNSEB.Input.GetKey("PlayerRight") && Position.X + delta <= RNSEB.RESOLUTION.X)
-                    this.Position.X += delta;
-                */
-
                 //calculate acceleration (the rest is handled in Mass class)
                 Vector2 forceDirection = new Vector2(0, 0);
                 if (RNSEB.Input.GetKey("PlayerUp"))
@@ -97,15 +84,15 @@ namespace teamstairwell {
                 if (RNSEB.Input.GetKey("PlayerRight"))
                     forceDirection.X = 1;
                 if (forceDirection.Length() > 0)
-                    forceDirection.Normalize(); //hmm
+                    forceDirection.Normalize();
                 acceleration = forceDirection * EnginePower;
 
                 //calculate ship rotation from mouse cursor position (props to ryan)
                 Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
 
                 //fire weapons!
-                FiringFocused = RNSEB.Input.GetKey("PlayerFire1");
-                FiringDiffuse = RNSEB.Input.GetKey("PlayerFire2");
+                firingFocused = RNSEB.Input.GetKey("PlayerFire1");
+                firingDiffuse = RNSEB.Input.GetKey("PlayerFire2");
 
             } else if (!Animate)
                 RNSEB.CurrentScreen = "BossVictory";
@@ -142,7 +129,7 @@ namespace teamstairwell {
         public void AddUpgrade(RNSEB.HenryUpgrade upgrade){
             switch(upgrade){
                 case RNSEB.HenryUpgrade.PlayerSuperLaser:
-                    focusedWeapon = new HenryWeapon(this, "BulletGoldLaser", "BulletLaser", 1, 30, 600);
+                    FocusedWeapon = new GoldLaser(this); //todo!!
                     break;
 
                 //every player upgrade here!

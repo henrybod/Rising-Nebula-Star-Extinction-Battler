@@ -45,7 +45,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
             //Prop Sheet
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Gum0", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Gum1", 15, 15, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "WeaponMissle", 15, 15, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletMissle", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Skull", 45, 45, 5);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "SkullAura", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Line", 45, 45, 5);
@@ -61,14 +61,14 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "HealthTick", 3, 20, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "TinyRecticle", 5, 5, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Cursor", 11, 20, 9);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "BombExplosion", 50, 50, 7);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletA", 15, 15, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletB", 15, 15, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletC", 15, 15, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "Explosion", 50, 50, 7);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletFireball", 15, 15, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletPlasma", 15, 15, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletBlueFuzz", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "MarbleSpawner", 45, 45, 5);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "MarbleSpawnerAura", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletLaser", 15, 15, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "OrangeFuzz", 30, 30, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "RedFuzz", 30, 30, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Marble", 60, 60, 16);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Magnet", 45, 45, 5);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "MagnetAura", 45, 45, 1);

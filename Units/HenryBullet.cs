@@ -8,26 +8,22 @@ using teamstairwell.Graphics;
 
 namespace teamstairwell {
 
-    class HenryBullet : HenrySprite {
+    class HenryBullet : HenryMass {
 
-        private float velocity;
         private int damage;
         public HenryWeapon WhereIWasShotFrom;
         public bool Spent = false; //has bullet impacted something or left the screen?
-        private string soundEffect;
 
-        public HenryBullet(string spriteName, string soundName, HenryWeapon whereIWasShotFrom, int damage, Vector2 initialPosition, float rotation, float velocity, bool manageHitRadius)
-            : base(whereIWasShotFrom.Ship.cm) {
+        public HenryBullet(string spriteName, HenryWeapon whereIWasShotFrom, int damage, Vector2 initialPosition, float rotation, float velocity, bool manageHitRadius)
+            : base(whereIWasShotFrom.Ship.cm, 1, initialPosition, new Vector2((float)Math.Cos(rotation - (float)Math.PI / 2), (float)Math.Sin(rotation - (float)Math.PI / 2)) * velocity, 0.0f, true) {
             this.Position = initialPosition;
             this.Rotation = rotation;
-            this.velocity = velocity;
             this.damage = damage;
             this.ManageHitRadius = manageHitRadius;
             this.LoadContent(spriteName, true);
             this.Animate = true;
             this.CenterOrigin();
             this.WhereIWasShotFrom = whereIWasShotFrom;
-            this.soundEffect = soundName;
         }
 
         public new void Update(GameTime gt){
@@ -36,20 +32,25 @@ namespace teamstairwell {
                 || Position.Y < -50
                 || Position.Y > RNSEB.RESOLUTION.Y + 50)
                 Spent = true;
-            if(WhereIWasShotFrom.Ship.GetType().ToString() == "teamstairwell.HenryPlayer"
-                && !WhereIWasShotFrom.Ship.Battlefield.Notus.Dead
-                && Collision(WhereIWasShotFrom.Ship.Battlefield.Notus)) {
-                    WhereIWasShotFrom.Ship.Battlefield.Notus.Damage(damage);
-                    Spent = true;
-            } else if(WhereIWasShotFrom.Ship.GetType().ToString() == "teamstairwell.HenrySpawner"
+            
+            if(WhereIWasShotFrom.Ship.spawnerType == "Player") { //if I was shot from the player, I should damage spawners and boss
+                foreach(HenrySpawner s in WhereIWasShotFrom.Ship.Battlefield.spawners)
+                    if(!s.Dead && Collision(s)){
+                        if (s.spawnerType == "Boss")
+                            ((HenryBoss)s).Damage(damage);
+                        else
+                            s.Damage(damage);
+                        Spent = true;
+                    }
+
+            } else if((WhereIWasShotFrom.Ship.spawnerType == "Boss" //if I was shot from the boss or a spawner, I should damage player
+                || WhereIWasShotFrom.Ship.spawnerType == "Spawner")
                 && !WhereIWasShotFrom.Ship.Battlefield.Zihao.Dead
                 && Collision(WhereIWasShotFrom.Ship.Battlefield.Zihao)) {
                     WhereIWasShotFrom.Ship.Battlefield.Zihao.Damage(damage);
                     Spent = true;
             }
 
-            Position.X += (float)Math.Cos(Rotation - (float)Math.PI / 2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
-            Position.Y += (float)Math.Sin(Rotation - (float)Math.PI / 2) * velocity * (float)gt.ElapsedGameTime.TotalSeconds;
             base.Update(gt);
         }
     }

@@ -42,18 +42,17 @@ namespace teamstairwell {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void LoadDefaults(){
+        public void LoadDefaults() {
             //adds boss and player
             Zihao = new HenryPlayer(cm, this, 100, new Vector2(600, 600), new Vector2(0,0), 0.9999999999999f);
             Notus = new HenryBoss(cm, this, 1000,new Vector2(200, 300), new Vector2(0,0), 0.5f);
+            spawners.Add(Notus);
         }
 
         public override void Draw(SpriteBatch sb) {
             background.Draw(sb);
             Notus.Draw(sb);
             Zihao.Draw(sb);
-            foreach (HenrySpawner s in spawners)
-                s.Draw(sb);
         }
 
         public override void Update(GameTime gt) {
@@ -72,6 +71,5 @@ namespace teamstairwell {
             Notus.Update(gt);
             RNSEB.Audio.PlayMusic(music);
         }
-
     }
 }
