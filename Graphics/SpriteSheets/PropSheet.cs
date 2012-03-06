@@ -57,6 +57,7 @@ namespace Hook.Graphics.SpriteSheets
         public const int HEXSPAWN = 38;
         public const int HEXSPAWNAURA = 39;
         public const int R = 40;
+        public const int GUNNER = 41;
 
 
         public PropSheet(Texture2D SheetImage)
@@ -105,7 +106,8 @@ namespace Hook.Graphics.SpriteSheets
                 {25, 25, 4},    //P
                 {45, 45, 5},   //Hex Spawner
                 {45, 45, 1},    //Hex Spawner Highlighted
-                {25, 25, 4}    //R
+                {25, 25, 4},    //R
+                {32, 32, 4}     //Gunner drone ship
             };
 
             /*FrameValues = new int[,]{

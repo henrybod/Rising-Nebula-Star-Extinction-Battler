@@ -24,7 +24,7 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        bool HenryMode = true;
+        bool HenryMode = false;
         HenryMouse TheMouse;
         Dictionary<string, HenryScreen> screens = new Dictionary<string, HenryScreen>();
         

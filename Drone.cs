@@ -26,16 +26,17 @@ namespace teamstairwell
         Entity master;              //Reference to controlling unit
         droneType type;
 
-        Sprite normalSprite;
 
-        public Drone(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, droneType type, Entity master)
+        public Drone(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, droneType type, Entity master, Sprite sprite)
             : base(position, velocity, acceleration, radius)
         {
             this.type = type;
             this.master = master;
             dBs = new List<Bullet>();
+            pic = sprite;
 
-            normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
+            //normalSprite = sprite;
+           //normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
         }
 
         public override void update(GameTime time)
@@ -48,7 +49,7 @@ namespace teamstairwell
             }
             if (type == droneType.Orbital)
             {
-                rot += (float)(time.ElapsedGameTime.Milliseconds) / 1000;
+                rot -= (float)(time.ElapsedGameTime.Milliseconds) / 1000;
                 pos.X = master.pos.X + (float)Math.Cos(rot) * 50;
                 pos.Y = master.pos.Y + (float)Math.Sin(rot) * 50;
             }

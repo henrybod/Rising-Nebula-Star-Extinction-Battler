@@ -59,7 +59,7 @@ namespace teamstairwell
             invisible = false;
 
             pDs = new List<Drone>();
-            //pDs.Add(new Drone (pos, vel, acc, radius, Drone.droneType.Orbital, this));
+            //pDs.Add(new Drone (pos, vel, acc, radius, Drone.droneType.Orbital, this, new Sprite(RNSEB.PropSheet, PropSheet.GUNNER)));
 
             normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
             shieldSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PSHIELD);
