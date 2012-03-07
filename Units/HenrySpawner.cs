@@ -10,7 +10,7 @@ using teamstairwell.Interface;
 
 namespace teamstairwell {
 
-    class HenrySpawner : HenryMass {
+    public class HenrySpawner : HenryMass {
 
         public string spawnerType = "Spawner";
         private int healthMax;

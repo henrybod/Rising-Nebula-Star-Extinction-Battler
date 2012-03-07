@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell {
 
-    class HenryBoss : HenrySpawner {
+    public class HenryBoss : HenrySpawner {
 
         private HenryHealthBar healthBar;
         private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();

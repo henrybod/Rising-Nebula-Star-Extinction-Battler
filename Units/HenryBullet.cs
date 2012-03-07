@@ -8,14 +8,14 @@ using teamstairwell.Graphics;
 
 namespace teamstairwell {
 
-    class HenryBullet : HenryMass {
+    public class HenryBullet : HenryMass {
 
         private int damage;
         public HenryWeapon WhereIWasShotFrom;
         public bool Spent = false; //has bullet impacted something or left the screen?
 
         public HenryBullet(string spriteName, HenryWeapon whereIWasShotFrom, int damage, Vector2 initialPosition, float rotation, float velocity, bool manageHitRadius)
-            : base(whereIWasShotFrom.Ship.cm, 1, initialPosition, new Vector2((float)Math.Cos(rotation - (float)Math.PI / 2), (float)Math.Sin(rotation - (float)Math.PI / 2)) * velocity, 0.0f, true) {
+            : base(whereIWasShotFrom.Ship.cm, 1, initialPosition, whereIWasShotFrom.Ship.Velocity + new Vector2((float)Math.Cos(rotation - (float)Math.PI / 2), (float)Math.Sin(rotation - (float)Math.PI / 2)) * velocity, 0.0f, true) {
             this.Position = initialPosition;
             this.Rotation = rotation;
             this.damage = damage;

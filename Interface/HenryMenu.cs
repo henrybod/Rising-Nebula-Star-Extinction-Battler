@@ -37,10 +37,10 @@ namespace teamstairwell.Interface {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void AddButton(float percentX, float percentY, string text, string link, string spriteNormal = "ButtonNormal", string spriteHighlight = "ButtonHighlight", string spritePress = "ButtonClick", float scale = 0.6f) {
+        public void AddButton(float percentX, float percentY, string text, RNSEB.OnClick callbackfunc, string spriteNormal = "ButtonNormal", string spriteHighlight = "ButtonHighlight", string spritePress = "ButtonClick", float scale = 0.6f) {
             int x = (int)(percentX * RNSEB.RESOLUTION.X);
             int y = (int)(percentY * RNSEB.RESOLUTION.Y);
-            HenryButton b = new HenryButton(x, y, text, link, cm, spriteNormal, spriteHighlight, spritePress);
+            HenryButton b = new HenryButton(x, y, text, callbackfunc, cm, spriteNormal, spriteHighlight, spritePress);
             b.Scale = scale;
             
             buttons.Add(b);

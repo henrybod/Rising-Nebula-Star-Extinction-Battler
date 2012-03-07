@@ -9,7 +9,7 @@ using teamstairwell.Weapons;
 
 namespace teamstairwell {
 
-    class HenrySpawnerBay {
+    public class HenrySpawnerBay {
         //this class holds information on a given bay, e.g. what spawners it launches
         //is "held" by the boss
         public HenrySpawner Ship;

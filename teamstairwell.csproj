@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <ProjectGuid>{A4F375C0-1CB1-46C3-B29F-DBA0D6A7B53F}</ProjectGuid>
@@ -121,6 +121,7 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="BulletSpawner.cs" />
     <Compile Include="BurstSpawner.cs" />
+    <Compile Include="Drone.cs" />
     <Compile Include="Graphics\SpriteSheets\Credits.cs" />
     <Compile Include="Graphics\SpriteSheets\HenrySpriteSheets.cs" />
     <Compile Include="HardEnvironment.cs" />
@@ -131,7 +132,7 @@
     <Compile Include="Interface\HenryHealthBar.cs" />
     <Compile Include="Interface\HenryShieldBar.cs" />
     <Compile Include="Interface\HenryUpgradeButton.cs" />
-    <Compile Include="Units\HenryRocket.cs" />
+    <Compile Include="Seeker.cs" />
     <Compile Include="Units\Weps\BasicLaser.cs" />
     <Compile Include="Units\BossAI.cs" />
     <Compile Include="Units\HenryBoss.cs" />
@@ -193,6 +194,9 @@
     <Compile Include="Units\HenrySpawnerBay.cs" />
     <Compile Include="Units\HenryWeapon.cs" />
     <Compile Include="Units\SpawnerAI.cs" />
+    <Compile Include="Units\Weps\Seeker.cs" />
+    <Compile Include="Units\Weps\SeekerMissles.cs" />
+    <Compile Include="Units\Weps\QuadLaser.cs" />
     <Compile Include="Units\Weps\SpiralRockets.cs" />
     <Compile Include="Units\Weps\PlasmaWall.cs" />
     <Compile Include="Units\Weps\RingOfFire.cs" />

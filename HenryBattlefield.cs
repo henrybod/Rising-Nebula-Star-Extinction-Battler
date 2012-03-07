@@ -10,22 +10,23 @@ using teamstairwell.Interface;
 
 namespace teamstairwell {
 
-    class HenryBattlefield : HenryScreen {
+    public class HenryBattlefield : HenryScreen {
 
         private string music = "Level1Music";
         private ContentManager cm;
         private HenrySprite background;
-        public bool SpinBackground = false;
+        public bool SpinBackground = false, BossMode;
         public List<HenryBullet> bullets = new List<HenryBullet>();
         public List<HenrySpawner> spawners = new List<HenrySpawner>();
         public HenryPlayer Zihao;
         public HenryBoss Notus;
         public int LevelNumber = 1;
 
-        public HenryBattlefield(ContentManager cm, string backgroundSprite) {
+        public HenryBattlefield(ContentManager cm, bool mode) {
             this.cm = cm;
+            BossMode = mode;
             background = new HenrySprite(cm);
-            SetBackground(backgroundSprite);
+            SetBackground("BattlefieldBackground");
             LoadDefaults();
             SpinBackground = true;
         }
@@ -45,7 +46,7 @@ namespace teamstairwell {
         public void LoadDefaults() {
             //adds boss and player
             Zihao = new HenryPlayer(cm, this, 100, new Vector2(600, 600), new Vector2(0,0), 0.9999999999999f);
-            Notus = new HenryBoss(cm, this, 1000,new Vector2(200, 300), new Vector2(0,0), 0.5f);
+            Notus = new HenryBoss(cm, this, 1000,new Vector2(200, 300), new Vector2(0,0), 0.9f);
             spawners.Add(Notus);
         }
 
@@ -59,17 +60,18 @@ namespace teamstairwell {
             //link to upgrade, pause menus
             if (RNSEB.Input.GetKey("Pause"))
                 RNSEB.CurrentScreen = "PauseMenu";
+            //choose level based on boss's health
             if (1 - Notus.Health/(float)Notus.HealthMax > LevelNumber/10.0f) {
-                LevelNumber++;
-                music = "Level" + LevelNumber.ToString() + "Music";
-                RNSEB.CurrentScreen = "PlayerUpgradeMenu";
+                LevelNumber++; //take it to the next level, yo
+                music = "Level" + LevelNumber.ToString() + "Music"; //dynamically generate name of music
+                RNSEB.CurrentScreen = BossMode ? "BossUpgradeMenu" : "PlayerUpgradeMenu"; //let the user upgrade
             }
 
-            if (SpinBackground)
+            if (SpinBackground) //yeah, spin that background, babe
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
             Zihao.Update(gt);
             Notus.Update(gt);
-            RNSEB.Audio.PlayMusic(music);
+            RNSEB.Audio.PlayMusic(music); //this can be called every update because of logic in PlayMusic()
         }
     }
 }

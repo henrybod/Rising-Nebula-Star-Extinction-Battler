@@ -30,14 +30,14 @@ namespace teamstairwell.Interface {
             this.ship = ship;
             healthTick = new HenrySprite(cm);
             healthTick.LoadContent("HealthTick", true);
-            healthTick.Position.Y = 0;
+            healthTick.Position.Y = -4;
         }
 
         public void Draw(SpriteBatch sb){
             float ticks = RNSEB.RESOLUTION.X * (ship.Health / (float)ship.HealthMax);
-            ticks = (int)(ticks/3);
-            for(int i = 0; i < ticks; i++){
-                healthTick.Position.X = 3 * i;
+            ticks = (int)(ticks);
+            for(int i = 0; i < ticks; i += 3){
+                healthTick.Position.X = i;
                 healthTick.Draw(sb);
             }
         }

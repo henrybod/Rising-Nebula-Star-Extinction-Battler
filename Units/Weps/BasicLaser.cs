@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
 
-    class BasicLaser : HenryWeapon {
+    public class BasicLaser : HenryWeapon {
 
         public BasicLaser(HenrySpawner ship)
             : base(ship, 20) {

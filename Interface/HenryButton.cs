@@ -21,14 +21,14 @@ namespace teamstairwell.Interface {
         private ButtonState prevState;
         private ButtonState currState;
         private string buttonNormal, buttonHighlight, buttonClick;
+        private RNSEB.OnClick onClick;
 
 
-        public HenryButton(int x, int y, string text, string link, ContentManager cm, string spriteNormal, string spriteHighlight, string spritePress) : base(cm) {
-
+        public HenryButton(int x, int y, string text,  RNSEB.OnClick onClick, ContentManager cm, string spriteNormal, string spriteHighlight, string spritePress) : base(cm) {
+            
             buttonNormal = spriteNormal;
             buttonHighlight = spriteHighlight;
             buttonClick = spritePress;
-
             base.LoadContent(buttonNormal, true); //load the button background
             this.Position = new Vector2(x, y); //set the button position where specified
             this.CenterOrigin(); //draw button measuring from center of texture
@@ -37,7 +37,7 @@ namespace teamstairwell.Interface {
             buttonText.Color = Color.Red; //set the text color
             this.cm = cm; //store the content manager reference so we can use it later to swap button textures
 
-            this.link = link; //store where a click will take us
+            this.onClick = onClick; //store the lambda function to call when clicked
         }
 
         public new void Update(GameTime gt) {
@@ -72,7 +72,9 @@ namespace teamstairwell.Interface {
             }
 
             if(currState == ButtonState.Highlighted && prevState == ButtonState.Pressed)
-                RNSEB.CurrentScreen = this.link;
+                //I've been clicked! Ouch! Right in the eye! Son of a ...!
+                onClick();
+            
             
             base.Update(gt); //update view (in case base.frame has changed)
         }

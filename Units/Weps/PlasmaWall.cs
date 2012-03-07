@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
 
-    class PlasmaWall : HenryWeapon {
+    public class PlasmaWall : HenryWeapon {
 
         float rotation; //should be 0 or pi/2 for horizontal or vertical walls of plasma
 

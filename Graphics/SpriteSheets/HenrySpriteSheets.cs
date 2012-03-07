@@ -75,7 +75,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Crosshair", 60, 60, 2);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Buoy", 30, 30, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletGoldLaser", 15, 15, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletRocket", 15, 15, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletSeeker", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpG", 25, 25, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpM", 25, 25, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpK", 25, 25, 4);
@@ -84,7 +84,8 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "HexSpawner", 45, 45, 5);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "HexSpawnerAura", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpR", 25, 25, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "ShieldTick", 1, 20, 1);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "Drone", 32, 32, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "ShieldTick", 3, 20, 1);
             //here shall be a whole lotta code
 
 
