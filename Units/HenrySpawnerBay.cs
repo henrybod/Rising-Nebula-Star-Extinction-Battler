@@ -28,8 +28,8 @@ namespace teamstairwell {
             if(timeSinceLastFired >= 1/(launchRate * Ship.FireRateMultiplier)) {
                 //calc new spawner's initial velocity
                 Random r = new Random();
-                int rx = r.Next(400);
-                int ry = r.Next(400);
+                int rx = r.Next(200);
+                int ry = r.Next(200);
                 if(r.Next(2) > 0) rx *= -1;
                 if(r.Next(2) > 0) ry *= -1;
                 Vector2 initVel = new Vector2(rx, ry); //TODO: calc where the spawner should head to
@@ -72,7 +72,7 @@ namespace teamstairwell {
                 s.Automated = true;
                 s.FocusedWeapon.timeSinceLastFired = 1.0f;
                 spawners.Add(s);
-                Ship.Battlefield.spawners.Add(s);
+                Ship.Battlefield.ships.Add(s);
                 RNSEB.Audio.PlayEffect("LaunchSpawner");
                 timeSinceLastFired = 0;
             }

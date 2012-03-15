@@ -35,7 +35,7 @@ namespace teamstairwell {
             }
         }
 
-        public void Update(GameTime gt) {
+        public virtual void Update(GameTime gt) {
             //fire weapon
             timeSinceLastFired += (float)gt.ElapsedGameTime.TotalSeconds;
 
@@ -44,7 +44,7 @@ namespace teamstairwell {
                 if(!b.Spent) b.Update(gt);
         }
 
-        public void Draw(SpriteBatch sb){
+        public virtual void Draw(SpriteBatch sb){
             //draw all my bullets
             foreach (HenryBullet b in bullets)
                 if(!b.Spent) b.Draw(sb);

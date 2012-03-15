@@ -12,7 +12,7 @@ namespace teamstairwell.Interface {
     class HenryMenu : HenryScreen {
         private string music = "MenuMusic";
         private ContentManager cm;
-        private List<HenryButton> buttons = new List<HenryButton>();
+        public Dictionary<string, HenryButton> Buttons = new Dictionary<string, HenryButton>();
         private List<HenryUpgradeButton> upgradeButtons = new List<HenryUpgradeButton>();
         private List<HenryText> texts = new List<HenryText>();
         private HenrySprite background;
@@ -43,13 +43,13 @@ namespace teamstairwell.Interface {
             HenryButton b = new HenryButton(x, y, text, callbackfunc, cm, spriteNormal, spriteHighlight, spritePress);
             b.Scale = scale;
             
-            buttons.Add(b);
+            Buttons.Add(text, b);
         }
 
-        public void AddUpgradeButton(float percentX, float percentY, HenryBattlefield batt, ContentManager cm, string normalSprite, string highlightedSprite, RNSEB.HenryUpgrade up, string description) {
+        public void AddUpgradeButton(float percentX, float percentY, ContentManager cm, string normalSprite, string highlightedSprite, RNSEB.HenryUpgrade up, string description) {
             int x = (int)(percentX * RNSEB.RESOLUTION.X);
             int y = (int)(percentY * RNSEB.RESOLUTION.Y);
-            HenryUpgradeButton b = new HenryUpgradeButton(x, y, description, cm, batt, normalSprite, highlightedSprite, highlightedSprite, up);
+            HenryUpgradeButton b = new HenryUpgradeButton(x, y, description, cm, normalSprite, highlightedSprite, highlightedSprite, up);
             b.Scale = 1.5f;
             upgradeButtons.Add(b);
         }
@@ -64,7 +64,7 @@ namespace teamstairwell.Interface {
 
         public new void Draw(SpriteBatch sb) {
             background.Draw(sb);
-            foreach(HenryButton b in buttons)
+            foreach(HenryButton b in Buttons.Values)
                 b.Draw(sb);
             foreach(HenryUpgradeButton u in upgradeButtons)
                 u.Draw(sb);
@@ -75,7 +75,7 @@ namespace teamstairwell.Interface {
         public new void Update(GameTime gt){
             if(SpinBackground)
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
-            foreach(HenryButton b in buttons)
+            foreach(HenryButton b in Buttons.Values)
                 b.Update(gt);
             foreach (HenryUpgradeButton u in upgradeButtons)
                 u.Update(gt);

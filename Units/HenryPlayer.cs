@@ -13,6 +13,7 @@ namespace teamstairwell {
     public class HenryPlayer : HenrySpawner {
 
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
+        private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
         private HenryShieldBar shieldBar;
         private bool shieldIsUp = true;
@@ -46,12 +47,13 @@ namespace teamstairwell {
             shieldDownTime = 8.0f; //how many seconds should the shield stay offline when brought to 0?
             shieldReturnCapacity = 0.2f; //what percentage of the shield should be instantly restored when shield comes back online?
             ShieldRegenRate = 0.2f; //this many shield hitpoints regen per second (1 bullet takes 1 point)
-            EnginePower = 1000.0f; //in km/s (lol)
-            HitRadius = 20;
+            EnginePower = 800.0f; //accerlation magnitude of the engines
+            HitRadius = 20; //what hit size is the player?
+            invulnerabilityAfterDamageLength = 1.0f; //how much time (in seconds) should the player be invulnerable after a hit?
             shieldBar = new HenryShieldBar(cm, this);
             
             //starter weapon
-            FocusedWeapon = new SpiralRockets(this);
+            FocusedWeapon = new DroneLauncher(this);
         }
 
         public new void Update(GameTime gt){
@@ -59,6 +61,13 @@ namespace teamstairwell {
             if (!Dead) {
                 //play anim
                 LoadContent("PlayerIdle", true);
+
+                //update invulnerability from shield hit
+                if(Invulnerable) invulnerabilityAfterDamageCounter += (float)gt.ElapsedGameTime.TotalSeconds;
+                if(invulnerabilityAfterDamageCounter > invulnerabilityAfterDamageLength){
+                    invulnerabilityAfterDamageCounter = 0;
+                    Invulnerable = false;
+                }
 
                 //update shield
                 if (shieldIsUp)
@@ -102,24 +111,30 @@ namespace teamstairwell {
 
         public new void Draw(SpriteBatch sb){
             base.Draw(sb);
-            shieldBar.Draw(sb);
         }
 
-        public new void Damage(int amount){
+        public override void Damage(int amount){
+            if (Invulnerable)
+                return; //no damage if invulnerbale
 
             if (!shieldIsUp)
-                Dead = true; //if no shield and be damage equal deddify j00!
+                Dead = true; //if no shield and be damaged equal deddify j00!
 
             if (Dead) {
+                Velocity = Vector2.Zero;
+                acceleration = Vector2.Zero;
                 LoadContent("PlayerDeath", false, 1.0f); //u b ded!
                 RNSEB.Audio.PlayEffect("PlayerDeath"); //u sounds ded 2!
             } else {
                 //not dead yet
                 Shield -= amount;
-                if (Shield == 0) {
-                    shieldIsUp = false;
-                    //RNSEB.Audio.Play("PlayerShieldDown"); <-- todo: find sound effect
-                } else {
+                Invulnerable = true;
+
+                //shield logic
+                if (Shield <= 0) { //oh noes! teh shield iz down!
+                    shieldIsUp = false; //this initiates logic in the update method
+                    //RNSEB.Audio.Play("PlayerShieldDown!!!"); <-- todo: find sound effect
+                } else { //shield absorbs damage
                     LoadContent("PlayerHit", false, 3);
                     RNSEB.Audio.PlayEffect("PlayerHit");
                 }
@@ -129,10 +144,10 @@ namespace teamstairwell {
         public void AddUpgrade(RNSEB.HenryUpgrade upgrade){
             switch(upgrade){
                 case RNSEB.HenryUpgrade.PlayerSuperLaser:
-                    FocusedWeapon = new GoldLaser(this); //todo!!
+                    FocusedWeapon = new GoldLaser(this);
                     break;
 
-                //every player upgrade here!
+                //todo: put every player upgrade here!
             }
         }
     }

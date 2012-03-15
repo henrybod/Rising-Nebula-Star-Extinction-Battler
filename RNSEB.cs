@@ -189,7 +189,7 @@ namespace teamstairwell {
                 MainMenu.AddText(0.5f, 0.225f, TitleFont, TitleColor, "Extinction Battler:");
                 MainMenu.AddText(0.5f, 0.3f, TitleFont, TitleColor, "The Final Sin"); //todo: find a way to center justify text
                 MainMenu.AddButton(0.5f, 0.5f, "", new OnClick(()=>{RNSEB.CurrentScreen = "Credits";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.5f);
-
+                
                 //create how to play screen
                 HenryMenu HowToPlay = (HenryMenu)screens["HowToPlay"];
                 HowToPlay.AddButton(0.9f, 0.9f, "Back", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
@@ -197,13 +197,14 @@ namespace teamstairwell {
                 HowToPlay.AddText(0.35f, 0.25f, TextFont, Color.White, "Zihao is the last fighter pilot\nof ... something, something ...");
                 HowToPlay.AddButton(0.65f, 0.25f, "", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.0f);
                 HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
-                HowToPlay.AddButton(0.30f, 0.6f, "", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "BossIdle", "BossHit", "BossDeath", 1.0f);
+                HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "BossIdle", "BossHit", "BossDeath", 1.0f);
 
                 //create player's upgrade menu
                 HenryMenu PlayerUpgradeMenu = (HenryMenu)screens["PlayerUpgradeMenu"];
                 PlayerUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
                 PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
-                //PlayerUpgradeMenu.AddUpgradeButton(0.5f, 0.5f, Battlefield, Content, "Skull", "SkullAura", HenryUpgrade.PlayerSuperLaser, "Gives lazer thing");
+                PlayerUpgradeMenu.AddButton(0.5f, 0.5f, "", new OnClick(()=>{}), "PowerUpG", "PowerUpG", "PowerUpG", 1.5f);
+                //PlayerUpgradeMenu.AddUpgradeButton(0.5f, 0.5f, Content, "Skull", "SkullAura", HenryUpgrade.PlayerSuperLaser, "Gives lazer thing");
                 //todo: make semi-transparent background for upgrade & pause menu
 
                 //create boss's upgrade menu

@@ -11,7 +11,7 @@ namespace teamstairwell.Weapons {
         float rotation; //should be 0 or pi/2 for horizontal or vertical walls of plasma
 
         public PlasmaWall(HenrySpawner ship, float rotation)
-            : base(ship, 0.5f) {
+            : base(ship, 0.2f) {
             this.rotation = rotation;
         }
         

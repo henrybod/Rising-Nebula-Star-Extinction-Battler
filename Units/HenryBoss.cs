@@ -15,7 +15,7 @@ namespace teamstairwell {
         private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
 
         public HenryBoss(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
-            : base(cm, b, 10000, mass, initPos, initVel, damping) {
+            : base(cm, b, 1000, mass, initPos, initVel, damping) {
             spawnerType = "Boss";
             this.LoadContent("BossIdle", true); //initally idle
             this.CenterOrigin();
@@ -23,7 +23,7 @@ namespace teamstairwell {
             this.healthBar = new HenryHealthBar(cm, this);
             this.HitRadius = 65;
             EnginePower = 30.0f;
-            spawnerBays.Add(new HenrySpawnerBay(this, 0.5f, "VerticalPlasmaWall", 100));
+            spawnerBays.Add(new HenrySpawnerBay(this, 0.2f, "VerticalPlasmaWall", 100));
 
         }
 
@@ -48,7 +48,7 @@ namespace teamstairwell {
                 acceleration = forceDirection * EnginePower;
 
                 //activate spawner bays!
-                if (RNSEB.Input.GetKey("BossFire1"))
+                if (RNSEB.Input.GetKey("BossFire1") || Automated)
                     foreach (HenrySpawnerBay bay in spawnerBays)
                         bay.Fire();
 
@@ -74,7 +74,7 @@ namespace teamstairwell {
             //todo
         }
 
-        public new void Damage(int amount){
+        public override void Damage(int amount){
             if (Health <= 0)
                 Dead = true;
 

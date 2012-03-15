@@ -20,7 +20,7 @@ namespace teamstairwell {
                   Health = healthMax; }}
         public float Health, EnginePower;
         public HenryBattlefield Battlefield;
-        public bool Dead = false, Automated = false;
+        public bool Dead = false, Automated = false, Invulnerable = false;
         protected bool firingFocused = false, firingDiffuse = false;
         private float fireRateMultiplier = 1.0f;
         public float FireRateMultiplier {
@@ -71,7 +71,7 @@ namespace teamstairwell {
             if(!Dead || Animate) base.Update(gt);
         }
 
-        public void Damage(int amount) {
+        public virtual void Damage(int amount) {
             if (Health <= 0)
                 Dead = true;
 
