@@ -132,7 +132,9 @@
     <Compile Include="Interface\HenryHealthBar.cs" />
     <Compile Include="Interface\HenryShieldBar.cs" />
     <Compile Include="Interface\HenryUpgradeButton.cs" />
+    <Compile Include="Interface\HUD\ProgressBar.cs" />
     <Compile Include="Seeker.cs" />
+    <Compile Include="Units\Weps\BasicLaser.cs" />
     <Compile Include="Units\BossAI.cs" />
     <Compile Include="Units\HenryBoss.cs" />
     <Compile Include="Units\HenryBullet.cs" />
@@ -193,6 +195,14 @@
     <Compile Include="Units\HenrySpawnerBay.cs" />
     <Compile Include="Units\HenryWeapon.cs" />
     <Compile Include="Units\SpawnerAI.cs" />
+    <Compile Include="Units\Weps\DroneLauncher.cs" />
+    <Compile Include="Units\Weps\SeekerMissles.cs" />
+    <Compile Include="Units\Weps\QuadLaser.cs" />
+    <Compile Include="Units\Weps\SpiralRockets.cs" />
+    <Compile Include="Units\Weps\PlasmaWall.cs" />
+    <Compile Include="Units\Weps\RingOfFire.cs" />
+    <Compile Include="Units\Weps\MarbleShooter.cs" />
+    <Compile Include="Units\Weps\GoldLaser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

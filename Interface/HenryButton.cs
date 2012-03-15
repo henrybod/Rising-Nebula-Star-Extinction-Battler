@@ -12,7 +12,6 @@ namespace teamstairwell.Interface {
     public class HenryButton : HenrySprite {
  
         private HenryText buttonText;
-        private string link;
         private enum ButtonState {
             Normal,
             Highlighted,
@@ -21,14 +20,15 @@ namespace teamstairwell.Interface {
         private ButtonState prevState;
         private ButtonState currState;
         private string buttonNormal, buttonHighlight, buttonClick;
+        public RNSEB.OnClick onClick;
+        public bool Enabled = true;
 
 
-        public HenryButton(int x, int y, string text, string link, ContentManager cm, string spriteNormal, string spriteHighlight, string spritePress) : base(cm) {
-
+        public HenryButton(int x, int y, string text,  RNSEB.OnClick onClick, ContentManager cm, string spriteNormal, string spriteHighlight, string spritePress) : base(cm) {
+            
             buttonNormal = spriteNormal;
             buttonHighlight = spriteHighlight;
             buttonClick = spritePress;
-
             base.LoadContent(buttonNormal, true); //load the button background
             this.Position = new Vector2(x, y); //set the button position where specified
             this.CenterOrigin(); //draw button measuring from center of texture
@@ -37,10 +37,11 @@ namespace teamstairwell.Interface {
             buttonText.Color = Color.Red; //set the text color
             this.cm = cm; //store the content manager reference so we can use it later to swap button textures
 
-            this.link = link; //store where a click will take us
+            this.onClick = onClick; //store the lambda function to call when clicked
         }
 
         public new void Update(GameTime gt) {
+            if(!Enabled) return;
             prevState = currState; //current state is now old
             //check mouse hover/click
             if(RNSEB.Input.MouseIsIn(Position, Size)){
@@ -71,14 +72,23 @@ namespace teamstairwell.Interface {
                 }
             }
 
-            if(currState == ButtonState.Highlighted && prevState == ButtonState.Pressed)
-                RNSEB.CurrentScreen = this.link;
+            if(currState == ButtonState.Highlighted && prevState == ButtonState.Pressed){
+                //I've been clicked! Ouch! Right in the eye! Son of a ...!
+                LoadContent(buttonNormal, true);
+                buttonText.Color = Color.Red;
+                onClick();
+            }
             
             base.Update(gt); //update view (in case base.frame has changed)
         }
 
         public new void Draw(SpriteBatch sb) {
-            base.Draw(sb); //draw the button sprite first
+            //draw the button sprite first
+            if(Enabled) base.Draw(sb);
+            else
+                sb.Draw(Texture, Position, viewRect, Color.Gray,
+                    Rotation, Origin, Scale, SpriteEffects.None, 0);
+
             buttonText.Draw(sb); //then draw the text on top of it
         }
     }

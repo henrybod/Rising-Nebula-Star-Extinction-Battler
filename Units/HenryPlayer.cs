@@ -6,13 +6,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Interface;
+using teamstairwell.Weapons;
 
 namespace teamstairwell {
 
-    class HenryPlayer : HenrySpawner {
+    public class HenryPlayer : HenrySpawner {
 
-        public int UpgradePoints = 0;
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
+        private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
         private HenryShieldBar shieldBar;
         private bool shieldIsUp = true;
@@ -38,7 +39,8 @@ namespace teamstairwell {
         }
 
         public HenryPlayer(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
-            : base(cm, b, mass, initPos, initVel, damping) {
+            : base(cm, b, 1, mass, initPos, initVel, damping) {
+            spawnerType = "Player";
             LoadContent("PlayerIdle", true); //initally idle
             CenterOrigin();
             ShieldMax = 2; //just a random starting value (upgrades will increment this)
@@ -46,12 +48,13 @@ namespace teamstairwell {
             shieldDownTime = 8.0f; //how many seconds should the shield stay offline when brought to 0?
             shieldReturnCapacity = 0.2f; //what percentage of the shield should be instantly restored when shield comes back online?
             ShieldRegenRate = 0.2f; //this many shield hitpoints regen per second (1 bullet takes 1 point)
-            EnginePower = 1000.0f; //in km/s (lol)
-            HitRadius = 20;
-            focusedWeapon = new HenryWeapon(this, "BulletLaser", "BulletLaser", 1, 20, 1000);
+            EnginePower = 800.0f; //accerlation magnitude of the engines
+            HitRadius = 20; //what hit size is the player?
+            invulnerabilityAfterDamageLength = 1.0f; //how much time (in seconds) should the player be invulnerable after a hit?
             shieldBar = new HenryShieldBar(cm, this);
             Drones = new List<Drone>();
             Drones.Add(new Drone(cm, Battlefield, 80, new Vector2(Position.X + 40, Position.Y), new Vector2(0, 0), 0.9999999999999f, this, Drone.droneType.SideBySide));
+            FocusedWeapon = new DroneLauncher(this);
         }
 
         public new void Update(GameTime gt){
@@ -59,6 +62,13 @@ namespace teamstairwell {
             if (!Dead) {
                 //play anim
                 LoadContent("PlayerIdle", true);
+
+                //update invulnerability from shield hit
+                if(Invulnerable) invulnerabilityAfterDamageCounter += (float)gt.ElapsedGameTime.TotalSeconds;
+                if(invulnerabilityAfterDamageCounter > invulnerabilityAfterDamageLength){
+                    invulnerabilityAfterDamageCounter = 0;
+                    Invulnerable = false;
+                }
 
                 //update shield
                 if (shieldIsUp)
@@ -73,22 +83,6 @@ namespace teamstairwell {
                     }
                 }
 
-                //movement (anachronous)
-                /*
-                float delta = this.MovementSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
-                if ((RNSEB.Input.GetKey("PlayerUp") || RNSEB.Input.GetKey("PlayerDown"))
-                    && (RNSEB.Input.GetKey("PlayerRight") || RNSEB.Input.GetKey("PlayerLeft")))
-                    delta /= (float)Math.Sqrt(2);
-                if (RNSEB.Input.GetKey("PlayerUp") && Position.Y - delta >= 0)
-                    this.Position.Y -= delta;
-                if (RNSEB.Input.GetKey("PlayerDown") && Position.Y + delta <= RNSEB.RESOLUTION.Y)
-                    this.Position.Y += delta;
-                if (RNSEB.Input.GetKey("PlayerLeft") && Position.X - delta >= 0)
-                    this.Position.X -= delta;
-                if (RNSEB.Input.GetKey("PlayerRight") && Position.X + delta <= RNSEB.RESOLUTION.X)
-                    this.Position.X += delta;
-                */
-
                 //calculate acceleration (the rest is handled in Mass class)
                 Vector2 forceDirection = new Vector2(0, 0);
                 if (RNSEB.Input.GetKey("PlayerUp"))
@@ -100,15 +94,15 @@ namespace teamstairwell {
                 if (RNSEB.Input.GetKey("PlayerRight"))
                     forceDirection.X = 1;
                 if (forceDirection.Length() > 0)
-                    forceDirection.Normalize(); //hmm
+                    forceDirection.Normalize();
                 acceleration = forceDirection * EnginePower;
 
                 //calculate ship rotation from mouse cursor position (props to ryan)
                 Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
 
                 //fire weapons!
-                FiringFocused = RNSEB.Input.GetKey("PlayerFire1");
-                FiringDiffuse = RNSEB.Input.GetKey("PlayerFire2");
+                firingFocused = RNSEB.Input.GetKey("PlayerFire1");
+                firingDiffuse = RNSEB.Input.GetKey("PlayerFire2");
 
             } else if (!Animate)
                 RNSEB.CurrentScreen = "BossVictory";
@@ -118,7 +112,6 @@ namespace teamstairwell {
 
         public new void Draw(SpriteBatch sb){
             base.Draw(sb);
-            shieldBar.Draw(sb);
             for (int i = 0; i < Drones.Count; i++)
             {
                 Drones[i].Draw(sb);
@@ -126,21 +119,28 @@ namespace teamstairwell {
 
         }
 
-        public new void Damage(int amount){
+        public override void Damage(int amount){
+            if (Invulnerable)
+                return; //no damage if invulnerbale
 
             if (!shieldIsUp)
-                Dead = true; //if no shield and be damage equal deddify j00!
+                Dead = true; //if no shield and be damaged equal deddify j00!
 
             if (Dead) {
+                Velocity = Vector2.Zero;
+                acceleration = Vector2.Zero;
                 LoadContent("PlayerDeath", false, 1.0f); //u b ded!
                 RNSEB.Audio.PlayEffect("PlayerDeath"); //u sounds ded 2!
             } else {
                 //not dead yet
                 Shield -= amount;
-                if (Shield == 0) {
-                    shieldIsUp = false;
-                    //RNSEB.Audio.Play("PlayerShieldDown"); <-- todo: find sound effect
-                } else {
+                Invulnerable = true;
+
+                //shield logic
+                if (Shield <= 0) { //oh noes! teh shield iz down!
+                    shieldIsUp = false; //this initiates logic in the update method
+                    //RNSEB.Audio.Play("PlayerShieldDown!!!"); <-- todo: find sound effect
+                } else { //shield absorbs damage
                     LoadContent("PlayerHit", false, 3);
                     RNSEB.Audio.PlayEffect("PlayerHit");
                 }
@@ -150,13 +150,13 @@ namespace teamstairwell {
         public void AddUpgrade(RNSEB.HenryUpgrade upgrade){
             switch(upgrade){
                 case RNSEB.HenryUpgrade.PlayerSuperLaser:
-                    focusedWeapon = new HenryWeapon(this, "BulletGoldLaser", "BulletLaser", 1, 30, 600);
+                    FocusedWeapon = new GoldLaser(this);
                     break;
                 case RNSEB.HenryUpgrade.PlayerGunnerDrones:
                     Drones.Add(new Drone(cm, Battlefield, 80, new Vector2(Position.X + 40, 0), new Vector2(0, 0),  0.9999999999999f, this, Drone.droneType.SideBySide));
                     break;
 
-                //every player upgrade here!
+                //todo: put every player upgrade here!
             }
         }
     }

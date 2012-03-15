@@ -12,7 +12,6 @@ namespace teamstairwell.Interface {
     class HenryUpgradeButton : HenrySprite {
  
         private HenryText buttonText;
-        private HenryBattlefield battlefield;
         private enum ButtonState {
             Normal,
             Highlighted,
@@ -24,7 +23,7 @@ namespace teamstairwell.Interface {
         private bool used = false;
         private RNSEB.HenryUpgrade upgrade;
 
-        public HenryUpgradeButton(int x, int y, string text, ContentManager cm, HenryBattlefield b, string spriteNormal, string spriteHighlight, string spritePress, RNSEB.HenryUpgrade up) : base(cm) {
+        public HenryUpgradeButton(int x, int y, string text, ContentManager cm, string spriteNormal, string spriteHighlight, string spritePress, RNSEB.HenryUpgrade up) : base(cm) {
 
             buttonNormal = spriteNormal;
             buttonHighlight = spriteHighlight;
@@ -37,7 +36,6 @@ namespace teamstairwell.Interface {
             buttonText = new HenryText(new Vector2(0.5f * RNSEB.RESOLUTION.X, 0.9f * RNSEB.RESOLUTION.Y), RNSEB.TextFont, text);
             buttonText.Color = Color.White; //set the text color
             this.cm = cm; //store the content manager reference so we can use it later to swap button textures
-            battlefield = b; //store the battlefield so we can later access the player and boss to grant upgrades
             upgrade = up;
         }
 
@@ -73,7 +71,7 @@ namespace teamstairwell.Interface {
             }
 
             if (currState == ButtonState.Highlighted && prevState == ButtonState.Pressed){
-                battlefield.Zihao.AddUpgrade(upgrade);
+                RNSEB.TheBattlefield.Zihao.AddUpgrade(upgrade);
                 used = true;
             }
             

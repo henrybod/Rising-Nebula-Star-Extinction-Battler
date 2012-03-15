@@ -10,60 +10,75 @@ using teamstairwell.Interface;
 
 namespace teamstairwell {
 
-    class HenrySpawner : HenryMass {
+    public class HenrySpawner : HenryMass {
 
-        public int HealthMax = 10;
+        public string spawnerType = "Spawner";
+        private int healthMax;
+        public int HealthMax {
+            get { return healthMax; }
+            set { healthMax = value;
+                  Health = healthMax; }}
         public float Health, EnginePower;
-        protected float healthOld;
         public HenryBattlefield Battlefield;
-        public bool Dead = false, Automated = false, FiringFocused = false, FiringDiffuse = false;
+        public bool Dead = false, Automated = false, Invulnerable = false;
+        protected bool firingFocused = false, firingDiffuse = false;
         private float fireRateMultiplier = 1.0f;
-        public Vector2 Velocity = Vector2.Zero;
         public float FireRateMultiplier {
             get { return fireRateMultiplier; }
             set { fireRateMultiplier = (value <= 0) ? 1.0f : value; }
         }
-        public HenryWeapon focusedWeapon, diffuseWeapon;
+        public HenryWeapon FocusedWeapon, DiffuseWeapon;
 
 
-        public HenrySpawner(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
+
+        public HenrySpawner(ContentManager cm, HenryBattlefield b, int health, float mass, Vector2 initPos, Vector2 initVel, float damping)
             : base(cm, mass, initPos, initVel, damping, false) {
             this.Battlefield = b;
+            HealthMax = health;
+            Health = (float)health;
+            FocusedWeapon = new HenryWeapon(this, 20);
+            DiffuseWeapon = new HenryWeapon(this, 20);
         }
 
         public new void Draw(SpriteBatch sb) {
-            if (focusedWeapon != null) focusedWeapon.Draw(sb);
-            if (diffuseWeapon != null) diffuseWeapon.Draw(sb);
+            FocusedWeapon.Draw(sb);
+            DiffuseWeapon.Draw(sb);
             if (!Dead || Animate) base.Draw(sb);
         }
 
         public new void Update(GameTime gt){
-            //spawners may not leave the screen
-            
 
-            if (Automated) { //I'm a mindless minion of notus!
+            //note: spawners may not leave the screen
+
+            if (!Dead && Automated) { //I'm a mindless minion of notus!
                 //temporary crude ai for testing purposes (face player and fire)
-                Rotation = (float)(Math.Atan2(Position.Y - Battlefield.Zihao.Position.Y,
-                                              Position.X - Battlefield.Zihao.Position.X) - Math.PI / 2);
-                FiringFocused = true;
+                //Rotation = (float)(Math.Atan2(Position.Y - Battlefield.Zihao.Position.Y,
+                //                              Position.X - Battlefield.Zihao.Position.X) - Math.PI / 2);
+                firingFocused = true;
             }
 
-            //update all weapons
-            if (focusedWeapon != null) focusedWeapon.Update(gt);
-            if (diffuseWeapon != null) diffuseWeapon.Update(gt);
+            //update weapons
+            FocusedWeapon.Update(gt);
+            DiffuseWeapon.Update(gt);
+
+            //fire weapons
+            if (firingFocused)
+                FocusedWeapon.Fire();
+            if (firingDiffuse)
+                DiffuseWeapon.Fire();
 
             //update mass
             if(!Dead || Animate) base.Update(gt);
         }
 
-        public void Damage(int amount) {
+        public virtual void Damage(int amount) {
             if (Health <= 0)
                 Dead = true;
 
             if (Dead){
-                velocity = Vector2.Zero;
-                LoadContent("PlayerDeath", false, 1.0f); //dieeeee!
-                RNSEB.Audio.PlayEffect("SmallExplosion");
+                Velocity = Vector2.Zero;
+                LoadContent("Explosion", false, 3.0f); //dieeeee!
+                RNSEB.Audio.PlayEffect("ExplosionSmall");
             } else {
                 Health -= amount;
             }

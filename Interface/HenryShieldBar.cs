@@ -30,12 +30,13 @@ namespace teamstairwell.Interface {
             this.ship = ship;
             shieldTick = new HenrySprite(cm);
             shieldTick.LoadContent("ShieldTick", true);
-            shieldTick.Position.Y = RNSEB.RESOLUTION.Y - 20;
+            shieldTick.Position.Y = RNSEB.RESOLUTION.Y - 16;
         }
+
         public void Draw(SpriteBatch sb){
             float ticks = RNSEB.RESOLUTION.X * (ship.Shield / (float)ship.ShieldMax);
             ticks = (int)ticks;
-            for(int i = 0; i < ticks; i++){
+            for(int i = 0; i < ticks; i += 3){
                 shieldTick.Position.X = i;
                 shieldTick.Draw(sb);
             }
