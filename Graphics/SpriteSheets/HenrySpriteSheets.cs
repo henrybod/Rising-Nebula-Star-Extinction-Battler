@@ -85,6 +85,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "HexSpawnerAura", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpR", 25, 25, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "ShieldTick", 1, 20, 1);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "GunnerDrone", 32, 32, 4);
             //here shall be a whole lotta code
 
 

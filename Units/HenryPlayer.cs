@@ -16,6 +16,7 @@ namespace teamstairwell {
         private int shieldMax;
         private HenryShieldBar shieldBar;
         private bool shieldIsUp = true;
+        public List<Drone> Drones;
         public float Shield {
             get{ return shield; }
             set {
@@ -49,6 +50,8 @@ namespace teamstairwell {
             HitRadius = 20;
             focusedWeapon = new HenryWeapon(this, "BulletLaser", "BulletLaser", 1, 20, 1000);
             shieldBar = new HenryShieldBar(cm, this);
+            Drones = new List<Drone>();
+            Drones.Add(new Drone(cm, Battlefield, 80, new Vector2(Position.X + 40, Position.Y), new Vector2(0, 0), 0.9999999999999f, this, Drone.droneType.SideBySide));
         }
 
         public new void Update(GameTime gt){
@@ -116,6 +119,11 @@ namespace teamstairwell {
         public new void Draw(SpriteBatch sb){
             base.Draw(sb);
             shieldBar.Draw(sb);
+            for (int i = 0; i < Drones.Count; i++)
+            {
+                Drones[i].Draw(sb);
+            }
+
         }
 
         public new void Damage(int amount){
@@ -143,6 +151,9 @@ namespace teamstairwell {
             switch(upgrade){
                 case RNSEB.HenryUpgrade.PlayerSuperLaser:
                     focusedWeapon = new HenryWeapon(this, "BulletGoldLaser", "BulletLaser", 1, 30, 600);
+                    break;
+                case RNSEB.HenryUpgrade.PlayerGunnerDrones:
+                    Drones.Add(new Drone(cm, Battlefield, 80, new Vector2(Position.X + 40, 0), new Vector2(0, 0),  0.9999999999999f, this, Drone.droneType.SideBySide));
                     break;
 
                 //every player upgrade here!

@@ -24,7 +24,7 @@ namespace teamstairwell{
         SpriteBatch spriteBatch;
 
         //Henry Stuff (just testin')
-        bool HenryMode = false;
+        bool HenryMode = true;
         HenryMouse TheMouse;
         Dictionary<string, HenryScreen> screens = new Dictionary<string, HenryScreen>();
         
@@ -40,6 +40,7 @@ namespace teamstairwell{
             PlayerShieldCapacity2, //defense: increase total shield capacity
             PlayerShieldRecovery, //defense: decrease shield downtime
             PlayerSpeed, //increase player's maximum velocity
+            PlayerGunnerDrones,
             BossLineSpawner, //offense: I'm not sure what all these do yet
             BossRollSpawner, //offense
             BossSplitSpawner, //offense
