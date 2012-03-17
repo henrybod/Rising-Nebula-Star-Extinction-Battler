@@ -82,6 +82,11 @@ namespace teamstairwell.Interface {
             RNSEB.Audio.PlayMusic(music);
         }
 
+        public void clearTexts()
+        {
+            texts.Clear();
+        }
+
         
 
     }

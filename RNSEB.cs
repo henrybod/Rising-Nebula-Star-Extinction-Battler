@@ -23,6 +23,13 @@ namespace teamstairwell {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Multiplayer
+        NetworkSession networkSession;
+        AvailableNetworkSessionCollection availableSessions;
+        int selectedSessionIndex;
+        PacketReader packetReader = new PacketReader();
+        PacketWriter packetWriter = new PacketWriter();
+
         //Henry Stuff (just testin')
         bool HenryMode = true;
         HenryMouse TheMouse;
@@ -40,6 +47,7 @@ namespace teamstairwell {
             PlayerShieldCapacity2, //defense: increase total shield capacity
             PlayerShieldRecovery, //defense: decrease shield downtime
             PlayerSpeed, //increase player's maximum velocity
+            PlayerGunnerDrones,
             BossVerticalLineSpawner, //offense: send out a line of purple plasma balls
             BossHorizontalLineSpawner, //offense: sinned out a line of purple plasma balls
             BossRollSpawner, //offense
@@ -88,6 +96,8 @@ namespace teamstairwell {
 
         public ScreenManage ScreenManager;
 
+        private HenryMenu Multiplayer;
+
 
 
 
@@ -97,6 +107,10 @@ namespace teamstairwell {
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
             Content.RootDirectory = "Content";
+
+            //Multiplayer sign in components
+            Components.Add(new GamerServicesComponent(this));
+            SignedInGamer.SignedIn +=new EventHandler<SignedInEventArgs>(SignedInGamer_SignedIn);
         }
 
         protected override void Initialize() {
@@ -159,6 +173,7 @@ namespace teamstairwell {
                 screens.Add("BossVictory", new HenryMenu(this.Content));
                 screens.Add("Credits", new HenryMenu(this.Content));
                 screens.Add("HowToPlay", new HenryMenu(this.Content));
+                screens.Add("Multiplayer", new HenryMenu(this.Content));
                 screens.Add("Battlefield", new HenryScreen()); //note: not an actual battlefield, gets filled in by appropriate button
                 screens.Add("PauseMenu", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
@@ -180,7 +195,7 @@ namespace teamstairwell {
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
-                MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
+                MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", new OnClick(()=>{RNSEB.CurrentScreen = "Multiplayer";}));
                 MainMenu.AddButton(0.7f, 0.5f, "Load /\n Save", new OnClick(()=>{RNSEB.CurrentScreen = "LoadMenu";}));
                 MainMenu.AddButton(0.66f, 0.675f, "Quit", new OnClick(()=>{RNSEB.CurrentScreen = "Exit";}));
                 MainMenu.AddButton(0.5f, 0.75f, "How to\n  Play", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlay";}));
@@ -198,6 +213,20 @@ namespace teamstairwell {
                 HowToPlay.AddButton(0.65f, 0.25f, "", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.0f);
                 HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
                 HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "BossIdle", "BossHit", "BossDeath", 1.0f);
+
+                //create multiplayer screen
+                //HenryMenu 
+                Multiplayer = (HenryMenu)screens["Multiplayer"];
+                Multiplayer.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                /*Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                if (SignedInGamer.SignedInGamers.Count == 0)
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
+                }
+                else
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "Press A to create a new session \n X to search for sessions");
+                }*/
 
                 //create player's upgrade menu
                 HenryMenu PlayerUpgradeMenu = (HenryMenu)screens["PlayerUpgradeMenu"];
@@ -242,10 +271,32 @@ namespace teamstairwell {
             // mayhaps utilization of this function will clear up our generous memory usage problem
         }
 
+        //Multiplayer Sign In
+        void SignedInGamer_SignedIn(object sender, SignedInEventArgs e)
+        {
+            e.Gamer.Tag = new User();
+        }
+
         protected override void Update(GameTime gameTime) {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) //this looks like xbox to me
                 this.Exit();
+
+            //Maintains lobby sign in state... probably a cleaner way to do this, but I'm lazy
+            if (RNSEB.CurrentScreen == "Multiplayer")
+            {
+                Multiplayer.clearTexts();
+                Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                if (SignedInGamer.SignedInGamers.Count == 0)
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
+                }
+                else
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "Press A to create a new session \n X to search for sessions");
+                }
+            }
+
 
             if(!HenryMode){
 

@@ -203,6 +203,7 @@
     <Compile Include="Units\Weps\RingOfFire.cs" />
     <Compile Include="Units\Weps\MarbleShooter.cs" />
     <Compile Include="Units\Weps\GoldLaser.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

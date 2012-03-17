@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell
 {
-    class Drone : HenrySpawner
+    public class Drone : HenrySpawner
     {
 
         //Specifies the movement pattern of the drone
@@ -29,7 +29,7 @@ namespace teamstairwell
         droneType type;
 
         public Drone(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping, HenrySpawner master, droneType type)
-            : base(cm, b, mass, initPos, initVel, damping)
+            : base(cm, b, 1, mass, initPos, initVel, damping)
         {
             LoadContent("PlayerIdle", true);
             this.type = type;
