@@ -33,11 +33,18 @@ namespace teamstairwell{
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Multiplayer
+        NetworkSession networkSession;
+        AvailableNetworkSessionCollection availableSessions;
+        int selectedSessionIndex;
+        PacketReader packetReader = new PacketReader();
+        PacketWriter packetWriter = new PacketWriter();
+
         //Henry Stuff (just testin')
         bool HenryMode = true;
         HenryMouse TheMouse;
         Dictionary<string, HenryScreen> screens = new Dictionary<string, HenryScreen>();
-        
+        public delegate void OnClick(); //delegate type for lambda functions passed to buttons
         public enum HenryUpgrade {
             PlayerSuperLaser, //focused offense
             PlayerQuadLaser, //mostly focused but a little diffuse offense
@@ -50,24 +57,27 @@ namespace teamstairwell{
             PlayerShieldCapacity2, //defense: increase total shield capacity
             PlayerShieldRecovery, //defense: decrease shield downtime
             PlayerSpeed, //increase player's maximum velocity
-            BossLineSpawner, //offense: I'm not sure what all these do yet
+            PlayerGunnerDrones,
+            BossVerticalLineSpawner, //offense: send out a line of purple plasma balls
+            BossHorizontalLineSpawner, //offense: sinned out a line of purple plasma balls
             BossRollSpawner, //offense
             BossSplitSpawner, //offense
             BossBurstSpawner, //offense
-            BossMarbleSpawner, //offense
+            BossMarbleSpawner, //offense: large projectile aimed straight at the player
             BossGravityWellSpawner, //offense: will be perhaps the last boss offensive upgrade
             BossAttritionField, //defense: damage the player while he is in the blue bubble
             BossAutoRepair, //defense: the boss regains health slowly
             BossPlating, //damage to boss reduced 50%
-            BossEMP, //offense: (concept) manually target weapon that takes out all shields
+            BossEMP, //offense: (concept) manually target AoE weapon that takes out all shields
             BossAutoTurrets //offense: give the boss some automatically targeting/firing lasers
-            //feel free to add ideas
+            //feel free to add ideas, ya'll
         }
         public static string PreviousScreen, CurrentScreen = "MainMenu"; //start by displaying the main menu
         public static HenrySpriteSheets HenrySprites; //a container for all spritedom
         public static SpriteFont ButtonFont, TitleFont, TextFont;
-        public static HenryMediaPlayer Audio;
-        public static HenryInput Input;
+        public static HenryMediaPlayer Audio; //reference for audio manager
+        public static HenryInput Input; //refence for input manager
+        public static HenryBattlefield TheBattlefield; //reference for other classes to access current battlefield
 
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
@@ -96,6 +106,8 @@ namespace teamstairwell{
 
         public ScreenManage ScreenManager;
 
+        //private HenryMenu Multiplayer;
+
       
 
 
@@ -105,6 +117,10 @@ namespace teamstairwell{
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
             Content.RootDirectory = "Content";
+
+            //Multiplayer sign in components
+            Components.Add(new GamerServicesComponent(this));
+            SignedInGamer.SignedIn +=new EventHandler<SignedInEventArgs>(SignedInGamer_SignedIn);
         }
 
         protected override void Initialize() {
@@ -167,72 +183,111 @@ namespace teamstairwell{
                 screens.Add("BossVictory", new HenryMenu(this.Content));
                 screens.Add("Credits", new HenryMenu(this.Content));
                 screens.Add("HowToPlay", new HenryMenu(this.Content));
-                screens.Add("Battlefield", new HenryBattlefield(this.Content, "BattlefieldBackground"));
+                screens.Add("SignIn", new HenryMenu(this.Content));
+                screens.Add("SessionOption", new HenryMenu(this.Content));
+                //screens.Add("Multiplayer", new HenryMenu(this.Content));
+                screens.Add("Battlefield", new HenryScreen()); //note: not an actual battlefield, gets filled in by appropriate button
+                screens.Add("PauseMenu", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
                 TextFont = this.Content.Load<SpriteFont>("TextFont");
                 TheMouse = new HenryMouse(this.Content);
                 Audio.LoadContent();
-                
+
                 //create main menu
                 HenryMenu MainMenu = (HenryMenu)screens["MainMenu"];
-                MainMenu.AddButton(0.3f, 0.5f, "Single\nPlayer", "Battlefield");
-                MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", "Battlefield");
-                MainMenu.AddButton(0.7f, 0.5f, "Load /\n Save", "LoadMenu");
-                MainMenu.AddButton(0.66f, 0.675f, "Quit", "Exit");
-                MainMenu.AddButton(0.5f, 0.75f, "How to\n  Play", "HowToPlay");
+                MainMenu.AddButton(0.3f, 0.5f, "Boss\nMode", new OnClick(() => {
+                    screens["Battlefield"] = new HenryBattlefield(this.Content, true); //new battlefield w/ boss mode true
+                    TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
+                    RNSEB.CurrentScreen = "Battlefield";
+                }));
+                MainMenu.AddButton(0.175f, 0.5f, "Player\nMode", new OnClick(() => {
+                    screens["Battlefield"] = new HenryBattlefield(this.Content, false); //new battlefield w/ boss mode false, i.e. player mode true
+                    TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
+                    RNSEB.CurrentScreen = "Battlefield";
+                }));
+                MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", new OnClick(()=>{RNSEB.CurrentScreen = "SignIn";}));
+                MainMenu.AddButton(0.7f, 0.5f, "Load /\n Save", new OnClick(()=>{RNSEB.CurrentScreen = "LoadMenu";}));
+                MainMenu.AddButton(0.66f, 0.675f, "Quit", new OnClick(()=>{RNSEB.CurrentScreen = "Exit";}));
+                MainMenu.AddButton(0.5f, 0.75f, "How to\n  Play", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlay";}));
                 Color TitleColor = Color.White;
                 MainMenu.AddText(0.5f, 0.15f, TitleFont, TitleColor, "Rising Nebula Star");
                 MainMenu.AddText(0.5f, 0.225f, TitleFont, TitleColor, "Extinction Battler:");
                 MainMenu.AddText(0.5f, 0.3f, TitleFont, TitleColor, "The Final Sin"); //todo: find a way to center justify text
-                MainMenu.AddButton(0.5f, 0.5f, "", "Credits", "PlayerIdle", "PlayerHit", "PlayerDeath", 1.5f);
-
+                MainMenu.AddButton(0.5f, 0.5f, "", new OnClick(()=>{RNSEB.CurrentScreen = "Credits";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.5f);
+                
                 //create how to play screen
                 HenryMenu HowToPlay = (HenryMenu)screens["HowToPlay"];
-                HowToPlay.AddButton(0.9f, 0.9f, "Back", "MainMenu");
+                HowToPlay.AddButton(0.9f, 0.9f, "Back", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
                 HowToPlay.AddText(0.5f, 0.1f, TitleFont, Color.White, "The Players");
-
                 HowToPlay.AddText(0.35f, 0.25f, TextFont, Color.White, "Zihao is the last fighter pilot\nof ... something, something ...");
-                HowToPlay.AddButton(0.65f, 0.25f, "", "HowToPlayZihao", "PlayerIdle", "PlayerHit", "PlayerDeath", 1.0f);
+                HowToPlay.AddButton(0.65f, 0.25f, "", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.0f);
                 HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
-                HowToPlay.AddButton(0.30f, 0.6f, "", "HowToPlayNotus", "BossIdle", "BossHit", "BossDeath", 1.0f);
+                HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "BossIdle", "BossHit", "BossDeath", 1.0f);
 
-                //create battlefield
-                HenryBattlefield Battlefield = (HenryBattlefield)screens["Battlefield"];
-                //nothing to do here as of yet
+                //Create Sign In Screen
+                HenryMenu SignIn = (HenryMenu)screens["SignIn"];
+                SignIn.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                SignIn.AddText(0.5f, 0.1f, TitleFont, Color.White, "Sign In");
+                SignIn.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
+
+                //Create New/Search Session Screen
+                HenryMenu SessionOption = (HenryMenu)screens["SessionOption"];
+                SessionOption.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                SessionOption.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                SessionOption.AddButton(0.35f, 0.3f, "New Session", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                SessionOption.AddButton(0.65f, 0.3f, "Find Session", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+
+                //create multiplayer screen
+                //Multiplayer = (HenryMenu)screens["Multiplayer"];
+                //Multiplayer.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+
+                /*Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                if (SignedInGamer.SignedInGamers.Count == 0)
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
+                }
+                else
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "Press A to create a new session \n X to search for sessions");
+                }*/
 
                 //create player's upgrade menu
                 HenryMenu PlayerUpgradeMenu = (HenryMenu)screens["PlayerUpgradeMenu"];
                 PlayerUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
-                PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", "Battlefield");
-                PlayerUpgradeMenu.AddUpgradeButton(0.5f, 0.5f, Battlefield, Content, "Skull", "SkullAura", HenryUpgrade.PlayerSuperLaser, "Gives lazer thing");
+                PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
+                PlayerUpgradeMenu.AddButton(0.5f, 0.5f, "", new OnClick(()=>{}), "PowerUpG", "PowerUpG", "PowerUpG", 1.5f);
+                //PlayerUpgradeMenu.AddUpgradeButton(0.5f, 0.5f, Content, "Skull", "SkullAura", HenryUpgrade.PlayerSuperLaser, "Gives lazer thing");
                 //todo: make semi-transparent background for upgrade & pause menu
 
                 //create boss's upgrade menu
                 HenryMenu BossUpgradeMenu = (HenryMenu)screens["BossUpgradeMenu"];
-                PlayerUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
-                PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", "Battlefield");
+                BossUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
+                BossUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
 
                 //create pause menu
+                HenryMenu PauseMenu = (HenryMenu)screens["PauseMenu"];
+                PauseMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Paused");
+                PauseMenu.AddButton(0.5f, 0.5f, "Back", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
 
                 //create credits screen
                 HenryMenu Credits = (HenryMenu)screens["Credits"];
                 Credits.AddText(0.25f, 0.5f, TextFont, Color.White, "Matt Groot\nIan Wilbanks\nChris Rose\nEric See\nMatt Paniagua");
                 Credits.AddText(0.75f, 0.5f, TextFont, Color.White, "Henry Bodensteiner\nRyan Koym\nParker Leech\nEric See");
-                Credits.AddButton(0.5f, 0.75f, "Back", "MainMenu");
+                Credits.AddButton(0.5f, 0.75f, "Back", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
 
                 //create player victory screen
                 HenryMenu PlayerVictory = (HenryMenu)screens["PlayerVictory"];
                 PlayerVictory.AddText(0.5f, 0.1f, TitleFont, Color.White, "Zihao is teh victor!");
                 PlayerVictory.AddText(0.5f, 0.5f, TextFont, Color.White, "The inexorable time marching shall be notus revenge");
-                PlayerVictory.AddButton(0.5f, 0.8f, "Main\nMenu", "MainMenu");
+                PlayerVictory.AddButton(0.5f, 0.8f, "Main\nMenu", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
 
                 //create boss victory screen
                 HenryMenu BossVictory = (HenryMenu)screens["BossVictory"];
                 BossVictory.AddText(0.5f, 0.1f, TitleFont, Color.White, "Notus is teh victor!");
                 BossVictory.AddText(0.5f, 0.5f, TextFont, Color.White, "An infinity years of dark befall the universe");
-                BossVictory.AddButton(0.5f, 0.8f, "Main\nMenu", "MainMenu");
+                BossVictory.AddButton(0.5f, 0.8f, "Main\nMenu", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
             }
         }
 
@@ -298,6 +353,30 @@ namespace teamstairwell{
 
        
        
+
+            //Maintains lobby sign in state... probably a cleaner way to do this, but I'm lazy
+            if (RNSEB.CurrentScreen == "SignIn")
+            {
+                if (SignedInGamer.SignedInGamers.Count != 0)
+                {
+                    RNSEB.CurrentScreen = "SessionOption";
+                }
+            }
+            /*if (RNSEB.CurrentScreen == "Multiplayer")
+            {
+                Multiplayer.clearTexts();
+                Multiplayer.clearButtons();
+                Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                if (SignedInGamer.SignedInGamers.Count == 0)
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
+                }
+                else
+                {
+                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "Press A to create a new session \n X to search for sessions");
+                }
+            }*/
+
 
             if(!HenryMode){
 

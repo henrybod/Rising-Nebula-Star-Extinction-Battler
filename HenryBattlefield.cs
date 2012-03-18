@@ -7,27 +7,42 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
 using teamstairwell.Interface;
+using teamstairwell.Interface.HUD;
 
 namespace teamstairwell {
-
-   public class HenryBattlefield : HenryScreen {
+    
+    public class HenryBattlefield : HenryScreen {
 
         private string music = "Level1Music";
         private ContentManager cm;
         private HenrySprite background;
-        public bool SpinBackground = false;
+        public bool SpinBackground = false, BossMode;
         public List<HenryBullet> bullets = new List<HenryBullet>();
-        public List<HenrySpawner> spawners = new List<HenrySpawner>();
+        public List<HenrySpawner> ships = new List<HenrySpawner>();
         public HenryPlayer Zihao;
         public HenryBoss Notus;
         public int LevelNumber = 1;
+        public ProgressBar NotusHealth, ZihaoShield;
 
-        public HenryBattlefield(ContentManager cm, string backgroundSprite) {
+        public HenryBattlefield(ContentManager cm, bool mode) {
             this.cm = cm;
+            BossMode = mode;
             background = new HenrySprite(cm);
-            SetBackground(backgroundSprite);
-            LoadDefaults();
+            SetBackground("BattlefieldBackground");
             SpinBackground = true;
+
+            //load the default stuff
+            Zihao = new HenryPlayer(cm, this, 100, new Vector2(600, 600), new Vector2(0, 0), 0.9999999999999f);
+            Notus = new HenryBoss(cm, this, 1000, new Vector2(200, 300), new Vector2(0, 0), 0.8f);
+            ships.Add(Notus);
+            ships.Add(Zihao);
+            if (BossMode)
+                Zihao.Automated = true;
+            else
+                Notus.Automated = true;
+            ZihaoShield = new ProgressBar(cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y-20, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
+            ZihaoShield.TickRotation = (float)Math.PI / 16.0f;
+            ZihaoShield.QuantityMax = Zihao.ShieldMax;
         }
 
         public void SetBackground(string filename) {
@@ -42,36 +57,30 @@ namespace teamstairwell {
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
 
-        public void LoadDefaults(){
-            //adds boss and player
-            Zihao = new HenryPlayer(cm, this, 100, new Vector2(600, 600), new Vector2(0,0), 0.9999999999999f);
-            Notus = new HenryBoss(cm, this, 1000,new Vector2(200, 300), new Vector2(0,0), 0.5f);
-        }
-
         public override void Draw(SpriteBatch sb) {
             background.Draw(sb);
             Notus.Draw(sb);
             Zihao.Draw(sb);
-            foreach (HenrySpawner s in spawners)
-                s.Draw(sb);
+            ZihaoShield.Draw(sb);
         }
 
         public override void Update(GameTime gt) {
             //link to upgrade, pause menus
             if (RNSEB.Input.GetKey("Pause"))
                 RNSEB.CurrentScreen = "PauseMenu";
+            //choose level based on boss's health
             if (1 - Notus.Health/(float)Notus.HealthMax > LevelNumber/10.0f) {
-                LevelNumber++;
-                music = "Level" + LevelNumber.ToString() + "Music";
-                RNSEB.CurrentScreen = "PlayerUpgradeMenu";
+                LevelNumber++; //take it to the next level, yo
+                music = "Level" + LevelNumber.ToString() + "Music"; //dynamically generate name of music
+                RNSEB.CurrentScreen = BossMode ? "BossUpgradeMenu" : "PlayerUpgradeMenu"; //let the user upgrade
             }
 
-            if (SpinBackground)
+            if (SpinBackground) //yeah, spin that background, bitch
                 background.Rotation += 0.065f * (float)gt.ElapsedGameTime.TotalSeconds;
             Zihao.Update(gt);
+            ZihaoShield.Quantity = Zihao.Shield;
             Notus.Update(gt);
-            RNSEB.Audio.PlayMusic(music);
+            RNSEB.Audio.PlayMusic(music); //this can be called every update because of logic in PlayMusic()
         }
-
     }
 }

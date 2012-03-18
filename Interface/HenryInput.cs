@@ -17,10 +17,10 @@ namespace teamstairwell.Interface {
         Keys PlayerDown = Keys.S;
         Keys PlayerLeft = Keys.A;
         Keys PlayerRight = Keys.D;
-        Keys BossUp = Keys.Up;
-        Keys BossDown = Keys.Down;
-        Keys BossLeft = Keys.Left;
-        Keys BossRight = Keys.Right;
+        Keys BossUp = Keys.W;
+        Keys BossDown = Keys.S;
+        Keys BossLeft = Keys.A;
+        Keys BossRight = Keys.D;
         Keys PauseGame = Keys.P;
 
         public HenryInput(){
@@ -53,28 +53,35 @@ namespace teamstairwell.Interface {
         }
 
         public void Update(GameTime gt){
+            //check battlefield mode
+            bool bossMode = false;
+            if(RNSEB.TheBattlefield != null)
+                 bossMode = RNSEB.TheBattlefield.BossMode;
+
             //check mouse
             MouseState currMState = Mouse.GetState();
             MouseX = currMState.X;
             MouseY = currMState.Y;
-            input["PlayerFire1"] = input["Mouse1"] = (currMState.LeftButton == ButtonState.Pressed) ? true : false;
-            input["PlayerFire2"] = input["Mouse2"] = (currMState.RightButton == ButtonState.Pressed) ? true : false;
+            input["Mouse1"] = (currMState.LeftButton == ButtonState.Pressed) ? true : false;
+            input["Mouse2"] = (currMState.RightButton == ButtonState.Pressed) ? true : false;
+            input["PlayerFire1"] = bossMode ? false : input["Mouse1"];
+            input["PlayerFire2"] = bossMode ? false : input["Mouse2"];
+            input["BossFire1"] = bossMode ? input["Mouse1"] : false;
+            input["BossFire2"] = bossMode ? input["Mouse2"] : false;
 
             //check keyboard
             KeyboardState currKState = Keyboard.GetState();
             input["Pause"] = currKState.IsKeyDown(PauseGame);
 
-            input["PlayerUp"] = currKState.IsKeyDown(PlayerUp);
-            input["PlayerDown"] = currKState.IsKeyDown(PlayerDown);
-            input["PlayerLeft"] = currKState.IsKeyDown(PlayerLeft);
-            input["PlayerRight"] = currKState.IsKeyDown(PlayerRight);
+            input["PlayerUp"] = bossMode ? false : currKState.IsKeyDown(PlayerUp);
+            input["PlayerDown"] = bossMode ? false : currKState.IsKeyDown(PlayerDown);
+            input["PlayerLeft"] = bossMode ? false : currKState.IsKeyDown(PlayerLeft);
+            input["PlayerRight"] = bossMode ? false : currKState.IsKeyDown(PlayerRight);
 
-            input["BossUp"] = currKState.IsKeyDown(BossUp);
-            input["BossDown"] = currKState.IsKeyDown(BossDown);
-            input["BossLeft"] = currKState.IsKeyDown(BossLeft);
-            input["BossRight"] = currKState.IsKeyDown(BossRight);
-            input["BossFire1"] = currKState.IsKeyDown(Keys.Space); //will change to mouse 1 later
-            input["BossFire2"] = currKState.IsKeyDown(Keys.LeftAlt); //will change to mouse 2 later
+            input["BossUp"] = bossMode ? currKState.IsKeyDown(BossUp) : false;
+            input["BossDown"] = bossMode ? currKState.IsKeyDown(BossDown) : false;
+            input["BossLeft"] = bossMode ? currKState.IsKeyDown(BossLeft) : false;
+            input["BossRight"] = bossMode ? currKState.IsKeyDown(BossRight) : false;
         }
 
         public bool MouseIsIn(Vector2 pos, Vector2 area){ //helper function for button class (should probably be moved there)

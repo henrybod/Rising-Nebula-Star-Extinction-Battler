@@ -22,6 +22,7 @@ namespace teamstairwell
     public class Player : Entity
     {
         List<Bullet> pBs;
+        //public List<Drone> pDs;
         public int live;
         public int bomb;
         public TimeSpan invisibleTime = TimeSpan.Zero;
@@ -29,10 +30,13 @@ namespace teamstairwell
         public bool invisible;
         KeyboardState oldstate = Keyboard.GetState();
         MouseState oldmouse = Mouse.GetState();
+        public TimeSpan reloadTime = TimeSpan.Zero;
+        TimeSpan reloadSpan = new TimeSpan(0, 0, 0, 0, 500);
 
         public bool fury;
         public bool surge;
         public bool tracker;
+        public bool seeker;
         public bool angleGun;
         public bool angleRocket;
         public bool rotTurretR;
@@ -53,6 +57,9 @@ namespace teamstairwell
             bomb = bombs;
             pBs = playerBullets;
             invisible = false;
+
+            //pDs = new List<Drone>();
+            //pDs.Add(new Drone (pos, vel, acc, radius, Drone.droneType.Orbital, this, new Sprite(RNSEB.PropSheet, PropSheet.GUNNER)));
 
             normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
             shieldSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PSHIELD);
@@ -77,7 +84,8 @@ namespace teamstairwell
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
                 Bullet b = new Bullet(pos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.LASER), rot);
-                pBs.Add(b);
+                if(!seeker)
+                    pBs.Add(b);
                 if (fury)
                 {
                     Vector2 lpos = pos;
@@ -105,6 +113,15 @@ namespace teamstairwell
                     rpos.Y += (float)Math.Sin(rot) * 8;
                     pBs.Add(new Bullet(lpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER), rot));
                     pBs.Add(new Bullet(rpos, new Vector2(-12, -12), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.GOLDLASER), rot));
+                }
+                //seeker = true;
+                if (seeker && (time.TotalGameTime - reloadTime > reloadSpan))
+                {
+                    Vector2 laccel = new Vector2(0, 0);
+                    laccel.X = (float)Math.Sin(rot) * 6;
+                    laccel.Y = (float)Math.Cos(rot) * -6;
+                    pBs.Add(new Seeker(pos, new Vector2(-5, -5), new Vector2(0, 0), 0f, new Sprite(RNSEB.PropSheet, PropSheet.ROCKET), rot));
+                    reloadTime = time.TotalGameTime;
                 }
                 if (angleGun)
                 {
@@ -180,6 +197,10 @@ namespace teamstairwell
             KeyboardState state = Keyboard.GetState();
 
             processMouseInput(time);
+            //for (int i = 0; i < pDs.Count; i++)
+            //{
+                //pDs[i].update(time);
+            //}
 
             if (state.IsKeyDown(Keys.W) && state.IsKeyUp(Keys.S))
             {

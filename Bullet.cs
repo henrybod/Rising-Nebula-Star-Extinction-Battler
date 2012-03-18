@@ -11,8 +11,7 @@ namespace teamstairwell
     public class Bullet : Entity
     {
         public Bullet(Vector2 position, Vector2 velocity, Vector2 acceleration, float radius, Sprite sprite)
-            : base(position, velocity, acceleration, radius)
-        {
+            : base(position, velocity, acceleration, radius) {
             pos = position;
             vel = velocity;
             acc = acceleration;

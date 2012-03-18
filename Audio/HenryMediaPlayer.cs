@@ -48,7 +48,12 @@ namespace teamstairwell.Audio {
             effects.Add("PlayerDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryPlayerDeath"));
             effects.Add("BossHit", cm.Load<SoundEffect>("Audio/SoundEffects/Boss Hit"));
             effects.Add("PlayerHit", cm.Load<SoundEffect>("Audio/SoundEffects/Shield Zap"));
-            effects.Add("PlayerGoldLaser", cm.Load<SoundEffect>("Audio/SoundEffects/GoldLaser"));
+            effects.Add("ExplosionSmall", cm.Load<SoundEffect>("Audio/SoundEffects/Explosion small"));
+            effects.Add("ExplosionMedium", cm.Load<SoundEffect>("Audio/SoundEffects/Explosion medium"));
+            effects.Add("BulletTorpedo", cm.Load<SoundEffect>("Audio/SoundEffects/torpedo"));
+            effects.Add("BulletMissle", cm.Load<SoundEffect>("Audio/SoundEffects/Missle"));
+            effects.Add("BulletLaser", cm.Load<SoundEffect>("Audio/SoundEffects/laser"));
+            effects.Add("LaunchSpawner", cm.Load<SoundEffect>("Audio/SoundEffects/BossLaunchSpawner"));
         }
 
         public void PlayMusic(string name){

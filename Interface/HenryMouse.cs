@@ -13,6 +13,7 @@ namespace teamstairwell.Interface {
     class HenryMouse : HenrySprite {
 
         private bool targeting = false;
+        private Color currentColor;
 
         public HenryMouse(ContentManager cm) : base(cm){
             LoadContent("Cursor", true);
@@ -25,9 +26,11 @@ namespace teamstairwell.Interface {
             if (RNSEB.CurrentScreen == "Battlefield"){
                 targeting = true;
                 Oscillate = true;
+                currentColor = RNSEB.TheBattlefield.BossMode ? Color.Red : Color.Blue;
             }else{
                 targeting = false;
                 Oscillate = false;
+                currentColor = Color.White;
             }
             base.FrameSpeed = 10;
             base.Update(gt);
@@ -35,10 +38,10 @@ namespace teamstairwell.Interface {
 
         public new void Draw(SpriteBatch sb){
             if (targeting) {
-                sb.Draw(Texture, Position, viewRect, Color.Red, Rotation, Origin, 0.75f, SpriteEffects.None, 0);
-                sb.Draw(Texture, Position, viewRect, Color.Red, Rotation + (float)Math.PI / 2, Origin, 0.75f, SpriteEffects.None, 0);
-                sb.Draw(Texture, Position, viewRect, Color.Red, Rotation + (float)Math.PI, Origin, 0.75f, SpriteEffects.None, 0);
-                sb.Draw(Texture, Position, viewRect, Color.Red, Rotation - (float)Math.PI / 2, Origin, 0.75f, SpriteEffects.None, 0);
+                sb.Draw(Texture, Position, viewRect, currentColor, Rotation, Origin, 0.75f, SpriteEffects.None, 0);
+                sb.Draw(Texture, Position, viewRect, currentColor, Rotation + (float)Math.PI / 2, Origin, 0.75f, SpriteEffects.None, 0);
+                sb.Draw(Texture, Position, viewRect, currentColor, Rotation + (float)Math.PI, Origin, 0.75f, SpriteEffects.None, 0);
+                sb.Draw(Texture, Position, viewRect, currentColor, Rotation - (float)Math.PI / 2, Origin, 0.75f, SpriteEffects.None, 0);
             } else
             base.Draw(sb);
         }
