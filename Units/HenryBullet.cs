@@ -7,12 +7,12 @@ using Microsoft.Xna.Framework.Content;
 using teamstairwell.Graphics;
 
 namespace teamstairwell {
-
-    class HenryBullet : HenrySprite {
+    [Serializable]
+    public class HenryBullet : HenrySprite {
 
         private float velocity;
         private int damage;
-        public HenryWeapon WhereIWasShotFrom;
+         HenryWeapon WhereIWasShotFrom;
         public bool Spent = false; //has bullet impacted something or left the screen?
         private string soundEffect;
 

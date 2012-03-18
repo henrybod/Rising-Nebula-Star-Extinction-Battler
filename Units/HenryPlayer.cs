@@ -9,7 +9,7 @@ using teamstairwell.Interface;
 
 namespace teamstairwell {
 
-    class HenryPlayer : HenrySpawner {
+   public class HenryPlayer : HenrySpawner {
 
         public int UpgradePoints = 0;
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;

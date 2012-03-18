@@ -14,9 +14,19 @@ using Hook.Graphics.SpriteSheets;
 using teamstairwell.Interface;
 using teamstairwell.Graphics.SpriteSheets;
 using teamstairwell.Audio;
+using System.IO;
+using System.Xml.Serialization;
+using System.Diagnostics;
+
 
 namespace teamstairwell{
-
+  [Serializable]
+        public struct SaveGameData
+        {
+            public HenryPlayer Notus;
+            public HenryBoss Zihao;
+            public List<HenryBullet> dBs;
+        }
     public class RNSEB : Microsoft.Xna.Framework.Game {
 
         //XNA objects for managing content
@@ -86,7 +96,7 @@ namespace teamstairwell{
 
         public ScreenManage ScreenManager;
 
-
+      
 
 
         //functions
@@ -230,11 +240,64 @@ namespace teamstairwell{
             // TODO: Unload any non ContentManager content here
             // mayhaps utilization of this function will clear up our generous memory usage problem
         }
+       
+        
+
+        IAsyncResult result;
+        Object stateobj;
+        bool GameSaveRequested = false;
+        GamePadState currentState;
+
 
         protected override void Update(GameTime gameTime) {
+             GamePadState previousState = currentState;
+            
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) //this looks like xbox to me
                 this.Exit();
+              // Allows the default game to exit on Xbox 360 and Windows
+        
+        if ((currentState.Buttons.A == ButtonState.Pressed) &&
+                (previousState.Buttons.A == ButtonState.Released))
+            {
+                // Set the request flag
+                if ((!Guide.IsVisible) && (GameSaveRequested == false))
+                {
+                    GameSaveRequested = true;
+                    result = StorageDevice.BeginShowSelector(
+                            PlayerIndex.One, null, null);
+                }
+            }
+
+            if ((currentState.Buttons.B == ButtonState.Pressed) &&
+                (previousState.Buttons.B == ButtonState.Released))
+            {
+                if (!Guide.IsVisible)
+                {
+                    // Reset the device
+                    device = null;                   
+                    stateobj = (Object)"GetDevice for Player One";
+                    StorageDevice.BeginShowSelector(
+                            PlayerIndex.One, this.GetDevice, stateobj);
+                }
+            }
+            // If a save is pending, save as soon as the
+            // storage device is chosen
+            if ((GameSaveRequested) && (result.IsCompleted))
+            {
+                StorageDevice device = StorageDevice.EndShowSelector(result);
+                if (device != null && device.IsConnected)
+                {
+                    DoSaveGame(device);
+                   
+                }
+                // Reset the request flag
+                GameSaveRequested = false;
+            }
+        
+
+       
+       
 
             if(!HenryMode){
 
@@ -253,7 +316,27 @@ namespace teamstairwell{
             }
             base.Update(gameTime);
         }
-
+        
+        StorageDevice device;
+        private static HenryPlayer Notus;
+        private static HenryBoss Zihao;
+        private static List<HenryBullet> dBs;
+        void GetDevice(IAsyncResult result)
+        {
+            device = StorageDevice.EndShowSelector(result);
+            if (device != null && device.IsConnected)
+            {
+                DoSaveGame(device);
+                //DoLoadGame(device);
+                //DoCreate(device);
+                //DoOpen(device);   //obviously we do not want to do all at once this is just to demonstrate the syntax
+                //DoCopy(device);
+                //DoEnumerate(device);
+                //DoRename(device);
+                //DoDelete(device);
+                //DoOpenFile();
+            }
+        }
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
@@ -271,6 +354,308 @@ namespace teamstairwell{
             }
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+    
+ /// <summary>
+        /// This method serializes a data object into
+        /// the StorageContainer for this game.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoSaveGame(StorageDevice device)
+        {
+
+            // Create the data to save.
+            SaveGameData data = new SaveGameData();
+            data.Notus = Notus;
+            data.Zihao = Zihao;
+            data.dBs = dBs;
+
+            // Open a storage container.
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+           string filename = "savegame.sav";
+
+           // Check to see whether the save exists.
+           if (container.FileExists(filename))
+              // Delete it so that we can create one fresh.
+              container.DeleteFile(filename);
+
+           // Create the file.
+           Stream stream = container.CreateFile(filename);
+
+           // Convert the object to XML data and put it in the stream.
+           XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData));
+           serializer.Serialize(stream, data);
+
+           // Close the file.
+           stream.Close();
+
+           // Dispose the container, to commit changes.
+           container.Dispose();
+        }
+        /// <summary>
+        /// This method loads a serialized data object
+        /// from the StorageContainer for this game.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoLoadGame(StorageDevice device)
+        {
+            // Open a storage container.
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            string filename = "savegame.sav";
+
+            // Check to see whether the save exists.
+            if (!container.FileExists(filename))
+            {
+               // If not, dispose of the container and return.
+               container.Dispose();
+               return;
+            }
+
+            // Open the file.
+            Stream stream = container.OpenFile(filename, FileMode.Open);
+
+            // Read the data from the file.
+            XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData));
+            SaveGameData data = (SaveGameData)serializer.Deserialize(stream);
+
+            // Close the file.
+            stream.Close();
+
+            // Dispose the container.
+            container.Dispose();
+           
+
+            // Report the data to the console.
+            Debug.WriteLine("Name:     " + data.Notus.ToString());
+            Debug.WriteLine("Level:    " + data.Zihao.ToString());
+            Debug.WriteLine("Score:    " + data.dBs.ToString());
+           
+        }
+        /// <summary>
+        /// This method creates a file called demobinary.sav and places
+        /// it in the StorageContainer for this game.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoCreate(StorageDevice device)
+        {
+            // Open a storage container.
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+
+            // Create a new file.
+            if (!container.FileExists(filename))
+            {
+               Stream file = container.CreateFile(filename);
+               file.Close();
+            }
+            // Dispose the container, to commit the data.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to open a file. It presumes
+        /// that demobinary.sav has been created.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoOpen(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+
+            Stream file = container.OpenFile(filename, FileMode.Open);
+            file.Close();
+
+            // Dispose the container.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to copy files.  It presumes
+        /// that demobinary.sav has been created.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoCopy(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+            string copyfilename = "copybinary.sav";
+
+            if (container.FileExists(filename) && !container.FileExists(copyfilename))
+            {
+                Stream file = container.OpenFile(filename, FileMode.Open);
+               Stream copyfile = container.CreateFile(copyfilename);
+               file.CopyTo(copyfile);
+
+               file.Close();
+               copyfile.Close();
+            }
+
+            // Dispose the container, to commit the change.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to rename files.  It presumes
+        /// that demobinary.sav has been created.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoRename(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string oldfilename = "demobinary.sav";
+            string newfilename = "renamebinary.sav";
+
+            if (container.FileExists(oldfilename) && !container.FileExists(newfilename))
+            {
+               Stream oldfile = container.OpenFile(oldfilename, FileMode.Open);
+               Stream newfile = container.CreateFile(newfilename);
+               oldfile.CopyTo(newfile);
+
+               oldfile.Close();
+               newfile.Close();
+               container.DeleteFile(oldfilename);
+            }
+
+            // Dispose the container, to commit the change.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to enumerate files in a 
+        /// StorageContainer.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoEnumerate(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            string[] FileList = container.GetFileNames();
+            foreach (string filename in FileList)
+            {
+               Console.WriteLine(filename);
+            }
+
+            // Dispose the container.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method deletes a file previously created by this demo.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoDelete(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+
+            if (container.FileExists(filename))
+            {
+               container.DeleteFile(filename);
+            }
+
+            // Dispose the container, to commit the change.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method opens a file using System.IO classes and the
+        /// TitleLocation property.  It presumes that a file named
+        /// ship.dds has been deployed alongside the game.
+        /// </summary>
+        private static void DoOpenFile()
+        {
+            try
+            {
+                System.IO.Stream stream = TitleContainer.OpenStream("ship.dds");
+                System.IO.StreamReader sreader = new System.IO.StreamReader(stream);
+                // use StreamReader.ReadLine or other methods to read the file data
+
+                Console.WriteLine("File Size: " + stream.Length);
+                stream.Close();
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // this will be thrown by OpenStream if gamedata.txt
+                // doesn't exist in the title storage location
+            }
         }
     }
 }

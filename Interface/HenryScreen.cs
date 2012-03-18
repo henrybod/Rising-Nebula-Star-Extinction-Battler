@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell.Interface {
 
-    class HenryScreen {
+   public class HenryScreen {
 
         //this is a just a parent for the menus and battlefield so I can make a dictionary of them
         virtual public void Update(GameTime gt){}

@@ -10,7 +10,7 @@ using teamstairwell.Interface;
 
 namespace teamstairwell {
 
-    class HenryBattlefield : HenryScreen {
+   public class HenryBattlefield : HenryScreen {
 
         private string music = "Level1Music";
         private ContentManager cm;

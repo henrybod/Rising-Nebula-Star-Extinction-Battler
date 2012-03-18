@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
 
 namespace teamstairwell {
-
-    class HenryMass : HenrySprite {
+    [Serializable]
+   public class HenryMass : HenrySprite {
         //Spawners (ships) and bullets will inherit from this class their properties of motion.
 
         //variables to be set upon instantiation

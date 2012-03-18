@@ -8,7 +8,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell {
-    class HenryBoss : HenrySpawner {
+    [Serializable]
+  public  class HenryBoss : HenrySpawner {
 
         new public int HealthMax = 100;
         private HenryHealthBar healthBar;
