@@ -87,6 +87,11 @@ namespace teamstairwell.Interface {
             texts.Clear();
         }
 
+        public void clearButtons()
+        {
+            Buttons.Clear();
+        }
+
         
 
     }

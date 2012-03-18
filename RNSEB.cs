@@ -96,7 +96,7 @@ namespace teamstairwell {
 
         public ScreenManage ScreenManager;
 
-        private HenryMenu Multiplayer;
+        //private HenryMenu Multiplayer;
 
 
 
@@ -173,7 +173,9 @@ namespace teamstairwell {
                 screens.Add("BossVictory", new HenryMenu(this.Content));
                 screens.Add("Credits", new HenryMenu(this.Content));
                 screens.Add("HowToPlay", new HenryMenu(this.Content));
-                screens.Add("Multiplayer", new HenryMenu(this.Content));
+                screens.Add("SignIn", new HenryMenu(this.Content));
+                screens.Add("SessionOption", new HenryMenu(this.Content));
+                //screens.Add("Multiplayer", new HenryMenu(this.Content));
                 screens.Add("Battlefield", new HenryScreen()); //note: not an actual battlefield, gets filled in by appropriate button
                 screens.Add("PauseMenu", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
@@ -195,7 +197,7 @@ namespace teamstairwell {
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
-                MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", new OnClick(()=>{RNSEB.CurrentScreen = "Multiplayer";}));
+                MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", new OnClick(()=>{RNSEB.CurrentScreen = "SignIn";}));
                 MainMenu.AddButton(0.7f, 0.5f, "Load /\n Save", new OnClick(()=>{RNSEB.CurrentScreen = "LoadMenu";}));
                 MainMenu.AddButton(0.66f, 0.675f, "Quit", new OnClick(()=>{RNSEB.CurrentScreen = "Exit";}));
                 MainMenu.AddButton(0.5f, 0.75f, "How to\n  Play", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlay";}));
@@ -214,10 +216,23 @@ namespace teamstairwell {
                 HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
                 HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "BossIdle", "BossHit", "BossDeath", 1.0f);
 
+                //Create Sign In Screen
+                HenryMenu SignIn = (HenryMenu)screens["SignIn"];
+                SignIn.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                SignIn.AddText(0.5f, 0.1f, TitleFont, Color.White, "Sign In");
+                SignIn.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
+
+                //Create New/Search Session Screen
+                HenryMenu SessionOption = (HenryMenu)screens["SessionOption"];
+                SessionOption.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                SessionOption.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                SessionOption.AddButton(0.35f, 0.3f, "New Session", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                SessionOption.AddButton(0.65f, 0.3f, "Find Session", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+
                 //create multiplayer screen
-                //HenryMenu 
-                Multiplayer = (HenryMenu)screens["Multiplayer"];
-                Multiplayer.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                //Multiplayer = (HenryMenu)screens["Multiplayer"];
+                //Multiplayer.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+
                 /*Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
                 if (SignedInGamer.SignedInGamers.Count == 0)
                 {
@@ -271,11 +286,6 @@ namespace teamstairwell {
             // mayhaps utilization of this function will clear up our generous memory usage problem
         }
 
-        //Multiplayer Sign In
-        void SignedInGamer_SignedIn(object sender, SignedInEventArgs e)
-        {
-            e.Gamer.Tag = new User();
-        }
 
         protected override void Update(GameTime gameTime) {
             // Allows the game to exit
@@ -283,9 +293,17 @@ namespace teamstairwell {
                 this.Exit();
 
             //Maintains lobby sign in state... probably a cleaner way to do this, but I'm lazy
-            if (RNSEB.CurrentScreen == "Multiplayer")
+            if (RNSEB.CurrentScreen == "SignIn")
+            {
+                if (SignedInGamer.SignedInGamers.Count != 0)
+                {
+                    RNSEB.CurrentScreen = "SessionOption";
+                }
+            }
+            /*if (RNSEB.CurrentScreen == "Multiplayer")
             {
                 Multiplayer.clearTexts();
+                Multiplayer.clearButtons();
                 Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
                 if (SignedInGamer.SignedInGamers.Count == 0)
                 {
@@ -295,7 +313,7 @@ namespace teamstairwell {
                 {
                     Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "Press A to create a new session \n X to search for sessions");
                 }
-            }
+            }*/
 
 
             if(!HenryMode){
@@ -333,6 +351,60 @@ namespace teamstairwell {
             }
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+
+        //Multiplayer Sign In
+        void SignedInGamer_SignedIn(object sender, SignedInEventArgs e)
+        {
+            e.Gamer.Tag = new User();
+        }
+
+        //Create new network session
+        void CreateSession()
+        {
+            networkSession = NetworkSession.Create(
+                NetworkSessionType.SystemLink,
+                1, 8, 2,
+                null);
+
+            networkSession.AllowHostMigration = true;
+            networkSession.AllowJoinInProgress = true;
+
+            HookSessionEvents();
+        }
+
+        private void HookSessionEvents()
+        {
+            networkSession.GamerJoined +=
+                new EventHandler<GamerJoinedEventArgs>(
+                    networkSession_GamerJoined);
+        }
+
+        void networkSession_GamerJoined(object sender, GamerJoinedEventArgs e)
+        {
+            if (!e.Gamer.IsLocal)
+            {
+                e.Gamer.Tag = new User();
+            }
+            else
+            {
+                e.Gamer.Tag = GetUser(e.Gamer.Gamertag);
+            }
+        }
+
+        User GetUser(String gamertag)
+        {
+            foreach (SignedInGamer signedInGamer in
+                SignedInGamer.SignedInGamers)
+            {
+                if (signedInGamer.Gamertag == gamertag)
+                {
+                    return signedInGamer.Tag as User;
+                }
+            }
+
+            return new User();
         }
     }
 }
