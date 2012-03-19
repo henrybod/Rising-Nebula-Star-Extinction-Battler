@@ -168,7 +168,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PropSheet.xnb</Output>
-      <Time>2012-03-03T16:43:51.1777987-06:00</Time>
+      <Time>2012-03-18T14:12:02.0069109-05:00</Time>
     </Item>
     <Item>
       <Source>SpriteSheets\Background.png</Source>
@@ -382,17 +382,27 @@
       <Name>Audio\SoundEffects\GoldLaser</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\GoldLaser.xnb</Output>
+      <Time>2012-03-03T16:43:50.6497685-06:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\SoundEffects\BossLaunchSpawner.wav</Source>
       <Name>Audio\SoundEffects\BossLaunchSpawner</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\BossLaunchSpawner.xnb</Output>
+      <Time>2012-03-03T16:43:50.5977656-06:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\SoundEffects\Explosion medium.wav</Source>
       <Name>Audio\SoundEffects\Explosion medium</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\GoldLaser.xnb</Output>
-      <Time>2012-03-03T16:43:50.6497685-06:00</Time>
+      <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Explosion medium.xnb</Output>
+      <Time>2012-03-18T14:12:01.9689087-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\SoundEffects\Explosion small.wav</Source>
@@ -400,8 +410,8 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Explosion small.xnb</Output>
-      <Time>2012-03-15T11:45:45.4053038-05:00</Time>
+      <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\Explosion small.xnb</Output>
+      <Time>2012-03-18T14:12:01.973909-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\SoundEffects\torpedo.wav</Source>
@@ -409,8 +419,8 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\torpedo.xnb</Output>
-      <Time>2012-03-15T11:45:45.461307-05:00</Time>
+      <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\torpedo.xnb</Output>
+      <Time>2012-03-18T14:12:01.9989105-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\SoundEffects\laser.wav</Source>
@@ -418,8 +428,8 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Ryan\Desktop\Game Prog\Rising Nebula Star Extinction\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\laser.xnb</Output>
-      <Time>2012-03-15T11:45:48.7614958-05:00</Time>
+      <Output>C:\Parker's Programing\Rising-Nebula-Star-Extinction-Battler\RNSEB.cs\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\laser.xnb</Output>
+      <Time>2012-03-18T14:12:04.5110541-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -458,7 +468,7 @@
         <Value>2010-08-23T13:41:18-05:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
         <Value>2012-02-10T14:39:19.8540231-06:00</Value>
       </Assembly>
     </Assemblies>
