@@ -11,8 +11,6 @@ namespace teamstairwell {
     [Serializable]
   public  class HenryBoss : HenrySpawner {
 
-    public class HenryBoss : HenrySpawner {
-
         private HenryHealthBar healthBar;
         private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
 

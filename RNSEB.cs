@@ -40,6 +40,8 @@ namespace teamstairwell{
         PacketReader packetReader = new PacketReader();
         PacketWriter packetWriter = new PacketWriter();
 
+        HenryMenu Lobby;
+
         //Henry Stuff (just testin')
         bool HenryMode = true;
         HenryMouse TheMouse;
@@ -185,7 +187,7 @@ namespace teamstairwell{
                 screens.Add("HowToPlay", new HenryMenu(this.Content));
                 screens.Add("SignIn", new HenryMenu(this.Content));
                 screens.Add("SessionOption", new HenryMenu(this.Content));
-                //screens.Add("Multiplayer", new HenryMenu(this.Content));
+                screens.Add("Lobby", new HenryMenu(this.Content));
                 screens.Add("Battlefield", new HenryScreen()); //note: not an actual battlefield, gets filled in by appropriate button
                 screens.Add("PauseMenu", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
@@ -236,22 +238,12 @@ namespace teamstairwell{
                 HenryMenu SessionOption = (HenryMenu)screens["SessionOption"];
                 SessionOption.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
                 SessionOption.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
-                SessionOption.AddButton(0.35f, 0.3f, "New Session", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
-                SessionOption.AddButton(0.65f, 0.3f, "Find Session", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
+                SessionOption.AddButton(0.35f, 0.3f, "New Session", new OnClick(() => { CreateSession(); RNSEB.CurrentScreen = "Lobby"; }));
+                SessionOption.AddButton(0.65f, 0.3f, "Find Session", new OnClick(() => { FindSession();  RNSEB.CurrentScreen = "Lobby"; }));
 
-                //create multiplayer screen
-                //Multiplayer = (HenryMenu)screens["Multiplayer"];
-                //Multiplayer.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
-
-                /*Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
-                if (SignedInGamer.SignedInGamers.Count == 0)
-                {
-                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
-                }
-                else
-                {
-                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "Press A to create a new session \n X to search for sessions");
-                }*/
+                //Create Player Lobby
+                Lobby = (HenryMenu)screens["Lobby"];
+                Lobby.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { networkSession.Dispose(); RNSEB.CurrentScreen = "SessionOption"; }));
 
                 //create player's upgrade menu
                 HenryMenu PlayerUpgradeMenu = (HenryMenu)screens["PlayerUpgradeMenu"];
@@ -350,11 +342,7 @@ namespace teamstairwell{
                 GameSaveRequested = false;
             }
         
-
-       
-       
-
-            //Maintains lobby sign in state... probably a cleaner way to do this, but I'm lazy
+            //Checks Lobby Sign In State
             if (RNSEB.CurrentScreen == "SignIn")
             {
                 if (SignedInGamer.SignedInGamers.Count != 0)
@@ -362,20 +350,52 @@ namespace teamstairwell{
                     RNSEB.CurrentScreen = "SessionOption";
                 }
             }
-            /*if (RNSEB.CurrentScreen == "Multiplayer")
+
+            //Maintains Lobby
+            if(RNSEB.CurrentScreen == "Lobby")
             {
-                Multiplayer.clearTexts();
-                Multiplayer.clearButtons();
-                Multiplayer.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
-                if (SignedInGamer.SignedInGamers.Count == 0)
+                if(networkSession != null)
                 {
-                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "No profile signed in!\nPress the Home Key to Sign In.");
+                    if(networkSession.SessionState == NetworkSessionState.Lobby)
+                    {
+                        if (Keyboard.GetState().IsKeyDown(Keys.A))
+                        {
+                            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+                                gamer.IsReady = true;
+                        }
+
+                        Lobby.clearTexts();
+                        Lobby.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                        Lobby.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A When Ready");
+                        float y = 0.25f;
+                        foreach (NetworkGamer gamer in networkSession.AllGamers)
+                        {
+                            string text = gamer.Gamertag;
+                            User player = gamer.Tag as User;
+
+                            if (gamer.IsReady)
+                                text += " - ready!";
+
+                            Lobby.AddText(0.2f, y, TextFont, Color.White, text);
+                            y += 0.1f;
+                        }
+
+                        // The host checks if everyone is ready, and moves to game play if true.
+                        if (networkSession.IsHost)
+                        {
+                            if (networkSession.IsEveryoneReady)
+                                networkSession.StartGame();
+                        }
+
+                        // Pump the underlying session object.
+                        networkSession.Update();
+                    }
                 }
-                else
-                {
-                    Multiplayer.AddText(0.25f, 0.25f, TextFont, Color.White, "Press A to create a new session \n X to search for sessions");
+                else{
+                    RNSEB.CurrentScreen = "SessionOption";
                 }
-            }*/
+            }
+
 
 
             if(!HenryMode){
@@ -434,7 +454,73 @@ namespace teamstairwell{
             spriteBatch.End();
             base.Draw(gameTime);
         }
-    
+
+
+        //Ryan's MULTIPLAYER CODE
+        //Multiplayer Sign In
+        void SignedInGamer_SignedIn(object sender, SignedInEventArgs e)
+        {
+            e.Gamer.Tag = new User();
+        }
+
+        //Create new network session
+        void CreateSession()
+        {
+            networkSession = NetworkSession.Create(
+                NetworkSessionType.SystemLink,
+                1, 8, 2,
+                null);
+
+            networkSession.AllowHostMigration = true;
+            networkSession.AllowJoinInProgress = true;
+
+            HookSessionEvents();
+        }
+
+        //Find network Sessions
+        void FindSession()
+        {
+            availableSessions = NetworkSession.Find(NetworkSessionType.SystemLink, 1, null);
+            selectedSessionIndex = 0;
+        }
+
+        private void HookSessionEvents()
+        {
+            networkSession.GamerJoined +=
+                new EventHandler<GamerJoinedEventArgs>(
+                    networkSession_GamerJoined);
+        }
+
+        void networkSession_GamerJoined(object sender, GamerJoinedEventArgs e)
+        {
+            if (!e.Gamer.IsLocal)
+            {
+                e.Gamer.Tag = new User();
+            }
+            else
+            {
+                e.Gamer.Tag = GetUser(e.Gamer.Gamertag);
+            }
+        }
+
+        User GetUser(String gamertag)
+        {
+            foreach (SignedInGamer signedInGamer in
+                SignedInGamer.SignedInGamers)
+            {
+                if (signedInGamer.Gamertag == gamertag)
+                {
+                    return signedInGamer.Tag as User;
+                }
+            }
+
+            return new User();
+        }
+
+
+
+
+    //SAVE GAME CODE
  /// <summary>
         /// This method serializes a data object into
         /// the StorageContainer for this game.

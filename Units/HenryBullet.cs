@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ using teamstairwell.Graphics;
 
 namespace teamstairwell {
     [Serializable]
-    public class HenryBullet : HenrySprite {
+    public class HenryBullet : HenryMass {
 
         private int damage;
          HenryWeapon WhereIWasShotFrom;

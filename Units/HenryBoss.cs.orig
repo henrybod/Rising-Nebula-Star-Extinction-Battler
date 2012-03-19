@@ -8,13 +8,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell {
-<<<<<<< HEAD
     [Serializable]
   public  class HenryBoss : HenrySpawner {
+<<<<<<< HEAD
 =======
->>>>>>> 6b6d44554fba828413cfdc3fa748222120459572
 
     public class HenryBoss : HenrySpawner {
+>>>>>>> f3f4ed5ed87e85a110e0326135528b332c8f6c55
 
         private HenryHealthBar healthBar;
         private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
