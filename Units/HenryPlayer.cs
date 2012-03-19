@@ -10,7 +10,7 @@ using teamstairwell.Weapons;
 
 namespace teamstairwell {
 
-    public class HenryPlayer : HenrySpawner {
+   public class HenryPlayer : HenrySpawner {
 
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;

@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell {
-
-    public class HenryBoss : HenrySpawner {
+    [Serializable]
+  public  class HenryBoss : HenrySpawner {
 
         private HenryHealthBar healthBar;
         private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();

@@ -10,14 +10,17 @@ using teamstairwell.Weapons;
 
 namespace teamstairwell {
 
+<<<<<<< HEAD
+   public class HenryPlayer : HenrySpawner {
+=======
     public class HenryPlayer : HenrySpawner {
+>>>>>>> 6b6d44554fba828413cfdc3fa748222120459572
 
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
         private HenryShieldBar shieldBar;
         private bool shieldIsUp = true;
-        public List<Drone> Drones;
         public float Shield {
             get{ return shield; }
             set {
@@ -52,14 +55,7 @@ namespace teamstairwell {
             HitRadius = 20; //what hit size is the player?
             invulnerabilityAfterDamageLength = 1.0f; //how much time (in seconds) should the player be invulnerable after a hit?
             shieldBar = new HenryShieldBar(cm, this);
-<<<<<<< HEAD
-            Drones = new List<Drone>();
-            Drones.Add(new Drone(cm, Battlefield, 80, new Vector2(Position.X + 40, Position.Y), new Vector2(0, 0), 0.9999999999999f, this, Drone.droneType.SideBySide));
-=======
-            
-            //starter weapon
             FocusedWeapon = new DroneLauncher(this);
->>>>>>> 3d52fb8ea05104dbb7f0c1ab79df62c8f9e29a2a
         }
 
         public new void Update(GameTime gt){
@@ -117,15 +113,6 @@ namespace teamstairwell {
 
         public new void Draw(SpriteBatch sb){
             base.Draw(sb);
-<<<<<<< HEAD
-            shieldBar.Draw(sb);
-            for (int i = 0; i < Drones.Count; i++)
-            {
-                Drones[i].Draw(sb);
-            }
-
-=======
->>>>>>> 3d52fb8ea05104dbb7f0c1ab79df62c8f9e29a2a
         }
 
         public override void Damage(int amount){
@@ -160,9 +147,6 @@ namespace teamstairwell {
             switch(upgrade){
                 case RNSEB.HenryUpgrade.PlayerSuperLaser:
                     FocusedWeapon = new GoldLaser(this);
-                    break;
-                case RNSEB.HenryUpgrade.PlayerGunnerDrones:
-                    Drones.Add(new Drone(cm, Battlefield, 80, new Vector2(Position.X + 40, 0), new Vector2(0, 0),  0.9999999999999f, this, Drone.droneType.SideBySide));
                     break;
 
                 //todo: put every player upgrade here!

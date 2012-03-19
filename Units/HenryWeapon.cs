@@ -9,7 +9,7 @@ using teamstairwell.Interface;
 
 namespace teamstairwell {
 
-    public class HenryWeapon {
+   public class HenryWeapon {
         //this class holds information on a given weapon, i.e. what bullet, what dmg, ...
         //is "held" by the player
 
