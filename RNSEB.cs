@@ -41,6 +41,7 @@ namespace teamstairwell{
         PacketWriter packetWriter = new PacketWriter();
 
         HenryMenu Lobby;
+        HenryMenu ListSessions;
 
         //Henry Stuff (just testin')
         bool HenryMode = true;
@@ -188,6 +189,7 @@ namespace teamstairwell{
                 screens.Add("SignIn", new HenryMenu(this.Content));
                 screens.Add("SessionOption", new HenryMenu(this.Content));
                 screens.Add("Lobby", new HenryMenu(this.Content));
+                screens.Add("ListSessions", new HenryMenu(this.Content));
                 screens.Add("Battlefield", new HenryScreen()); //note: not an actual battlefield, gets filled in by appropriate button
                 screens.Add("PauseMenu", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
@@ -239,7 +241,11 @@ namespace teamstairwell{
                 SessionOption.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
                 SessionOption.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
                 SessionOption.AddButton(0.35f, 0.3f, "New Session", new OnClick(() => { CreateSession(); RNSEB.CurrentScreen = "Lobby"; }));
-                SessionOption.AddButton(0.65f, 0.3f, "Find Session", new OnClick(() => { FindSession();  RNSEB.CurrentScreen = "Lobby"; }));
+                SessionOption.AddButton(0.65f, 0.3f, "Find Session", new OnClick(() => { FindSession();  RNSEB.CurrentScreen = "ListSessions"; }));
+
+                //List Available Sessions Screen
+                ListSessions = (HenryMenu)screens["ListSessions"];
+                ListSessions.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "SessionOption"; }));
 
                 //Create Player Lobby
                 Lobby = (HenryMenu)screens["Lobby"];
@@ -354,46 +360,13 @@ namespace teamstairwell{
             //Maintains Lobby
             if(RNSEB.CurrentScreen == "Lobby")
             {
-                if(networkSession != null)
-                {
-                    if(networkSession.SessionState == NetworkSessionState.Lobby)
-                    {
-                        if (Keyboard.GetState().IsKeyDown(Keys.A))
-                        {
-                            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
-                                gamer.IsReady = true;
-                        }
+                HandleLobby();
+            }
 
-                        Lobby.clearTexts();
-                        Lobby.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
-                        Lobby.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A When Ready");
-                        float y = 0.25f;
-                        foreach (NetworkGamer gamer in networkSession.AllGamers)
-                        {
-                            string text = gamer.Gamertag;
-                            User player = gamer.Tag as User;
-
-                            if (gamer.IsReady)
-                                text += " - ready!";
-
-                            Lobby.AddText(0.2f, y, TextFont, Color.White, text);
-                            y += 0.1f;
-                        }
-
-                        // The host checks if everyone is ready, and moves to game play if true.
-                        if (networkSession.IsHost)
-                        {
-                            if (networkSession.IsEveryoneReady)
-                                networkSession.StartGame();
-                        }
-
-                        // Pump the underlying session object.
-                        networkSession.Update();
-                    }
-                }
-                else{
-                    RNSEB.CurrentScreen = "SessionOption";
-                }
+            //Maintains Session Select Screen
+            if (RNSEB.CurrentScreen == "ListSessions")
+            {
+                HandleListSessions();
             }
 
 
@@ -517,11 +490,105 @@ namespace teamstairwell{
             return new User();
         }
 
+        //Handle Lobby Updates and Redraws
+        public void HandleLobby()
+        {
+            if (networkSession != null)
+            {
+                if (networkSession.SessionState == NetworkSessionState.Lobby)
+                {
+                    if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    {
+                        foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+                            gamer.IsReady = true;
+                    }
+
+                    Lobby.clearTexts();
+                    Lobby.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
+                    Lobby.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A When Ready");
+                    float y = 0.25f;
+                    foreach (NetworkGamer gamer in networkSession.AllGamers)
+                    {
+                        string text = gamer.Gamertag;
+                        User player = gamer.Tag as User;
+
+                        if (gamer.IsReady)
+                            text += " - ready!";
+
+                        Lobby.AddText(0.2f, y, TextFont, Color.White, text);
+                        y += 0.1f;
+                    }
+
+                    // The host checks if everyone is ready, and moves to game play if true.
+                    if (networkSession.IsHost)
+                    {
+                        if (networkSession.IsEveryoneReady)
+                            networkSession.StartGame();
+                    }
+
+                    // Pump the underlying session object.
+                    networkSession.Update();
+                }
+            }
+            else
+            {
+                RNSEB.CurrentScreen = "SessionOption";
+            }
+        }
+
+        //Handle updates and redrawing for List of Available Sessions Screen
+        public void HandleListSessions()
+        {
+            //Handle Keyboard
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                //Join selected Session
+                if (availableSessions.Count > 0)
+                {
+                    networkSession = NetworkSession.Join(availableSessions[selectedSessionIndex]);
+                    HookSessionEvents();
+
+                    availableSessions.Dispose();
+                    availableSessions = null;
+                    RNSEB.CurrentScreen = "Lobby";
+                }
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                if (selectedSessionIndex > 0)
+                    selectedSessionIndex--;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                if (selectedSessionIndex < availableSessions.Count - 1)
+                    selectedSessionIndex++;
+            }
+
+
+            ListSessions.clearTexts();
+            ListSessions.AddText(0.5f, 0.1f, TitleFont, Color.White, "Availabe Sessions");
+            ListSessions.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A to join");
+
+            float y = 100;
+            //int selectedSessionIndex = 0;
+
+            for (int sessionIndex = 0; sessionIndex < availableSessions.Count; sessionIndex++)
+            {
+                Color color = Color.White;
+                if (sessionIndex == selectedSessionIndex)
+                    color = Color.Red;
+
+                ListSessions.AddText(0.5f, y, TextFont, color, availableSessions[sessionIndex].HostGamertag);
+                y += 0.1f;
+            }
+        }
 
 
 
-    //SAVE GAME CODE
- /// <summary>
+
+
+        //SAVE GAME CODE
+        /// <summary>
         /// This method serializes a data object into
         /// the StorageContainer for this game.
         /// </summary>
