@@ -516,7 +516,7 @@ namespace teamstairwell{
                             text += " - ready!";
 
                         Lobby.AddText(0.2f, y, TextFont, Color.White, text);
-                        y += 0.1f;
+                        y += 0.06f;
                     }
 
                     // The host checks if everyone is ready, and moves to game play if true.
@@ -539,6 +539,22 @@ namespace teamstairwell{
         //Handle updates and redrawing for List of Available Sessions Screen
         public void HandleListSessions()
         {
+            ListSessions.clearTexts();
+            ListSessions.AddText(0.5f, 0.1f, TitleFont, Color.White, "Availabe Sessions");
+            ListSessions.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A to join");
+
+            float y = 0.2f;
+
+            for (int sessionIndex = 0; sessionIndex < availableSessions.Count; sessionIndex++)
+            {
+                Color color = Color.White;
+                if (sessionIndex == selectedSessionIndex)
+                    color = Color.Red;
+
+                ListSessions.AddText(0.5f, y, TextFont, color, availableSessions[sessionIndex].HostGamertag);
+                y += 0.06f;
+            }
+
             //Handle Keyboard
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
@@ -562,24 +578,6 @@ namespace teamstairwell{
             {
                 if (selectedSessionIndex < availableSessions.Count - 1)
                     selectedSessionIndex++;
-            }
-
-
-            ListSessions.clearTexts();
-            ListSessions.AddText(0.5f, 0.1f, TitleFont, Color.White, "Availabe Sessions");
-            ListSessions.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A to join");
-
-            float y = 100;
-            //int selectedSessionIndex = 0;
-
-            for (int sessionIndex = 0; sessionIndex < availableSessions.Count; sessionIndex++)
-            {
-                Color color = Color.White;
-                if (sessionIndex == selectedSessionIndex)
-                    color = Color.Red;
-
-                ListSessions.AddText(0.5f, y, TextFont, color, availableSessions[sessionIndex].HostGamertag);
-                y += 0.1f;
             }
         }
 
