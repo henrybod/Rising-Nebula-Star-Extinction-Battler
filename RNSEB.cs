@@ -213,7 +213,7 @@ namespace teamstairwell{
                 screens.Add("Lobby", new HenryMenu(this.Content));
                 screens.Add("ListSessions", new HenryMenu(this.Content));
                 screens.Add("PauseMenu", new HenryMenu(this.Content));
-
+                screens.Add("SignIn", new HenryMenu(this.Content));
 
                 //create main menu
                 HenryMenu MainMenu = (HenryMenu)screens["MainMenu"];
@@ -444,6 +444,7 @@ namespace teamstairwell{
             // Make changes to handle the new window size.
             RESOLUTION.X = graphics.GraphicsDevice.DisplayMode.Width;
             RESOLUTION.Y = graphics.GraphicsDevice.DisplayMode.Height;
+        }
 
         //Ryan's MULTIPLAYER CODE
         //Multiplayer Sign In
