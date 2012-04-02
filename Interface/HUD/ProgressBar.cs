@@ -8,31 +8,97 @@ using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface.HUD {
-    public class ProgressBar {
 
-        private HenrySprite shieldTick;
+    public class ProgressBar {
+        //a HUD element to display a progress bar. border and number display only work correctly when bar is horizontal.
+
+        private HenrySprite tick, borderPixel;
+        private HenryText text;
         private Rectangle area;
-        public float Quantity = 0;
-        public float QuantityMax = 0;
+        private float quantity = 0;
+        public float Quantity {
+            get { return quantity; }
+            set {
+                if(value >= 0) quantity = value;
+                if(quantity > quantityMax) quantity = quantityMax;
+            }
+        }
+        private float quantityMax = 0;
+        public float QuantityMax {
+            get { return quantityMax; }
+            set { if(value >= 0) quantityMax = value; }
+        }
         public float BarRotation = 0;
         public float TickRotation = 0;
-
-        public ProgressBar(ContentManager cm, Rectangle area, string spriteName){
-            shieldTick = new HenrySprite(cm);
-            shieldTick.LoadContent(spriteName, false);
-            shieldTick.Scale = area.Height / shieldTick.Size.Y;
-            this.area = area;
+        public bool ShowValue = false, ShowBorder = false;
+        private int valueAccuracy = 0;
+        public int ValueAccuracy {
+            get { return valueAccuracy; }
+            set { if(value >= 0) valueAccuracy = value; }
         }
 
-        public void Draw(SpriteBatch sb){
+
+
+        public ProgressBar(ContentManager cm, Rectangle area, string spriteName) {
+            tick = new HenrySprite(cm);
+            text = new HenryText(new Vector2(area.Center.X, area.Center.Y-15), cm.Load<SpriteFont>("ButtonFont"));
+            text.Color = Color.White;
+            tick.LoadContent(spriteName, true, 5);
+            tick.Scale = area.Height / tick.Size.Y;
+            this.area = area;
+            borderPixel = new HenrySprite(cm);
+            borderPixel.LoadContent("WhiteDot", false);
+        }
+
+        public void Draw(SpriteBatch sb) {
             //calculate the number of sprite draws to fill the bar
-            int ticks = (int)(area.Width / shieldTick.Size.X * (Quantity / QuantityMax));
-            for (int i = 0; i < ticks; i++){
-                shieldTick.Position.Y = area.Y + i * shieldTick.Size.X * (float)Math.Sin(BarRotation);
-                shieldTick.Position.X = area.X + i * shieldTick.Size.X * (float)Math.Cos(BarRotation);
-                shieldTick.Rotation = BarRotation + TickRotation;
-                shieldTick.Draw(sb);
+            int ticks = (int)(area.Width / tick.Size.X * (Quantity / QuantityMax));
+            for (int i = 0; i < ticks; i++) {
+                tick.Position.Y = area.Y + i * tick.Size.X * (float)Math.Sin(BarRotation);
+                tick.Position.X = area.X + i * tick.Size.X * (float)Math.Cos(BarRotation);
+                tick.Rotation = BarRotation + TickRotation;
+                tick.Draw(sb);
             }
+
+            //update font (if enabled) and display
+            if (ShowValue) {
+                text.Text = Quantity.ToString("n"+ValueAccuracy);
+                text.Draw(sb);
+            }
+
+            //draw a border (if enabled) and display
+            if (ShowBorder) {
+                borderPixel.Position.Y = area.Top - 1;
+                for(int i = 0; i < area.Width; i++) {
+                    borderPixel.Position.X = area.Left+i;
+                    borderPixel.Draw(sb);
+                }
+                borderPixel.Position.Y = area.Bottom + 1;
+                for (int i = 0; i < area.Width; i++) {
+                    borderPixel.Position.X = area.Left + i;
+                    borderPixel.Draw(sb);
+                }
+                borderPixel.Position.X = area.Left - 1;
+                for (int i = 0; i < area.Height; i++) {
+                    borderPixel.Position.Y = area.Top + i;
+                    borderPixel.Draw(sb);
+                }
+                borderPixel.Position.X = area.Right + 1;
+                for (int i = 0; i < area.Height; i++) {
+                    borderPixel.Position.Y = area.Top + i;
+                    borderPixel.Draw(sb);
+                }
+            }
+        }
+
+        public void Update(GameTime gt) {
+            tick.Update(gt);
+        }
+
+        public void Diag() {
+            Console.WriteLine("ProgressBar Diagnostic:");
+            Console.WriteLine(" > Location (" + area.X + ", " + area.Y + ")");
+            Console.WriteLine(" > Value (" + Quantity + " / " + QuantityMax + ")");
         }
     }
 }

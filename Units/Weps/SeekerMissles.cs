@@ -8,11 +8,10 @@ namespace teamstairwell.Weapons {
 
     public class SeekerMissles : HenryWeapon {
 
-        private const float rotationalVelocity = (float)Math.PI/2.0f;
+        private const float rotationalVelocity = (float)Math.PI/1.5f;
 
-        public SeekerMissles(HenrySpawner ship)
-            : base(ship, 1) {
-            //hmm
+        public SeekerMissles(HenrySpawner ship) : base(ship, 1) {
+            IconName = "SeekersIcon";
         }
         
         public override void SpawnBullets() {
@@ -25,7 +24,7 @@ namespace teamstairwell.Weapons {
             bullets.Add(new HenryBullet("BulletSeeker", this, 2, Ship.Position, Ship.Rotation + 3*(float)Math.PI/2, 50, true));
             
             //play appropriate sound effect
-            RNSEB.Audio.PlayEffect("BulletLaser"); //todo: find appropriate sound effect
+            RNSEB.Audio.PlayEffect("BulletMissle"); //todo: find appropriate sound effect
         }
 
         public override void Update(GameTime gt){
@@ -55,8 +54,8 @@ namespace teamstairwell.Weapons {
                 
                 //b.Rotation = (float)(Math.Atan2(targetPosition.Y - b.Position.Y, targetPosition.X - b.Position.X) + MathHelper.PiOver2);
                 //b.Velocity *= Vector2.Normalize(targetPosition - b.Position);
-                b.Velocity.X = (float)Math.Cos(b.Rotation + Math.PI / 2) * -200;
-                b.Velocity.Y = (float)Math.Sin(b.Rotation + Math.PI / 2) * -200;
+                b.Velocity.X = (float)Math.Cos(b.Rotation + Math.PI / 2) * -300;
+                b.Velocity.Y = (float)Math.Sin(b.Rotation + Math.PI / 2) * -300;
             }
             base.Update(gt);
         }

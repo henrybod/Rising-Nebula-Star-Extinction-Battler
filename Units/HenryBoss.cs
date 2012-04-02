@@ -6,13 +6,20 @@ using teamstairwell.Interface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using teamstairwell.Weapons;
+using teamstairwell.Graphics;
 
 namespace teamstairwell {
 
     public class HenryBoss : HenrySpawner {
 
-        private HenryHealthBar healthBar;
-        private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
+        //private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
+        public List<HenryWeapon> LaunchBays = new List<HenryWeapon>();
+        public List<HenryWeapon> ExtraWeapons = new List<HenryWeapon>();
+        public bool StaticField = false, Regeneration = false;
+        private HenrySprite staticFieldSprite;
+        public float DamageReceivedMultiplier = 1.0f;
+        public int SelectedLaunchBay = 1;
 
         public HenryBoss(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
             : base(cm, b, 1000, mass, initPos, initVel, damping) {
@@ -20,11 +27,15 @@ namespace teamstairwell {
             this.LoadContent("BossIdle", true); //initally idle
             this.CenterOrigin();
             this.Animate = true;
-            this.healthBar = new HenryHealthBar(cm, this);
             this.HitRadius = 65;
             EnginePower = 30.0f;
-            spawnerBays.Add(new HenrySpawnerBay(this, 0.2f, "VerticalPlasmaWall", 100));
+            staticFieldSprite = new HenrySprite(cm);
+            staticFieldSprite.LoadContent("BossStaticField", true);
+            staticFieldSprite.CenterOrigin();
+            staticFieldSprite.Scale = 0.6f;
 
+            //starter weapon
+            LaunchBays.Add(new LaunchBay(this, 0.6f, "PeaShooter", 100));
         }
 
         public new void Update(GameTime gt) {
@@ -47,34 +58,58 @@ namespace teamstairwell {
                     forceDirection.Normalize();
                 acceleration = forceDirection * EnginePower;
 
+                //fire weapons!
+                if (RNSEB.Input.GetKey("BossFire2") || Automated) {
+                    foreach (HenryWeapon w in ExtraWeapons)
+                        w.Fire();
+                }
+
+                //get weapon selection
+                SelectedLaunchBay += RNSEB.Input.GetMouseWheelDelta();///////////////////////////////////////////////////////
+                if (SelectedLaunchBay > LaunchBays.Count) SelectedLaunchBay -= LaunchBays.Count;
+                else if (SelectedLaunchBay < 1) SelectedLaunchBay = LaunchBays.Count + SelectedLaunchBay;
+                for (int i = 1; i <= LaunchBays.Count; i++)
+                    if (RNSEB.Input.GetKey("WeaponSelect" + i.ToString()))
+                       SelectedLaunchBay = i;
+
                 //activate spawner bays!
                 if (RNSEB.Input.GetKey("BossFire1") || Automated)
-                    foreach (HenrySpawnerBay bay in spawnerBays)
-                        bay.Fire();
+                    LaunchBays[SelectedLaunchBay-1].Fire();
+
+                //update weapons
+                foreach (HenryWeapon w in ExtraWeapons)
+                    w.Update(gt);
 
                 //update all spawner bays
-                foreach (HenrySpawnerBay bay in spawnerBays)
+                foreach (LaunchBay bay in LaunchBays)
                     bay.Update(gt);
             
             } else if (!Animate)
                 RNSEB.CurrentScreen = "PlayerVictory";
+
+            //regeneration upgrade
+            if (Regeneration)
+                Health += (float)gt.ElapsedGameTime.TotalSeconds * 8; //health per second
 
             base.Update(gt);
 
         }
 
         public new void Draw(SpriteBatch sb) {
-            foreach(HenrySpawnerBay bay in spawnerBays)
+            if (StaticField) {
+                staticFieldSprite.Position = Position;
+                staticFieldSprite.Draw(sb);
+            }
+            foreach (HenryWeapon w in ExtraWeapons)
+                w.Draw(sb);
+            foreach (LaunchBay bay in LaunchBays)
                 bay.Draw(sb);
             base.Draw(sb);
-            healthBar.Draw(sb);
-        }
-
-        public void AddSpawnerBay(HenrySpawner s) {
-            //todo
         }
 
         public override void Damage(int amount){
+            Health -= amount * DamageReceivedMultiplier;
+
             if (Health <= 0)
                 Dead = true;
 
@@ -82,7 +117,6 @@ namespace teamstairwell {
                 LoadContent("BossDeath", false, 1.0f); //dieeeee!
                 RNSEB.Audio.PlayEffect("BossDeath");
             } else {
-                Health -= amount;
                 LoadContent("BossHit", false, 6);
                 RNSEB.Audio.PlayEffect("BossHit");
             }

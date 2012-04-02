@@ -16,7 +16,7 @@ namespace teamstairwell {
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
         private HenryShieldBar shieldBar;
-        private bool shieldIsUp = true;
+        private bool shieldIsUp = true, invulnerableFromShield = false;
         public float Shield {
             get{ return shield; }
             set {
@@ -33,8 +33,12 @@ namespace teamstairwell {
             set { shieldMax = (value < 0)?0:value; }
         }
         public float ShieldRegenRate {
-            get{ return shieldRegenRate; }
+            get { return shieldRegenRate; }
             set { shieldRegenRate = (value < 0)?0:value; }
+        }
+        public float ShieldDownTime {
+            get { return shieldDownTime; }
+            set { shieldDownTime = (value < 0)?0:value; }
         }
 
         public HenryPlayer(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
@@ -53,7 +57,7 @@ namespace teamstairwell {
             shieldBar = new HenryShieldBar(cm, this);
             
             //starter weapon
-            FocusedWeapon = new DroneLauncher(this);
+            FocusedWeapon = new BasicLaser(this);
         }
 
         public new void Update(GameTime gt){
@@ -63,10 +67,10 @@ namespace teamstairwell {
                 LoadContent("PlayerIdle", true);
 
                 //update invulnerability from shield hit
-                if(Invulnerable) invulnerabilityAfterDamageCounter += (float)gt.ElapsedGameTime.TotalSeconds;
+                if(invulnerableFromShield) invulnerabilityAfterDamageCounter += (float)gt.ElapsedGameTime.TotalSeconds;
                 if(invulnerabilityAfterDamageCounter > invulnerabilityAfterDamageLength){
                     invulnerabilityAfterDamageCounter = 0;
-                    Invulnerable = false;
+                    invulnerableFromShield = false;
                 }
 
                 //update shield
@@ -97,7 +101,8 @@ namespace teamstairwell {
                 acceleration = forceDirection * EnginePower;
 
                 //calculate ship rotation from mouse cursor position (props to ryan)
-                Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
+                if(!Battlefield.BossMode)
+                    Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
 
                 //fire weapons!
                 firingFocused = RNSEB.Input.GetKey("PlayerFire1");
@@ -109,14 +114,10 @@ namespace teamstairwell {
             base.Update(gt);
         }
 
-        public new void Draw(SpriteBatch sb){
-            base.Draw(sb);
-        }
-
         public override void Damage(int amount){
-            if (Invulnerable)
-                return; //no damage if invulnerbale
-
+            if (Invulnerable || invulnerableFromShield)
+                return; //no damage if invulnerbale (for shield mechanic)
+            
             if (!shieldIsUp)
                 Dead = true; //if no shield and be damaged equal deddify j00!
 
@@ -128,26 +129,18 @@ namespace teamstairwell {
             } else {
                 //not dead yet
                 Shield -= amount;
-                Invulnerable = true;
+                invulnerableFromShield = true;
 
                 //shield logic
                 if (Shield <= 0) { //oh noes! teh shield iz down!
+                    //LoadContent("PlayerShieldDown", false, 3); //<---TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //RNSEB.Audio.PlayEffect("PlayerShieldDown"); //<---TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     shieldIsUp = false; //this initiates logic in the update method
                     //RNSEB.Audio.Play("PlayerShieldDown!!!"); <-- todo: find sound effect
                 } else { //shield absorbs damage
                     LoadContent("PlayerHit", false, 3);
                     RNSEB.Audio.PlayEffect("PlayerHit");
                 }
-            }
-        }
-
-        public void AddUpgrade(RNSEB.HenryUpgrade upgrade){
-            switch(upgrade){
-                case RNSEB.HenryUpgrade.PlayerSuperLaser:
-                    FocusedWeapon = new GoldLaser(this);
-                    break;
-
-                //todo: put every player upgrade here!
             }
         }
     }

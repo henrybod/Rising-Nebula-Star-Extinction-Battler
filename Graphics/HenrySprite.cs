@@ -13,13 +13,14 @@ namespace teamstairwell.Graphics {
 
         //data members
         public ContentManager cm;
+        public Color Color = Color.White;
         public Vector2 Position = new Vector2(0, 0);
         public Vector2 Origin = new Vector2(0, 0);
         protected Texture2D Texture;
         public Vector2 Size = new Vector2(0, 0);
         private float scale = 1.0f, hitRadius;
         public float Rotation = 0.0f;
-        public bool Animate = false, Oscillate = false, Loop = false, ManageHitRadius = false;
+        public bool Animate = false, Oscillate = false, Loop = false, ManageHitRadius = false, Visible = true;
         private bool reverseFrames = false;
         private int frame = 0, totalFrames;
         protected Rectangle viewRect = new Rectangle(0, 0, 0, 0);
@@ -77,12 +78,13 @@ namespace teamstairwell.Graphics {
             totalFrames = s.FrameCount;
             Loop = loop;
             FrameSpeed = frameSpeed;
-            Frame = 0;
+            Frame = 0; //start new animation on first frame (doesn't seem to be working properly)
         }
 
-        public void Draw(SpriteBatch sprites) {
-            sprites.Draw(Texture, Position, viewRect, Color.White,
-                Rotation, Origin, Scale, SpriteEffects.None, 0);
+        public void Draw(SpriteBatch sb) {
+            if (Visible)
+                sb.Draw(Texture, Position, viewRect, Color,
+                    Rotation, Origin, Scale, SpriteEffects.None, 0);
         }
         
         public void Update(GameTime gt) {

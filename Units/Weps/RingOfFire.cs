@@ -8,9 +8,8 @@ namespace teamstairwell.Weapons {
 
     public class RingOfFire : HenryWeapon {
 
-        public RingOfFire(HenrySpawner ship)
-            : base(ship, 0.5f) {
-            //hmm
+        public RingOfFire(HenrySpawner ship) : base(ship, 0.5f) {
+            IconName = "RingOfFireIcon";
         }
         
         public override void SpawnBullets() {

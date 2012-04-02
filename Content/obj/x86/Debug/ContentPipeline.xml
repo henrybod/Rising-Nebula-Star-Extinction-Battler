@@ -38,6 +38,15 @@
       <Time>2012-02-26T14:28:34.429591-06:00</Time>
     </Item>
     <Item>
+      <Source>HUDFont.spritefont</Source>
+      <Name>HUDFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\HUDFont.xnb</Output>
+      <Time>2012-03-22T21:36:14.1809516-05:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\Music\Forest Boss.mp3</Source>
       <Name>Audio\Music\Forest Boss</Name>
       <Importer>Mp3Importer</Importer>
@@ -168,7 +177,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\PropSheet.xnb</Output>
-      <Time>2012-03-06T18:57:34.596332-06:00</Time>
+      <Time>2012-03-31T22:59:49.1040099-05:00</Time>
     </Item>
     <Item>
       <Source>SpriteSheets\Background.png</Source>
@@ -195,7 +204,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\BombAnimSheet.xnb</Output>
-      <Time>2012-02-09T13:20:32.9319291-06:00</Time>
+      <Time>2012-03-31T14:17:13.5415743-05:00</Time>
     </Item>
     <Item>
       <Source>SpriteSheets\BombAnimSheetSingle.png</Source>
@@ -277,6 +286,15 @@
       <Options>None</Options>
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\Button.xnb</Output>
       <Time>2012-02-21T19:39:36.7043605-06:00</Time>
+    </Item>
+    <Item>
+      <Source>SpriteSheets\HUD.png</Source>
+      <Name>SpriteSheets\HUD</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\SpriteSheets\HUD.xnb</Output>
+      <Time>2012-03-31T12:31:32.595893-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\SoundEffects\Feeble Human Quote.wav</Source>
@@ -414,15 +432,6 @@
       <Time>2005-08-01T16:11:16-05:00</Time>
     </Item>
     <Item>
-      <Source>Audio\SoundEffects\torpedo.wav</Source>
-      <Name>Audio\SoundEffects\torpedo</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\torpedo.xnb</Output>
-      <Time>2005-08-01T16:06:54-05:00</Time>
-    </Item>
-    <Item>
       <Source>Audio\SoundEffects\laser.wav</Source>
       <Name>Audio\SoundEffects\laser</Name>
       <Importer>WavImporter</Importer>
@@ -430,6 +439,42 @@
       <Options>None</Options>
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\laser.xnb</Output>
       <Time>2005-08-01T16:08:26-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\BasicLaser.wav</Source>
+      <Name>Audio\SoundEffects\BasicLaser</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\BasicLaser.xnb</Output>
+      <Time>2012-04-01T15:46:26.9725704-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\PhotonTorpedo.WAV</Source>
+      <Name>Audio\SoundEffects\PhotonTorpedo</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\PhotonTorpedo.xnb</Output>
+      <Time>2000-01-31T12:46:12-06:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\QuantumTorpedo.wav</Source>
+      <Name>Audio\SoundEffects\QuantumTorpedo</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\QuantumTorpedo.xnb</Output>
+      <Time>2005-08-01T16:06:54-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\SoundEffects\BulletPea.wav</Source>
+      <Name>Audio\SoundEffects\BulletPea</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\BulletPea.xnb</Output>
+      <Time>2012-04-01T16:05:33.8111658-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

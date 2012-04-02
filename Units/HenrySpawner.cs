@@ -18,9 +18,19 @@ namespace teamstairwell {
             get { return healthMax; }
             set { healthMax = value;
                   Health = healthMax; }}
-        public float Health, EnginePower;
+        private float health;
+        public float Health {
+            get { return health; }
+            set {
+                if (value <= HealthMax && value >= 0)
+                    health = value;
+                else if (value < 0)
+                    health = 0;
+            }
+        }
+        public float EnginePower;
         public HenryBattlefield Battlefield;
-        public bool Dead = false, Automated = false, Invulnerable = false;
+        public bool Dead = false, Automated = false, Invulnerable = false, FacesTarget = false;
         protected bool firingFocused = false, firingDiffuse = false;
         private float fireRateMultiplier = 1.0f;
         public float FireRateMultiplier {
@@ -51,9 +61,9 @@ namespace teamstairwell {
             //note: spawners may not leave the screen
 
             if (!Dead && Automated) { //I'm a mindless minion of notus!
-                //temporary crude ai for testing purposes (face player and fire)
-                //Rotation = (float)(Math.Atan2(Position.Y - Battlefield.Zihao.Position.Y,
-                //                              Position.X - Battlefield.Zihao.Position.X) - Math.PI / 2);
+                if(FacesTarget)
+                    Rotation = (float)(Math.Atan2(Position.Y - Battlefield.Zihao.Position.Y,
+                                       Position.X - Battlefield.Zihao.Position.X) - Math.PI / 2);
                 firingFocused = true;
             }
 
@@ -67,11 +77,27 @@ namespace teamstairwell {
             if (firingDiffuse)
                 DiffuseWeapon.Fire();
 
-            //update mass
+            /*check for collisions w/ other spawners 
+            foreach(HenrySpawner s in Battlefield.ships) {
+                if( ((this.spawnerType == "Boss" && s.spawnerType == "Player")
+                    || (this.spawnerType == "Spawner" && s.spawnerType == "Player")
+                    || (this.spawnerType == "Spawner" && s.spawnerType == "Spawner")
+                    || (this.spawnerType == "Player" && s.spawnerType == "Spawner")
+                    || (this.spawnerType == "Player" && s.spawnerType == "Boss"))
+                    && Collision(s)) {
+
+                    this.Velocity = (this.Velocity * (this.mass - s.mass) + 2 * s.mass * s.Velocity) / (this.mass + s.mass);
+                    s.Velocity = 
+                }
+            } */
+
+            //update physics
             if(!Dead || Animate) base.Update(gt);
         }
 
         public virtual void Damage(int amount) {
+            Health -= amount;
+
             if (Health <= 0)
                 Dead = true;
 
@@ -79,8 +105,6 @@ namespace teamstairwell {
                 Velocity = Vector2.Zero;
                 LoadContent("Explosion", false, 3.0f); //dieeeee!
                 RNSEB.Audio.PlayEffect("ExplosionSmall");
-            } else {
-                Health -= amount;
             }
         }
     }

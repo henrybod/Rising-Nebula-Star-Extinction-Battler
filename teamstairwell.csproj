@@ -128,14 +128,15 @@
     <Compile Include="Entity.cs" />
     <Compile Include="Explosion.cs" />
     <Compile Include="HenryBattlefield.cs" />
+    <Compile Include="Interface\HenryUpgradeMenu.cs" />
     <Compile Include="Interface\HenryScreen.cs" />
-    <Compile Include="Interface\HenryHealthBar.cs" />
     <Compile Include="Interface\HenryShieldBar.cs" />
     <Compile Include="Interface\HenryUpgradeButton.cs" />
     <Compile Include="Interface\HUD\ProgressBar.cs" />
+    <Compile Include="Interface\HUD\WeaponBar.cs" />
+    <Compile Include="Interface\HUD\WeaponIndicator.cs" />
     <Compile Include="Seeker.cs" />
     <Compile Include="Units\Weps\BasicLaser.cs" />
-    <Compile Include="Units\BossAI.cs" />
     <Compile Include="Units\HenryBoss.cs" />
     <Compile Include="Units\HenryBullet.cs" />
     <Compile Include="Units\HenryMass.cs" />
@@ -192,17 +193,22 @@
     <Compile Include="Program.cs" />
     <Compile Include="RollSpawner.cs" />
     <Compile Include="SplitSpawner.cs" />
-    <Compile Include="Units\HenrySpawnerBay.cs" />
     <Compile Include="Units\HenryWeapon.cs" />
-    <Compile Include="Units\SpawnerAI.cs" />
+    <Compile Include="Units\Weps\ArseLightning.cs" />
+    <Compile Include="Units\Weps\AutoLaser.cs" />
+    <Compile Include="Units\Weps\PeaShooter.cs" />
+    <Compile Include="Units\Weps\PhotonTorpedo.cs" />
+    <Compile Include="Units\Weps\EnergyBomb.cs" />
+    <Compile Include="Units\Weps\TwinRockets.cs" />
+    <Compile Include="Units\Weps\LaunchBay.cs" />
     <Compile Include="Units\Weps\DroneLauncher.cs" />
     <Compile Include="Units\Weps\SeekerMissles.cs" />
     <Compile Include="Units\Weps\QuadLaser.cs" />
     <Compile Include="Units\Weps\SpiralRockets.cs" />
     <Compile Include="Units\Weps\PlasmaWall.cs" />
     <Compile Include="Units\Weps\RingOfFire.cs" />
-    <Compile Include="Units\Weps\MarbleShooter.cs" />
-    <Compile Include="Units\Weps\GoldLaser.cs" />
+    <Compile Include="Units\Weps\PlasmaTorpedo.cs" />
+    <Compile Include="Units\Weps\PulsePhaser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

@@ -20,8 +20,9 @@ namespace teamstairwell {
     public class RNSEB : Microsoft.Xna.Framework.Game {
 
         //XNA objects for managing content
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public static GraphicsDeviceManager graphics;
+        public static SpriteBatch spriteBatch;
+        public static ContentManager cm;
 
         //Henry Stuff (just testin')
         bool HenryMode = true;
@@ -29,30 +30,41 @@ namespace teamstairwell {
         Dictionary<string, HenryScreen> screens = new Dictionary<string, HenryScreen>();
         public delegate void OnClick(); //delegate type for lambda functions passed to buttons
         public enum HenryUpgrade {
-            PlayerSuperLaser, //focused offense
+            PlayerPulsePhaser, //focused offense
             PlayerQuadLaser, //mostly focused but a little diffuse offense
-            PlayerTwinRockets, //focused offense
+            //
+            //
+            //
+
+            PlayerTwinRockets, //diffuse offense
+            PlayerSeekers, //diffuse
             PlayerSpiralRockets, //diffuse offense
-            PlayerDeathLotus, //diffuse offense (double spiral rockets)
-            PlayerEnergyBomb, //diffuse offense
-            PlayerShieldRecharge, //defense: increase rate of shield recharge
+            PlayerEnergyBomb, //diffuse offense (double spiral rockets)
+            PlayerDrones, //diffuse offense
+
+            PlayerShieldRecharge1, //defense: increase rate of shield recharge
             PlayerShieldCapacity1, //defense: increase total shield capacity
+            PlayerShieldRecharge2, //defense: increase rate of shield recharge
             PlayerShieldCapacity2, //defense: increase total shield capacity
             PlayerShieldRecovery, //defense: decrease shield downtime
-            PlayerSpeed, //increase player's maximum velocity
-            BossVerticalLineSpawner, //offense: send out a line of purple plasma balls
-            BossHorizontalLineSpawner, //offense: sinned out a line of purple plasma balls
-            BossRollSpawner, //offense
-            BossSplitSpawner, //offense
-            BossBurstSpawner, //offense
-            BossMarbleSpawner, //offense: large projectile aimed straight at the player
-            BossGravityWellSpawner, //offense: will be perhaps the last boss offensive upgrade
-            BossAttritionField, //defense: damage the player while he is in the blue bubble
-            BossAutoRepair, //defense: the boss regains health slowly
-            BossPlating, //damage to boss reduced 50%
-            BossEMP, //offense: (concept) manually target AoE weapon that takes out all shields
+            
+            BossPhotonTorpedo,
+            BossPlasmaTorpedo,
+            //
+            //
+            //
+            
+            BossRingOfFire,
+            BossHorizontalPlasmaWall, //offense: send out a line of purple plasma balls
+            BossVerticalPlasmaWall, //offense: send out a line of purple plasma balls
+            BossHulk,
+            //
+
+            BossStaticField, //defense: damage the player while he is in the blue bubble
+            BossKevlar, //damage to boss reduced +25%
+            BossNanoregenerativeSubsystems, //defense: the boss regains health slowly
+            BossTritaniumBulkheads, //damage to boss reduced +25%
             BossAutoTurrets //offense: give the boss some automatically targeting/firing lasers
-            //feel free to add ideas, ya'll
         }
         public static string PreviousScreen, CurrentScreen = "MainMenu"; //start by displaying the main menu
         public static HenrySpriteSheets HenrySprites; //a container for all spritedom
@@ -96,7 +108,10 @@ namespace teamstairwell {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             Content.RootDirectory = "Content";
+            cm = this.Content;
         }
 
         protected override void Initialize() {
@@ -149,35 +164,38 @@ namespace teamstairwell {
             }else{
                 //Henry Stuff
                 //general setup
-                screens.Add("Exit", new HenryMenu(this.Content));
-                screens.Add("MainMenu", new HenryMenu(this.Content));
-                screens.Add("PlayerUpgradeMenu", new HenryMenu(this.Content));
-                screens.Add("BossUpgradeMenu", new HenryMenu(this.Content));
-                screens.Add("SaveMenu", new HenryMenu(this.Content));
-                screens.Add("LoadMenu", new HenryMenu(this.Content));
-                screens.Add("PlayerVictory", new HenryMenu(this.Content));
-                screens.Add("BossVictory", new HenryMenu(this.Content));
-                screens.Add("Credits", new HenryMenu(this.Content));
-                screens.Add("HowToPlay", new HenryMenu(this.Content));
-                screens.Add("Battlefield", new HenryScreen()); //note: not an actual battlefield, gets filled in by appropriate button
-                screens.Add("PauseMenu", new HenryMenu(this.Content));
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
                 TextFont = this.Content.Load<SpriteFont>("TextFont");
                 TheMouse = new HenryMouse(this.Content);
                 Audio.LoadContent();
+                screens.Add("Exit", new HenryMenu(this.Content));
+                screens.Add("MainMenu", new HenryMenu(this.Content));
+                screens.Add("PlayerUpgradeMenu", new HenryUpgradeMenu(false));
+                screens.Add("BossUpgradeMenu", new HenryUpgradeMenu(true));
+                screens.Add("SaveMenu", new HenryMenu(this.Content));
+                screens.Add("LoadMenu", new HenryMenu(this.Content));
+                screens.Add("PlayerVictory", new HenryMenu(this.Content));
+                screens.Add("BossVictory", new HenryMenu(this.Content));
+                screens.Add("Credits", new HenryMenu(this.Content));
+                screens.Add("HowToPlay", new HenryMenu(this.Content));
+                screens.Add("Battlefield", new HenryScreen()); //note: not an actual battlefield. gets replaced by a battlefield generated on start game button click
+                screens.Add("PauseMenu", new HenryMenu(this.Content));
+
 
                 //create main menu
                 HenryMenu MainMenu = (HenryMenu)screens["MainMenu"];
                 MainMenu.AddButton(0.3f, 0.5f, "Boss\nMode", new OnClick(() => {
                     screens["Battlefield"] = new HenryBattlefield(this.Content, true); //new battlefield w/ boss mode true
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
+                    TheBattlefield.LoadContent();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
                 MainMenu.AddButton(0.175f, 0.5f, "Player\nMode", new OnClick(() => {
                     screens["Battlefield"] = new HenryBattlefield(this.Content, false); //new battlefield w/ boss mode false, i.e. player mode true
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
+                    TheBattlefield.LoadContent();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
                 MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
@@ -189,7 +207,7 @@ namespace teamstairwell {
                 MainMenu.AddText(0.5f, 0.225f, TitleFont, TitleColor, "Extinction Battler:");
                 MainMenu.AddText(0.5f, 0.3f, TitleFont, TitleColor, "The Final Sin"); //todo: find a way to center justify text
                 MainMenu.AddButton(0.5f, 0.5f, "", new OnClick(()=>{RNSEB.CurrentScreen = "Credits";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.5f);
-                
+
                 //create how to play screen
                 HenryMenu HowToPlay = (HenryMenu)screens["HowToPlay"];
                 HowToPlay.AddButton(0.9f, 0.9f, "Back", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
@@ -199,7 +217,7 @@ namespace teamstairwell {
                 HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
                 HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "BossIdle", "BossHit", "BossDeath", 1.0f);
 
-                //create player's upgrade menu
+                /*create player's upgrade menu
                 HenryMenu PlayerUpgradeMenu = (HenryMenu)screens["PlayerUpgradeMenu"];
                 PlayerUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
                 PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
@@ -210,7 +228,7 @@ namespace teamstairwell {
                 //create boss's upgrade menu
                 HenryMenu BossUpgradeMenu = (HenryMenu)screens["BossUpgradeMenu"];
                 BossUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
-                BossUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
+                BossUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));*/
 
                 //create pause menu
                 HenryMenu PauseMenu = (HenryMenu)screens["PauseMenu"];
@@ -255,12 +273,10 @@ namespace teamstairwell {
             }else{
                 Input.Update(gameTime);
                 TheMouse.Update(gameTime);
-                if (CurrentScreen == "Battlefield")
-                    ((HenryBattlefield)(screens[CurrentScreen])).Update(gameTime);
-                else if (CurrentScreen == "Exit")
+                if (CurrentScreen == "Exit")
                     this.Exit();
                 else
-                    ((HenryMenu)(screens[CurrentScreen])).Update(gameTime);
+                    screens[CurrentScreen].Update(gameTime);
             }
             base.Update(gameTime);
         }
@@ -273,15 +289,17 @@ namespace teamstairwell {
                 ScreenManager.Draw(spriteBatch);
             }else{
                 //Henry Stuff
-                if(CurrentScreen == "Battlefield")
-                    ((HenryBattlefield)(screens[CurrentScreen])).Draw(spriteBatch);
-                else
-                    ((HenryMenu)(screens[CurrentScreen])).Draw(spriteBatch);
-
+                screens[CurrentScreen].Draw(spriteBatch);
                 TheMouse.Draw(spriteBatch); //mouse is always the last thing drawn so that it appears on top
             }
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        void Window_ClientSizeChanged(object sender, EventArgs e) {
+            // Make changes to handle the new window size.
+            RESOLUTION.X = graphics.GraphicsDevice.DisplayMode.Width;
+            RESOLUTION.Y = graphics.GraphicsDevice.DisplayMode.Height;
         }
     }
 }

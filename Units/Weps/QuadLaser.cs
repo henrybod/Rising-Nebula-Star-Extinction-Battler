@@ -8,9 +8,8 @@ namespace teamstairwell.Weapons {
 
     public class QuadLaser : HenryWeapon {
 
-        public QuadLaser(HenrySpawner ship)
-            : base(ship, 20) {
-            //hmm
+        public QuadLaser(HenrySpawner ship) : base(ship, 20) {
+            IconName = "QuadLaserIcon";
         }
         
         public override void SpawnBullets() {
