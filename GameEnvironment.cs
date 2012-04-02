@@ -234,10 +234,10 @@ namespace teamstairwell
                 {
                     bulletSpawners[n].draw(sb);
                 }
-                for (int i = 0; i < p.pDs.Count; i++)
-                {
-                    p.pDs[i].draw(sb);
-                }
+                //for (int i = 0; i < p.pDs.Count; i++)
+                //{
+                    //p.pDs[i].draw(sb);
+                //}
 
                 if (textBombs != null)
                     textBombs.Draw(sb);

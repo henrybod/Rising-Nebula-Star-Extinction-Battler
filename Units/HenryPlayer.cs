@@ -10,7 +10,7 @@ using teamstairwell.Weapons;
 
 namespace teamstairwell {
 
-    public class HenryPlayer : HenrySpawner {
+   public class HenryPlayer : HenrySpawner {
 
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
@@ -55,8 +55,6 @@ namespace teamstairwell {
             HitRadius = 20; //what hit size is the player?
             invulnerabilityAfterDamageLength = 1.0f; //how much time (in seconds) should the player be invulnerable after a hit?
             shieldBar = new HenryShieldBar(cm, this);
-            
-            //starter weapon
             FocusedWeapon = new BasicLaser(this);
         }
 

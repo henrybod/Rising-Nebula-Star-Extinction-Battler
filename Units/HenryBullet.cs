@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +7,11 @@ using Microsoft.Xna.Framework.Content;
 using teamstairwell.Graphics;
 
 namespace teamstairwell {
-
+    [Serializable]
     public class HenryBullet : HenryMass {
 
         private int damage;
-        public HenryWeapon WhereIWasShotFrom;
+         HenryWeapon WhereIWasShotFrom;
         public bool Spent = false; //has bullet impacted something or left the screen?
 
         public HenryBullet(string spriteName, HenryWeapon whereIWasShotFrom, int damage, Vector2 initialPosition, float rotation, float velocity, bool manageHitRadius)

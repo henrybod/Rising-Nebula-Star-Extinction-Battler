@@ -51,5 +51,15 @@ namespace teamstairwell.Interface {
                 b.Update(gt);
             RNSEB.Audio.PlayMusic(music);
         }
+        public void clearTexts()
+        {
+            texts.Clear();
+        }
+
+        public void clearButtons()
+        {
+            Buttons.Clear();
+        }
+
     }
 }

@@ -10,8 +10,8 @@ using teamstairwell.Weapons;
 using teamstairwell.Graphics;
 
 namespace teamstairwell {
-
-    public class HenryBoss : HenrySpawner {
+    [Serializable]
+  public  class HenryBoss : HenrySpawner {
 
         //private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
         public List<HenryWeapon> LaunchBays = new List<HenryWeapon>();

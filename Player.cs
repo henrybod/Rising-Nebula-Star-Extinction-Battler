@@ -22,7 +22,7 @@ namespace teamstairwell
     public class Player : Entity
     {
         List<Bullet> pBs;
-        public List<Drone> pDs;
+        //public List<Drone> pDs;
         public int live;
         public int bomb;
         public TimeSpan invisibleTime = TimeSpan.Zero;
@@ -58,8 +58,8 @@ namespace teamstairwell
             pBs = playerBullets;
             invisible = false;
 
-            pDs = new List<Drone>();
-            pDs.Add(new Drone (pos, vel, acc, radius, Drone.droneType.Orbital, this, new Sprite(RNSEB.PropSheet, PropSheet.GUNNER)));
+            //pDs = new List<Drone>();
+            //pDs.Add(new Drone (pos, vel, acc, radius, Drone.droneType.Orbital, this, new Sprite(RNSEB.PropSheet, PropSheet.GUNNER)));
 
             normalSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PNORMAL);
             shieldSprite = new Sprite(RNSEB.PlayerSheet, PlayerSheet.PSHIELD);
@@ -197,10 +197,10 @@ namespace teamstairwell
             KeyboardState state = Keyboard.GetState();
 
             processMouseInput(time);
-            for (int i = 0; i < pDs.Count; i++)
-            {
-                pDs[i].update(time);
-            }
+            //for (int i = 0; i < pDs.Count; i++)
+            //{
+                //pDs[i].update(time);
+            //}
 
             if (state.IsKeyDown(Keys.W) && state.IsKeyUp(Keys.S))
             {
