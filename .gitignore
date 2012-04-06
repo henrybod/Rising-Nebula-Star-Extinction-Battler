@@ -1,0 +1,10 @@
+_UpgradeReport_Files/
+bin/
+Content/bin/
+Content/obj/
+obj/
+teamstairwell.csproj
+teamstairwell.csproj.Debug.cachefile
+teamstairwell.csproj.user
+teamstairwell.sln
+teamstairwell.suo

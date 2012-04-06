@@ -2,51 +2,6 @@
 <XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
-      <Source>GameFont.spritefont</Source>
-      <Name>GameFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb</Output>
-      <Time>2012-02-09T13:20:32.8389238-06:00</Time>
-    </Item>
-    <Item>
-      <Source>ButtonFont.spritefont</Source>
-      <Name>ButtonFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\ButtonFont.xnb</Output>
-      <Time>2012-02-22T21:12:11.3506819-06:00</Time>
-    </Item>
-    <Item>
-      <Source>TitleFont.spritefont</Source>
-      <Name>TitleFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TitleFont.xnb</Output>
-      <Time>2012-02-22T21:25:35.9056998-06:00</Time>
-    </Item>
-    <Item>
-      <Source>TextFont.spritefont</Source>
-      <Name>TextFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TextFont.xnb</Output>
-      <Time>2012-02-26T14:28:34.429591-06:00</Time>
-    </Item>
-    <Item>
-      <Source>HUDFont.spritefont</Source>
-      <Name>HUDFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\HUDFont.xnb</Output>
-      <Time>2012-03-22T21:36:14.1809516-05:00</Time>
-    </Item>
-    <Item>
       <Source>Audio\Music\Forest Boss.mp3</Source>
       <Name>Audio\Music\Forest Boss</Name>
       <Importer>Mp3Importer</Importer>
@@ -475,6 +430,51 @@
       <Options>None</Options>
       <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\Audio\SoundEffects\BulletPea.xnb</Output>
       <Time>2012-04-01T16:05:33.8111658-05:00</Time>
+    </Item>
+    <Item>
+      <Source>GameFont.spritefont</Source>
+      <Name>GameFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\GameFont.xnb</Output>
+      <Time>2012-02-09T13:20:32.8389238-06:00</Time>
+    </Item>
+    <Item>
+      <Source>ButtonFont.spritefont</Source>
+      <Name>ButtonFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\ButtonFont.xnb</Output>
+      <Time>2012-02-22T21:12:11.3506819-06:00</Time>
+    </Item>
+    <Item>
+      <Source>TitleFont.spritefont</Source>
+      <Name>TitleFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TitleFont.xnb</Output>
+      <Time>2012-02-22T21:25:35.9056998-06:00</Time>
+    </Item>
+    <Item>
+      <Source>TextFont.spritefont</Source>
+      <Name>TextFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\TextFont.xnb</Output>
+      <Time>2012-02-26T14:28:34.429591-06:00</Time>
+    </Item>
+    <Item>
+      <Source>HUDFont.spritefont</Source>
+      <Name>HUDFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Hank\Desktop\CSCSE4420\Rising-Nebula-Star-Extinction-Battler\bin\x86\Debug\Content\HUDFont.xnb</Output>
+      <Time>2012-03-22T21:36:14.1809516-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

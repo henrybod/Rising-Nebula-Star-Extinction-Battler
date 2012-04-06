@@ -269,19 +269,6 @@ namespace teamstairwell{
                 Lobby = (HenryMenu)screens["Lobby"];
                 Lobby.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { networkSession.Dispose(); RNSEB.CurrentScreen = "SessionOption"; }));
 
-                /*create player's upgrade menu
-                HenryMenu PlayerUpgradeMenu = (HenryMenu)screens["PlayerUpgradeMenu"];
-                PlayerUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
-                PlayerUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
-                PlayerUpgradeMenu.AddButton(0.5f, 0.5f, "", new OnClick(()=>{}), "PowerUpG", "PowerUpG", "PowerUpG", 1.5f);
-                //PlayerUpgradeMenu.AddUpgradeButton(0.5f, 0.5f, Content, "Skull", "SkullAura", HenryUpgrade.PlayerSuperLaser, "Gives lazer thing");
-                //todo: make semi-transparent background for upgrade & pause menu
-
-                //create boss's upgrade menu
-                HenryMenu BossUpgradeMenu = (HenryMenu)screens["BossUpgradeMenu"];
-                BossUpgradeMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Upgrades");
-                BossUpgradeMenu.AddButton(0.9f, 0.9f, "Done", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));*/
-
                 //create pause menu
                 HenryMenu PauseMenu = (HenryMenu)screens["PauseMenu"];
                 PauseMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Paused");

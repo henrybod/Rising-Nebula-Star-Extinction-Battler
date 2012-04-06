@@ -1,8 +1,3 @@
-Content\GameFont.xnb
-Content\ButtonFont.xnb
-Content\TitleFont.xnb
-Content\TextFont.xnb
-Content\HUDFont.xnb
 Content\Audio\Music\Forest Boss.xnb
 Content\Audio\Music\Forest Theme.xnb
 Content\Audio\Music\teamstairwell Intro.xnb
@@ -50,6 +45,11 @@ Content\Audio\SoundEffects\BasicLaser.xnb
 Content\Audio\SoundEffects\PhotonTorpedo.xnb
 Content\Audio\SoundEffects\QuantumTorpedo.xnb
 Content\Audio\SoundEffects\BulletPea.xnb
+Content\GameFont.xnb
+Content\ButtonFont.xnb
+Content\TitleFont.xnb
+Content\TextFont.xnb
+Content\HUDFont.xnb
 Content\Audio\Music\Forest Boss.wma
 Content\Audio\Music\Forest Theme.wma
 Content\Audio\Music\teamstairwell Intro.wma

@@ -13,8 +13,8 @@
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaCrossPlatformGroupID>94086a3d-2a82-40f4-b334-d43393818db7</XnaCrossPlatformGroupID>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>Core\Game.ico</ApplicationIcon>
+    <Thumbnail>Core\GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <XnaUpgrade>
     </XnaUpgrade>
@@ -114,20 +114,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AimSpawner.cs" />
+    <Compile Include="Core\AimSpawner.cs" />
     <Compile Include="Audio\HenryMediaPlayer.cs" />
-    <Compile Include="Bomb.cs" />
-    <Compile Include="Boss.cs" />
-    <Compile Include="Bullet.cs" />
-    <Compile Include="BulletSpawner.cs" />
-    <Compile Include="BurstSpawner.cs" />
-    <Compile Include="Drone.cs" />
+    <Compile Include="Core\Bomb.cs" />
+    <Compile Include="Core\Boss.cs" />
+    <Compile Include="Core\Bullet.cs" />
+    <Compile Include="Core\BulletSpawner.cs" />
+    <Compile Include="Core\BurstSpawner.cs" />
+    <Compile Include="Core\Drone.cs" />
     <Compile Include="Graphics\SpriteSheets\Credits.cs" />
     <Compile Include="Graphics\SpriteSheets\HenrySpriteSheets.cs" />
-    <Compile Include="HardEnvironment.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="Explosion.cs" />
-    <Compile Include="HenryBattlefield.cs" />
+    <Compile Include="Core\HardEnvironment.cs" />
+    <Compile Include="Core\Entity.cs" />
+    <Compile Include="Core\Explosion.cs" />
+    <Compile Include="Core\HenryBattlefield.cs" />
     <Compile Include="Interface\HenryUpgradeMenu.cs" />
     <Compile Include="Interface\HenryScreen.cs" />
     <Compile Include="Interface\HenryShieldBar.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="Interface\HUD\ProgressBar.cs" />
     <Compile Include="Interface\HUD\WeaponBar.cs" />
     <Compile Include="Interface\HUD\WeaponIndicator.cs" />
-    <Compile Include="Seeker.cs" />
+    <Compile Include="Core\Seeker.cs" />
     <Compile Include="Units\Weps\BasicLaser.cs" />
     <Compile Include="Units\HenryBoss.cs" />
     <Compile Include="Units\HenryBullet.cs" />
@@ -148,8 +148,8 @@
     <Compile Include="Interface\HenryMouse.cs" />
     <Compile Include="Graphics\HenrySprite.cs" />
     <Compile Include="Graphics\HenryText.cs" />
-    <Compile Include="RNSEB.cs" />
-    <Compile Include="GameEnvironment.cs" />
+    <Compile Include="Core\RNSEB.cs" />
+    <Compile Include="Core\GameEnvironment.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\SpriteSheet.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="Graphics\SpriteSheets\TitleBackground.cs" />
     <Compile Include="Graphics\SpriteSheets\TitleSheet.cs" />
     <Compile Include="Graphics\TextSprite.cs" />
-    <Compile Include="GravitySpawner.cs" />
+    <Compile Include="Core\GravitySpawner.cs" />
     <Compile Include="Interface\BackScreen.cs" />
     <Compile Include="Interface\BossHPBar.cs" />
     <Compile Include="Interface\Button.cs" />
@@ -186,13 +186,13 @@
     <Compile Include="Interface\Screen.cs" />
     <Compile Include="Interface\ScreenManage.cs" />
     <Compile Include="Interface\StoryOverlay.cs" />
-    <Compile Include="LineSpawner.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Powerup.cs" />
+    <Compile Include="Core\LineSpawner.cs" />
+    <Compile Include="Core\Player.cs" />
+    <Compile Include="Core\Powerup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="RollSpawner.cs" />
-    <Compile Include="SplitSpawner.cs" />
+    <Compile Include="Core\Program.cs" />
+    <Compile Include="Core\RollSpawner.cs" />
+    <Compile Include="Core\SplitSpawner.cs" />
     <Compile Include="Units\HenryWeapon.cs" />
     <Compile Include="Units\Weps\ArseLightning.cs" />
     <Compile Include="Units\Weps\AutoLaser.cs" />
@@ -209,11 +209,11 @@
     <Compile Include="Units\Weps\RingOfFire.cs" />
     <Compile Include="Units\Weps\PlasmaTorpedo.cs" />
     <Compile Include="Units\Weps\PulsePhaser.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Core\User.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
+    <Content Include="Core\Game.ico" />
+    <Content Include="Core\GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
