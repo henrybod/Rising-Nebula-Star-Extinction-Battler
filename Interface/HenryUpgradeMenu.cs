@@ -35,7 +35,7 @@ namespace teamstairwell.Interface {
                 AddUpgradeButton("BasicLaser", 1, 1, RNSEB.HenryUpgrade.PlayerPulsePhaser, "Your basic starter weapon");
                 AddUpgradeButton("PulsePhaser", 1, 2, RNSEB.HenryUpgrade.PlayerPulsePhaser, "Twice the damage!");
                 AddUpgradeButton("QuadLaser", 1, 3, RNSEB.HenryUpgrade.PlayerQuadLaser, "Four laser overkill!");
-                AddUpgradeButton("PF4", 1, 4, RNSEB.HenryUpgrade.PlayerQuadLaser, "[Not implemented yet]");
+                AddUpgradeButton("IonBeam", 1, 4, RNSEB.HenryUpgrade.PlayerIonBeam, "High damage to everything in front of you!");
                 AddUpgradeButton("PF5", 1, 5, RNSEB.HenryUpgrade.PlayerQuadLaser, "[Not implemented yet]");
 
                 AddUpgradeButton("TwinRockets", 2, 1, RNSEB.HenryUpgrade.PlayerTwinRockets, "A parabola of destruction");
@@ -56,8 +56,8 @@ namespace teamstairwell.Interface {
                 //set up button dependencies
                 upgradeButtons["PulsePhaser"].Requirement = "BasicLaser";
                 upgradeButtons["QuadLaser"].Requirement = "PulsePhaser";
-                upgradeButtons["PF4"].Requirement = "QuadLaser";
-                upgradeButtons["PF5"].Requirement = "PF4";
+                upgradeButtons["IonBeam"].Requirement = "QuadLaser";
+                upgradeButtons["PF5"].Requirement = "IonBeam";
 
                 upgradeButtons["TwinRockets"].Requirement = "BasicLaser";
                 upgradeButtons["Seekers"].Requirement = "TwinRockets";
@@ -85,7 +85,7 @@ namespace teamstairwell.Interface {
                 AddUpgradeButton("HorizontalPlasmaWall", 2, 2, RNSEB.HenryUpgrade.BossHorizontalPlasmaWall, "Twice the dmg!");
                 AddUpgradeButton("VerticalPlasmaWall", 2, 3, RNSEB.HenryUpgrade.BossVerticalPlasmaWall, "Twice the dmg!");
                 AddUpgradeButton("Hulk", 2, 4, RNSEB.HenryUpgrade.BossHulk, "Twice the dmg!");
-                AddUpgradeButton("BD5", 2, 5, RNSEB.HenryUpgrade.BossHulk, "[Not implemented yet]");
+                AddUpgradeButton("Magneto", 2, 5, RNSEB.HenryUpgrade.BossHulk, "[Not implemented yet]");
 
                 AddUpgradeButton("StaticField", 3, 1, RNSEB.HenryUpgrade.BossStaticField, "Twice the dmg!");
                 AddUpgradeButton("Kevlar", 3, 2, RNSEB.HenryUpgrade.BossKevlar, "Twice the dmg!");
@@ -106,7 +106,7 @@ namespace teamstairwell.Interface {
                 upgradeButtons["HorizontalPlasmaWall"].Requirement = "RingOfFire";
                 upgradeButtons["VerticalPlasmaWall"].Requirement = "HorizontalPlasmaWall";
                 upgradeButtons["Hulk"].Requirement = "VerticalPlasmaWall";
-                upgradeButtons["BD5"].Requirement = "Hulk";
+                upgradeButtons["Magneto"].Requirement = "Hulk";
 
                 upgradeButtons["StaticField"].Requirement = "PeaShooter";
                 upgradeButtons["Kevlar"].Requirement = "StaticField";

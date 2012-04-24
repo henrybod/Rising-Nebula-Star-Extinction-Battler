@@ -10,7 +10,7 @@ namespace teamstairwell.Weapons {
     public class LaunchBay : HenryWeapon {
 
         private List<HenrySpawner> spawners = new List<HenrySpawner>();
-        private float spawnerMaxVelocity/*currently unused*/;
+        private float spawnerMaxVelocity; //current unused
         private string spawnerType;
         SpawnerTemplate template = new SpawnerTemplate();
 
@@ -20,14 +20,14 @@ namespace teamstairwell.Weapons {
             this.spawnerMaxVelocity = spawnerMaxVelocity;
 
             template.health = 10;
-            template.mass = 100;
+            template.mass = 10;
             template.damping = 0.0f;
             if (spawnerType == "PeaShooter") {
                 template.health = 2;
-                template.mass = 20;
+                template.mass = 4;
             } else if(spawnerType == "Hulk") {
                 template.health = 50;
-                template.mass = 1000;
+                template.mass = 50;
                 template.damping = 0.5f;
             }
             
@@ -64,6 +64,10 @@ namespace teamstairwell.Weapons {
                     IconName = "HulkIcon";
                     template.spriteName = "HexSpawner";
                     break;
+                case "Magneto":
+                    IconName = "MagnetoIcon";
+                    template.spriteName = "Magneto";
+                    break;
                 //more spawners here!!!
                 default:
                     break;
@@ -82,7 +86,7 @@ namespace teamstairwell.Weapons {
             Vector2 initVel = new Vector2(rx, ry); //TODO: calc where the spawner should head to
             */
 
-            //better launch mechanic
+            //better launch mechanic, I guess...
             Vector2 initVel = spawnerMaxVelocity * Vector2.Normalize(RNSEB.Input.GetCursor() - Ship.Position);
 
             //create t3h spawner
@@ -108,6 +112,9 @@ namespace teamstairwell.Weapons {
                 case "VerticalPlasmaWall":
                     s.FocusedWeapon = new PlasmaWall(s, 0);
                     break;
+                case "Magneto":
+                    s.Magnetic = true;
+                    break;
             }
 
             s.FacesTarget = template.facesTarget;
@@ -128,6 +135,17 @@ namespace teamstairwell.Weapons {
         }
 
         public override void Update(GameTime gt) {
+            //remove dead spawners
+            for (int i = 0; i < spawners.Count; i++) {
+                if (spawners[i].Dead && !spawners[i].Animate) {
+                    spawners.RemoveAt(i);
+                    i--;
+                }
+            }
+            //reset collisions
+            foreach (HenrySpawner s in spawners)
+                s.CollidedThisFrame = false;
+            //update
             foreach (HenrySpawner s in spawners)
                 s.Update(gt);
             base.Update(gt);

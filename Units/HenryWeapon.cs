@@ -42,15 +42,23 @@ namespace teamstairwell {
             timeSinceLastFired += (float)gt.ElapsedGameTime.TotalSeconds;
 
             //update all my bullets
-            foreach (HenryBullet b in bullets)
-                if(!b.Spent) b.Update(gt);
+            Rectangle screenArea = new Rectangle(-200, -200, (int)RNSEB.RESOLUTION.X+400, (int)RNSEB.RESOLUTION.Y+400);
+            for (int i = 0; i < bullets.Count; i++) {
+                bullets[i].Update(gt);
+                if (bullets[i].Spent || !screenArea.Contains(new Point((int)bullets[i].Position.X, (int)bullets[i].Position.Y))) {
+                    bullets.RemoveAt(i);
+                    i--;
+                }
+            }
 
             //update any other stuff
             foreach (HenrySprite s in otherEffects)
                 s.Update(gt);
+
+            //check for offscreen bullets and delete them
         }
 
-        public virtual void Draw(SpriteBatch sb){
+        public virtual void Draw(SpriteBatch sb) {
             //draw all my bullets
             foreach (HenryBullet b in bullets)
                 if(!b.Spent) b.Draw(sb);

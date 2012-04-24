@@ -10,7 +10,7 @@ using teamstairwell.Graphics;
 namespace teamstairwell.Interface {
 
     public class HenryButton : HenrySprite {
- 
+
         private HenryText buttonText;
         public enum ButtonState {
             Normal,
@@ -38,6 +38,8 @@ namespace teamstairwell.Interface {
             this.cm = cm; //store the content manager reference so we can use it later to swap button textures
 
             this.onClick = onClick; //store the lambda function to call when clicked
+            
+            //RNSEB.Win.ClientSizeChanged += new EventHandler<EventArgs>(ResolutionChange); //subscribe to window change event
         }
 
         public new void Update(GameTime gt) {
@@ -90,6 +92,16 @@ namespace teamstairwell.Interface {
             if(RNSEB.Input.MouseIsIn(Position, Size) && RNSEB.Input.GetKey("Mouse1")) bs = ButtonState.Pressed;
             if(currState == ButtonState.Pressed && bs == ButtonState.Highlighted) bs = ButtonState.JustClicked;
             return bs;
+        }
+
+                
+        private void ResolutionChange(object sender, EventArgs e){
+            GameWindow window = (GameWindow)sender;
+            Position *= (new Vector2(window.ClientBounds.Width, window.ClientBounds.Height)) / RNSEB.RESOLUTION;
+            if(buttonText.Text == "How to\n  Play") {
+                Console.Write("How to Play button's position: ");
+                Console.WriteLine("(" + Position.X + ", " + Position.Y + ")");
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace teamstairwell.Interface.HUD {
     public class WeaponIndicator {
         
         private HenrySprite icon;
-        private ProgressBar bar;
+        private ProgressBar chargeBar, superBar;
         private HenryWeapon myWeapon;
         private Vector2 position;
         private HenryText text;
@@ -24,10 +24,11 @@ namespace teamstairwell.Interface.HUD {
             this.position = pos;
             this.myWeapon = myWeapon;
 
-            bar = new ProgressBar(RNSEB.cm, new Rectangle((int)(icon.Position.X+icon.Size.X-4), (int)(icon.Position.Y+icon.Size.Y), (int)icon.Size.Y, 3), "WeaponRechargeTick");
-            bar.BarRotation = -(float)Math.PI / 2.0f;
-            bar.QuantityMax = 1 / myWeapon.rateOfFire;
-            bar.Quantity = bar.QuantityMax;
+            chargeBar = new ProgressBar(RNSEB.cm, new Rectangle((int)(icon.Position.X+icon.Size.X-4), (int)(icon.Position.Y+icon.Size.Y), (int)icon.Size.Y, 3), "WeaponRechargeTick");
+            //chargeBar = new ProgressBar(RNSEB.cm, new Rectangle((int)icon.Position.X, (int)icon.Position.Y+(int)icon.Size.Y, (int)icon.Size.Y, (int)icon.Size.X), "WeaponRechargeTick");
+            chargeBar.BarRotation = -(float)Math.PI / 2.0f;
+            chargeBar.QuantityMax = 1 / myWeapon.rateOfFire;
+            chargeBar.Quantity = chargeBar.QuantityMax;
 
             this.text = new HenryText(this.position + new Vector2(10, 10), RNSEB.ButtonFont, text);
             this.text.Color = Color.White;
@@ -36,14 +37,14 @@ namespace teamstairwell.Interface.HUD {
 
         public void Draw(SpriteBatch sb) {
             icon.Draw(sb); 
-            bar.Draw(sb);
+            chargeBar.Draw(sb);
             text.Draw(sb);
         }
 
         public void Update(GameTime gt) {
             icon.Update(gt);
-            bar.Quantity = myWeapon.timeSinceLastFired;
-            bar.Update(gt);
+            chargeBar.Quantity = myWeapon.timeSinceLastFired;
+            chargeBar.Update(gt);
         }
     }
 }

@@ -30,9 +30,9 @@ namespace teamstairwell.Graphics {
         public float Scale {
             get { return scale; }
             set {
-                scale = value;
-                Size.X = (int)(viewRect.Width * scale);
-                Size.Y = (int)(viewRect.Height * scale);
+                if(value > 0) scale = value;
+                Size.X = (viewRect.Width * scale);
+                Size.Y = (viewRect.Height * scale);
                 if(ManageHitRadius) HitRadius = CalcHitRadius();
             }
         }
@@ -58,6 +58,13 @@ namespace teamstairwell.Graphics {
         //functions
         public HenrySprite(ContentManager cm) {
             this.cm = cm;
+            RNSEB.Win.ClientSizeChanged += new EventHandler<EventArgs>(ResolutionChange);
+        }
+
+        private void ResolutionChange(object sender, EventArgs e) {
+            GameWindow window = (GameWindow)sender;
+            Position *= (new Vector2(window.ClientBounds.Width, window.ClientBounds.Height)) / RNSEB.RESOLUTION;
+            Scale *= window.ClientBounds.Width / RNSEB.RESOLUTION.X;
         }
 
         public void CenterOrigin() {

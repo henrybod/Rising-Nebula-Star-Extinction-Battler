@@ -11,8 +11,11 @@ namespace teamstairwell {
     public class HenryBullet : HenryMass {
 
         private int damage;
-         HenryWeapon WhereIWasShotFrom;
-        public bool Spent = false; //has bullet impacted something or left the screen?
+        HenryWeapon WhereIWasShotFrom;
+        public bool Spent = false; //has bullet impacted something?
+        public bool Immortal = false; //such a bullet continues through multiple targets
+        public float Dps = 0.0f;
+        public float Knockback = 0.0f;
 
         public HenryBullet(string spriteName, HenryWeapon whereIWasShotFrom, int damage, Vector2 initialPosition, float rotation, float velocity, bool manageHitRadius)
             : base(whereIWasShotFrom.Ship.cm, 1, initialPosition, /*whereIWasShotFrom.Ship.Velocity + */new Vector2((float)Math.Cos(rotation - (float)Math.PI / 2), (float)Math.Sin(rotation - (float)Math.PI / 2)) * velocity, 0.0f, true) {
@@ -33,37 +36,26 @@ namespace teamstairwell {
                 || Position.Y > RNSEB.RESOLUTION.Y + 200)
                 Spent = true;
             
-            /*
-            if(WhereIWasShotFrom.Ship.spawnerType == "Player") { //if I was shot from the player, I should damage spawners and boss
-                foreach(HenrySpawner s in WhereIWasShotFrom.Ship.Battlefield.ships)
-                    if(!s.Dead && Collision(s)){
-                        if (s.spawnerType == "Boss")
-                            ((HenryBoss)s).Damage(damage);
-                        else
-                            s.Damage(damage);
-                        Spent = true;
-                    }
-
-            } else if(WhereIWasShotFrom.Ship.spawnerType == "Boss" //if I was shot from the boss or a spawner, I should damage player
-                //|| WhereIWasShotFrom.Ship.spawnerType == "Spawner")
-                && !(WhereIWasShotFrom.Ship.Battlefield.Zihao.Dead || WhereIWasShotFrom.Ship.Battlefield.Zihao.Invulnerable)
-                && Collision(WhereIWasShotFrom.Ship.Battlefield.Zihao)) {
-                    WhereIWasShotFrom.Ship.Battlefield.Zihao.Damage(damage);
-                    Spent = true;
-            }*/
-            
-
-            
             foreach (HenrySpawner s in WhereIWasShotFrom.Ship.Battlefield.ships) {
                 if (WhereIWasShotFrom.Ship.spawnerType == "Boss" || WhereIWasShotFrom.Ship.spawnerType == "Spawner") {
                     if (s.spawnerType == "Player" && Collision(s) && !s.Dead && !s.Invulnerable) {
-                        s.Damage(damage);
-                        Spent = true;
+                        if (Immortal) {
+                            s.Damage(Dps * (float)gt.ElapsedGameTime.TotalSeconds);
+                            s.Velocity += Knockback * Velocity * (float)gt.ElapsedGameTime.TotalSeconds;
+                        } else {
+                            s.Damage(damage);
+                            Spent = true;
+                        }
                     }
                 } else if (WhereIWasShotFrom.Ship.spawnerType == "Player") {
                     if ((s.spawnerType == "Boss" || s.spawnerType == "Spawner") && Collision(s) && !s.Dead && !s.Invulnerable) {
-                        s.Damage(damage);
-                        Spent = true;
+                        if (Immortal) {
+                            s.Damage(Dps * (float)gt.ElapsedGameTime.TotalSeconds);
+                            s.Velocity += Knockback * Velocity * (float)gt.ElapsedGameTime.TotalSeconds;
+                        } else {
+                            s.Damage(damage);
+                            Spent = true;
+                        }
                     }
                 }
             }

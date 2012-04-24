@@ -114,19 +114,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\AimSpawner.cs" />
     <Compile Include="Audio\HenryMediaPlayer.cs" />
-    <Compile Include="Core\Bomb.cs" />
-    <Compile Include="Core\Boss.cs" />
-    <Compile Include="Core\Bullet.cs" />
-    <Compile Include="Core\BulletSpawner.cs" />
-    <Compile Include="Core\BurstSpawner.cs" />
-    <Compile Include="Core\Drone.cs" />
-    <Compile Include="Graphics\SpriteSheets\Credits.cs" />
+    <Compile Include="Core\User.cs" />
     <Compile Include="Graphics\SpriteSheets\HenrySpriteSheets.cs" />
-    <Compile Include="Core\HardEnvironment.cs" />
-    <Compile Include="Core\Entity.cs" />
-    <Compile Include="Core\Explosion.cs" />
     <Compile Include="Core\HenryBattlefield.cs" />
     <Compile Include="Interface\HenryUpgradeMenu.cs" />
     <Compile Include="Interface\HenryScreen.cs" />
@@ -135,7 +125,6 @@
     <Compile Include="Interface\HUD\ProgressBar.cs" />
     <Compile Include="Interface\HUD\WeaponBar.cs" />
     <Compile Include="Interface\HUD\WeaponIndicator.cs" />
-    <Compile Include="Core\Seeker.cs" />
     <Compile Include="Units\Weps\BasicLaser.cs" />
     <Compile Include="Units\HenryBoss.cs" />
     <Compile Include="Units\HenryBullet.cs" />
@@ -149,53 +138,13 @@
     <Compile Include="Graphics\HenrySprite.cs" />
     <Compile Include="Graphics\HenryText.cs" />
     <Compile Include="Core\RNSEB.cs" />
-    <Compile Include="Core\GameEnvironment.cs" />
-    <Compile Include="Graphics\Camera.cs" />
-    <Compile Include="Graphics\Sprite.cs" />
-    <Compile Include="Graphics\SpriteSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\Background.cs" />
-    <Compile Include="Graphics\SpriteSheets\GumBackground.cs" />
-    <Compile Include="Graphics\SpriteSheets\InfoOne.cs" />
-    <Compile Include="Graphics\SpriteSheets\InfoTwo.cs" />
-    <Compile Include="Graphics\SpriteSheets\ScreenBomb.cs" />
-    <Compile Include="Graphics\SpriteSheets\EffectSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\EnvironmentSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\PanelSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\ParticlePlayerSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\PlayerSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\PrimitiveSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\PropSheet.cs" />
-    <Compile Include="Graphics\SpriteSheets\TitleBackground.cs" />
-    <Compile Include="Graphics\SpriteSheets\TitleSheet.cs" />
-    <Compile Include="Graphics\TextSprite.cs" />
-    <Compile Include="Core\GravitySpawner.cs" />
-    <Compile Include="Interface\BackScreen.cs" />
-    <Compile Include="Interface\BossHPBar.cs" />
-    <Compile Include="Interface\Button.cs" />
-    <Compile Include="Interface\Credits.cs" />
-    <Compile Include="Interface\ExitOut.cs" />
-    <Compile Include="Interface\HardOverlay.cs" />
-    <Compile Include="Interface\InGameOverlay.cs" />
-    <Compile Include="Interface\InstructionOverlay.cs" />
-    <Compile Include="Interface\Instructiontwo.cs" />
-    <Compile Include="Interface\MainMenu.cs" />
-    <Compile Include="Interface\MenuItem.cs" />
-    <Compile Include="Interface\MenuPane.cs" />
-    <Compile Include="Interface\PauseScreen.cs" />
-    <Compile Include="Interface\PlayerTwoVictory.cs" />
-    <Compile Include="Interface\Screen.cs" />
-    <Compile Include="Interface\ScreenManage.cs" />
-    <Compile Include="Interface\StoryOverlay.cs" />
-    <Compile Include="Core\LineSpawner.cs" />
-    <Compile Include="Core\Player.cs" />
-    <Compile Include="Core\Powerup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Program.cs" />
-    <Compile Include="Core\RollSpawner.cs" />
-    <Compile Include="Core\SplitSpawner.cs" />
     <Compile Include="Units\HenryWeapon.cs" />
     <Compile Include="Units\Weps\ArseLightning.cs" />
     <Compile Include="Units\Weps\AutoLaser.cs" />
+    <Compile Include="Units\Weps\Shockwave.cs" />
+    <Compile Include="Units\Weps\IonBeam.cs" />
     <Compile Include="Units\Weps\PeaShooter.cs" />
     <Compile Include="Units\Weps\PhotonTorpedo.cs" />
     <Compile Include="Units\Weps\EnergyBomb.cs" />
@@ -209,7 +158,6 @@
     <Compile Include="Units\Weps\RingOfFire.cs" />
     <Compile Include="Units\Weps\PlasmaTorpedo.cs" />
     <Compile Include="Units\Weps\PulsePhaser.cs" />
-    <Compile Include="Core\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Game.ico" />
@@ -263,35 +211,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Graphics\.svn\all-wcprops" />
-    <None Include="Graphics\.svn\entries" />
-    <None Include="Graphics\.svn\text-base\Camera.cs.svn-base" />
-    <None Include="Graphics\.svn\text-base\Sprite.cs.svn-base" />
-    <None Include="Graphics\.svn\text-base\SpriteSheet.cs.svn-base" />
-    <None Include="Graphics\.svn\text-base\TextSprite.cs.svn-base" />
-    <None Include="Graphics\SpriteSheets\.svn\all-wcprops" />
-    <None Include="Graphics\SpriteSheets\.svn\entries" />
-    <None Include="Graphics\SpriteSheets\.svn\text-base\EffectSheet.cs.svn-base" />
-    <None Include="Graphics\SpriteSheets\.svn\text-base\EnvironmentSheet.cs.svn-base" />
-    <None Include="Graphics\SpriteSheets\.svn\text-base\PanelSheet.cs.svn-base" />
-    <None Include="Graphics\SpriteSheets\.svn\text-base\ParticlePlayerSheet.cs.svn-base" />
-    <None Include="Graphics\SpriteSheets\.svn\text-base\PlayerSheet.cs.svn-base" />
-    <None Include="Graphics\SpriteSheets\.svn\text-base\PrimitiveSheet.cs.svn-base" />
-    <None Include="Graphics\SpriteSheets\.svn\text-base\PropSheet.cs.svn-base" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\.svn\prop-base\" />
-    <Folder Include="Graphics\.svn\props\" />
-    <Folder Include="Graphics\.svn\tmp\prop-base\" />
-    <Folder Include="Graphics\.svn\tmp\props\" />
-    <Folder Include="Graphics\.svn\tmp\text-base\" />
-    <Folder Include="Graphics\SpriteSheets\.svn\prop-base\" />
-    <Folder Include="Graphics\SpriteSheets\.svn\props\" />
-    <Folder Include="Graphics\SpriteSheets\.svn\tmp\prop-base\" />
-    <Folder Include="Graphics\SpriteSheets\.svn\tmp\props\" />
-    <Folder Include="Graphics\SpriteSheets\.svn\tmp\text-base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="Content\RNESB_TFS_SILVERContent.contentproj">
       <Project>{1928A6B4-18B6-473E-85FF-388AF0E293B2}</Project>

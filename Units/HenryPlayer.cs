@@ -112,7 +112,7 @@ namespace teamstairwell {
             base.Update(gt);
         }
 
-        public override void Damage(int amount){
+        public override void Damage(float amount){
             if (Invulnerable || invulnerableFromShield)
                 return; //no damage if invulnerbale (for shield mechanic)
             

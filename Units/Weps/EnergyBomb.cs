@@ -33,7 +33,6 @@ namespace teamstairwell.Weapons {
             foreach (HenrySpawner s in RNSEB.TheBattlefield.ships) {
                 if (!(s is HenryPlayer)) {
                     s.Damage(9);
-                    Console.WriteLine(s.spawnerType + " damaged by 20.");
                 }
             }
         }

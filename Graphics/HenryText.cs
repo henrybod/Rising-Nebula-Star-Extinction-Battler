@@ -23,13 +23,18 @@ namespace teamstairwell.Graphics {
             Font = sf;
             Text = s;
             Origin = new Vector2(Font.MeasureString(Text).X / 2, Font.MeasureString(Text).Y / 2);
+            RNSEB.Win.ClientSizeChanged += new EventHandler<EventArgs>(ResolutionChange); //subscribe to window change event
         }
 
         public void Draw(SpriteBatch sb) {
             sb.DrawString(Font, Text, Position, Color, RotationAngle, Origin, Scale, SpriteEffect, 0);
         }
-        
-        //Will we conceivably need an update method? Flashing or scrolling text?
+
+        private void ResolutionChange(object sender, EventArgs e) {
+            GameWindow window = (GameWindow)sender;
+            Position *= (new Vector2(window.ClientBounds.Width, window.ClientBounds.Height)) / RNSEB.RESOLUTION;
+            Scale *= window.ClientBounds.Width / RNSEB.RESOLUTION.X;
+        }
 
     }
 }

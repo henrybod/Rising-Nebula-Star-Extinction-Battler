@@ -11,7 +11,7 @@ using teamstairwell.Graphics;
 
 namespace teamstairwell {
     [Serializable]
-  public  class HenryBoss : HenrySpawner {
+  public class HenryBoss : HenrySpawner {
 
         //private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
         public List<HenryWeapon> LaunchBays = new List<HenryWeapon>();
@@ -44,20 +44,25 @@ namespace teamstairwell {
 
                 LoadContent("BossIdle", true);
 
-                //calculate force direction
-                Vector2 forceDirection = new Vector2(0, 0);
-                if (RNSEB.Input.GetKey("BossUp"))
-                    forceDirection.Y = -1;
-                if (RNSEB.Input.GetKey("BossDown"))
-                    forceDirection.Y = 1;
-                if (RNSEB.Input.GetKey("BossLeft"))
-                    forceDirection.X = -1;
-                if (RNSEB.Input.GetKey("BossRight"))
-                    forceDirection.X = 1;
-                if(forceDirection.Length() > 0)
+                //get movement
+                if(Automated) {
+                    Vector2 forceDirection = (Battlefield.Zihao.Position - this.Position);
                     forceDirection.Normalize();
-                acceleration = forceDirection * EnginePower;
-
+                    acceleration = forceDirection * EnginePower;
+                } else {
+                    Vector2 forceDirection = new Vector2(0, 0);
+                    if (RNSEB.Input.GetKey("BossUp"))
+                        forceDirection.Y = -1;
+                    if (RNSEB.Input.GetKey("BossDown"))
+                        forceDirection.Y = 1;
+                    if (RNSEB.Input.GetKey("BossLeft"))
+                        forceDirection.X = -1;
+                    if (RNSEB.Input.GetKey("BossRight"))
+                        forceDirection.X = 1;
+                    if(forceDirection.Length() > 0)
+                        forceDirection.Normalize();
+                    acceleration = forceDirection * EnginePower;
+                }
                 //fire weapons!
                 if (RNSEB.Input.GetKey("BossFire2") || Automated) {
                     foreach (HenryWeapon w in ExtraWeapons)
@@ -65,7 +70,7 @@ namespace teamstairwell {
                 }
 
                 //get weapon selection
-                SelectedLaunchBay += RNSEB.Input.GetMouseWheelDelta();///////////////////////////////////////////////////////
+                SelectedLaunchBay += RNSEB.Input.GetMouseWheelDelta();
                 if (SelectedLaunchBay > LaunchBays.Count) SelectedLaunchBay -= LaunchBays.Count;
                 else if (SelectedLaunchBay < 1) SelectedLaunchBay = LaunchBays.Count + SelectedLaunchBay;
                 for (int i = 1; i <= LaunchBays.Count; i++)
@@ -75,6 +80,8 @@ namespace teamstairwell {
                 //activate spawner bays!
                 if (RNSEB.Input.GetKey("BossFire1") || Automated)
                     LaunchBays[SelectedLaunchBay-1].Fire();
+                if (Automated)
+                    SelectedLaunchBay++;
 
                 //update weapons
                 foreach (HenryWeapon w in ExtraWeapons)
@@ -107,7 +114,7 @@ namespace teamstairwell {
             base.Draw(sb);
         }
 
-        public override void Damage(int amount){
+        public override void Damage(float amount){
             Health -= amount * DamageReceivedMultiplier;
 
             if (Health <= 0)

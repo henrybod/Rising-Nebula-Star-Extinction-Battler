@@ -30,7 +30,7 @@ namespace teamstairwell {
         }
         public float EnginePower;
         public HenryBattlefield Battlefield;
-        public bool Dead = false, Automated = false, Invulnerable = false, FacesTarget = false;
+        public bool Dead = false, Automated = false, Invulnerable = false, FacesTarget = false, CollidedThisFrame = false, Magnetic = false;
         protected bool firingFocused = false, firingDiffuse = false;
         private float fireRateMultiplier = 1.0f;
         public float FireRateMultiplier {
@@ -64,6 +64,11 @@ namespace teamstairwell {
                 if(FacesTarget)
                     Rotation = (float)(Math.Atan2(Position.Y - Battlefield.Zihao.Position.Y,
                                        Position.X - Battlefield.Zihao.Position.X) - Math.PI / 2);
+                if (Magnetic) {
+                    Vector2 distance = Battlefield.Zihao.Position - this.Position;
+                    acceleration = 125.0f * Vector2.Normalize(distance);
+                    
+                }
                 firingFocused = true;
             }
 
@@ -77,25 +82,11 @@ namespace teamstairwell {
             if (firingDiffuse)
                 DiffuseWeapon.Fire();
 
-            /*check for collisions w/ other spawners 
-            foreach(HenrySpawner s in Battlefield.ships) {
-                if( ((this.spawnerType == "Boss" && s.spawnerType == "Player")
-                    || (this.spawnerType == "Spawner" && s.spawnerType == "Player")
-                    || (this.spawnerType == "Spawner" && s.spawnerType == "Spawner")
-                    || (this.spawnerType == "Player" && s.spawnerType == "Spawner")
-                    || (this.spawnerType == "Player" && s.spawnerType == "Boss"))
-                    && Collision(s)) {
-
-                    this.Velocity = (this.Velocity * (this.mass - s.mass) + 2 * s.mass * s.Velocity) / (this.mass + s.mass);
-                    s.Velocity = 
-                }
-            } */
-
             //update physics
             if(!Dead || Animate) base.Update(gt);
         }
 
-        public virtual void Damage(int amount) {
+        public virtual void Damage(float amount) {
             Health -= amount;
 
             if (Health <= 0)
@@ -103,6 +94,7 @@ namespace teamstairwell {
 
             if (Dead){
                 Velocity = Vector2.Zero;
+                acceleration = Vector2.Zero;
                 LoadContent("Explosion", false, 3.0f); //dieeeee!
                 RNSEB.Audio.PlayEffect("ExplosionSmall");
             }

@@ -41,8 +41,10 @@ namespace teamstairwell.Weapons {
         public override void Update(GameTime gt) {
             //remove dead drones from list
             for (int k = 0; k < drones.Count; k++) {
-                if (drones[k].Dead)
-                    drones.Remove(drones[k]);
+                if (drones[k].Dead) {
+                    drones.RemoveAt(k);
+                    k--;
+                }
             }
 
             //update destination position for drones (4 spots circling around player)

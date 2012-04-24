@@ -71,8 +71,8 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletLaser", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletRedFuzz", 30, 30, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Marble", 60, 60, 16);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "Magneto", 45, 45, 5);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "MagnetoAura", 45, 45, 1);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "Magnet", 45, 45, 5);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "MagnetAura", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Crosshair", 60, 60, 2);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Buoy", 30, 30, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletGoldLaser", 15, 15, 4);
@@ -86,8 +86,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "HexSpawnerAura", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpR", 25, 25, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Drone", 32, 29, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "ArseLightning", 150, 41, 2);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletIonBeam", 150, 60, 1);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "ArseLightning", 150, 45, 2);
 
             //HUD Sheet
                 AddSprite(ref All, "SpriteSheets/HUD", "ShieldTick", 3, 20, 1);
@@ -97,7 +96,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/HUD", "BasicLaserIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "PulsePhaserIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "QuadLaserIcon", 45, 45, 1);
-                AddSprite(ref All, "SpriteSheets/HUD", "IonBeamIcon", 45, 45, 1);
+                AddSprite(ref All, "SpriteSheets/HUD", "PF4Icon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "PF5Icon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "PF6Icon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "TwinRocketsIcon", 45, 45, 1);
@@ -118,14 +117,14 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/HUD", "HorizontalPlasmaWallIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "VerticalPlasmaWallIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "HulkIcon", 45, 45, 1);
-                AddSprite(ref All, "SpriteSheets/HUD", "MagnetoIcon", 45, 45, 1);
+                AddSprite(ref All, "SpriteSheets/HUD", "BD5Icon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "StaticFieldIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "KevlarIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "NanoregenerativeSubsystemsIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "TritaniumBulkheadsIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "AutoLasersIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "WeaponOverchargeTick", 1, 4, 8);
-                AddSprite(ref All, "SpriteSheets/HUD", "SelectorSquare", 57, 57, 7);
+                AddSprite(ref All, "SpriteSheets/HUD", "SelectorSquare", 57, 58, 7);
                 AddSprite(ref All, "SpriteSheets/HUD", "ShieldCapacity2Icon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "ShieldRecharge2Icon", 45, 45, 1);
 

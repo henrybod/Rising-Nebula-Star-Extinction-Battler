@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
-using Hook.Graphics.SpriteSheets;
 using teamstairwell.Interface;
 using teamstairwell.Graphics.SpriteSheets;
 using teamstairwell.Audio;
@@ -51,10 +50,9 @@ namespace teamstairwell{
         public delegate void OnClick(); //delegate type for lambda functions passed to buttons
         public enum HenryUpgrade {
             PlayerPulsePhaser, //focused offense
-            PlayerQuadLaser, //mostly focused but a little diffuse offense
-            //
-            //
-            //
+            PlayerQuadLaser, //focused offense
+            PlayerIonBeam, //focused offense
+            //1 more!
 
             PlayerTwinRockets, //diffuse offense
             PlayerSeekers, //diffuse
@@ -68,10 +66,8 @@ namespace teamstairwell{
             PlayerShieldCapacity2, //defense: increase total shield capacity
             PlayerShieldRecovery, //defense: decrease shield downtime
             
-            BossPhotonTorpedo,
-            PlayerGunnerDrones,
+            BossPhotonTorpedo, //focused
             BossPlasmaTorpedo,
-            //
             //
             //
             
@@ -94,33 +90,14 @@ namespace teamstairwell{
         public static HenryMediaPlayer Audio; //reference for audio manager
         public static HenryInput Input; //refence for input manager
         public static HenryBattlefield TheBattlefield; //reference for other classes to access current battlefield
+        public static GameWindow Win;
 
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
-        public static bool GUMBALLMODE = false;
-        public static Background Background;
-        public static GumBackground GumBackground;
-        public static TitleBackground TitleBackground;
-        public static PrimitiveSheet PrimitiveSheet;
-        public static EnvironmentSheet EnvironmentSheet;
-        public static PropSheet PropSheet;
-        public static PanelSheet PanelSheet;
-        public static PlayerSheet PlayerSheet;
-        public static ParticlePlayerSheet ParticlePlayerSheet;
-        public static EffectSheet EffectSheet;
-        public static ScreenBomb DaBomb;
-        public static TitleSheet TitleSheet;
-        public static InfoOne InfoOne;
-        public static InfoTwo InfoTwo;
-
-        public static teamstairwell.Graphics.SpriteSheets.Credits creditp;
-
         public static Dictionary<string, SoundEffect> SoundEffs; //hash table to reference sound effects
         public static Dictionary<string, Song> Music; //hash table to reference music
 
         public static SpriteFont GameFont;
-
-        public ScreenManage ScreenManager;
 
         //private HenryMenu Multiplayer;
 
@@ -136,6 +113,7 @@ namespace teamstairwell{
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             Content.RootDirectory = "Content";
             cm = this.Content;
+            Win = Window;
 
             //Multiplayer sign in components
             Components.Add(new GamerServicesComponent(this));
@@ -159,37 +137,7 @@ namespace teamstairwell{
             // TODO: use this.Content to load your game content here
             GameFont = this.Content.Load<SpriteFont>("GameFont");
 
-            if(!HenryMode){
-                PrimitiveSheet = new PrimitiveSheet(Content.Load<Texture2D>("Spritesheets/PrimitiveSheet"));
-                PropSheet = new PropSheet(Content.Load<Texture2D>("Spritesheets/PropSheet"));
-                PanelSheet = new PanelSheet(Content.Load<Texture2D>("Spritesheets/PanelSheet"));
-                EnvironmentSheet = new EnvironmentSheet(Content.Load<Texture2D>("Spritesheets/EnvironmentSheet"));
-                PlayerSheet = new PlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
-                ParticlePlayerSheet = new ParticlePlayerSheet(Content.Load<Texture2D>("Spritesheets/PlayerSheet"));
-                //EffectSheet = new EffectSheet(Content.Load<Texture2D>("Spritesheets/EffectSheet"));
-                Background = new Background(Content.Load<Texture2D>("Spritesheets/Background"));
-                GumBackground = new GumBackground(Content.Load<Texture2D>("Spritesheets/Gumball Background"));
-                TitleBackground = new TitleBackground(Content.Load<Texture2D>("Spritesheets/TitleBackground"));
-                DaBomb = new ScreenBomb(Content.Load<Texture2D>("Spritesheets/BombAnimSheet"));
-                TitleSheet = new TitleSheet(Content.Load<Texture2D>("Spritesheets/TitleSheet"));
-                InfoOne = new InfoOne(Content.Load<Texture2D>("Spritesheets/InfoOne"));
-                InfoTwo = new InfoTwo(Content.Load<Texture2D>("Spritesheets/InfoTwo"));
-                creditp = new teamstairwell.Graphics.SpriteSheets.Credits(Content.Load<Texture2D>("Spritesheets/Credits"));
-
-                Music = new Dictionary<string, Song>();
-                Music.Add("ForestMusic", Content.Load<Song>("Audio/Music/Forest Theme"));
-                Music.Add("ForestBoss", Content.Load<Song>("Audio/Music/Forest Boss"));
-                Music.Add("MenuMusic", Content.Load<Song>("Audio/Music/teamstairwell Intro"));
-                Music.Add("GameMusic", Content.Load<Song>("Audio/Music/teamstairwell Theme"));
-
-                SoundEffs = new Dictionary<string, SoundEffect>();
-                SoundEffs.Add("MissleSound", Content.Load<SoundEffect>("Audio/SoundEffects/Missle"));
-                SoundEffs.Add("MegaDead", Content.Load<SoundEffect>("Audio/SoundEffects/MEGAMAN!"));
-                SoundEffs.Add("Feeblehuman", Content.Load<SoundEffect>("Audio/SoundEffects/Feeble Human Quote"));
-
-                ScreenManager = new ScreenManage();
-
-            }else{
+            
                 //Henry Stuff
                 //general setup
                 ButtonFont = this.Content.Load<SpriteFont>("ButtonFont");
@@ -218,19 +166,19 @@ namespace teamstairwell{
                 //create main menu
                 HenryMenu MainMenu = (HenryMenu)screens["MainMenu"];
                 MainMenu.AddButton(0.3f, 0.5f, "Boss\nMode", new OnClick(() => {
-                    screens["Battlefield"] = new HenryBattlefield(this.Content, true); //new battlefield w/ boss mode true
+                    screens["Battlefield"] = new HenryBattlefield(true); //new battlefield w/ boss mode true
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
                     TheBattlefield.LoadContent();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
                 MainMenu.AddButton(0.175f, 0.5f, "Player\nMode", new OnClick(() => {
-                    screens["Battlefield"] = new HenryBattlefield(this.Content, false); //new battlefield w/ boss mode false, i.e. player mode true
+                    screens["Battlefield"] = new HenryBattlefield(false); //new battlefield w/ boss mode false, i.e. player mode true
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
                     TheBattlefield.LoadContent();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
                 MainMenu.AddButton(0.34f, 0.675f, "Multi-\nplayer", new OnClick(()=>{RNSEB.CurrentScreen = "SignIn";}));
-                MainMenu.AddButton(0.7f, 0.5f, "Load /\n Save", new OnClick(()=>{RNSEB.CurrentScreen = "LoadMenu";}));
+                MainMenu.AddButton(0.7f, 0.5f, "Load", new OnClick(()=>{RNSEB.CurrentScreen = "LoadMenu";}));
                 MainMenu.AddButton(0.66f, 0.675f, "Quit", new OnClick(()=>{RNSEB.CurrentScreen = "Exit";}));
                 MainMenu.AddButton(0.5f, 0.75f, "How to\n  Play", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlay";}));
                 Color TitleColor = Color.White;
@@ -240,13 +188,7 @@ namespace teamstairwell{
                 MainMenu.AddButton(0.5f, 0.5f, "", new OnClick(()=>{RNSEB.CurrentScreen = "Credits";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.5f);
 
                 //create how to play screen
-                HenryMenu HowToPlay = (HenryMenu)screens["HowToPlay"];
-                HowToPlay.AddButton(0.9f, 0.9f, "Back", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
-                HowToPlay.AddText(0.5f, 0.1f, TitleFont, Color.White, "The Players");
-                HowToPlay.AddText(0.35f, 0.25f, TextFont, Color.White, "Zihao is the last fighter pilot\nof ... something, something ...");
-                HowToPlay.AddButton(0.65f, 0.25f, "", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.0f);
-                HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
-                HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(()=>{RNSEB.CurrentScreen = "HowToPlayNotus";}), "BossIdle", "BossHit", "BossDeath", 1.0f);
+                createHowToPlayMenus(); //see waay below!
 
                 //Create Sign In Screen
                 HenryMenu SignIn = (HenryMenu)screens["SignIn"];
@@ -291,7 +233,7 @@ namespace teamstairwell{
                 BossVictory.AddText(0.5f, 0.1f, TitleFont, Color.White, "Notus is teh victor!");
                 BossVictory.AddText(0.5f, 0.5f, TextFont, Color.White, "An infinity years of dark befall the universe");
                 BossVictory.AddButton(0.5f, 0.8f, "Main\nMenu", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
-            }
+            
         }
 
         protected override void UnloadContent() {
@@ -376,19 +318,15 @@ namespace teamstairwell{
 
 
 
-            if(!HenryMode){
-
-                if (IsActive)
-                    ScreenManager.Update(gameTime);
-
-            }else{
+            
+                RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
                 Input.Update(gameTime);
                 TheMouse.Update(gameTime);
                 if (CurrentScreen == "Exit")
                     this.Exit();
                 else
                     screens[CurrentScreen].Update(gameTime);
-            }
+            
             base.Update(gameTime);
         }
         
@@ -412,25 +350,24 @@ namespace teamstairwell{
                 //DoOpenFile();
             }
         }
+
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
-            if(!HenryMode){
-                ScreenManager.Draw(spriteBatch);
-            }else{
+            
                 //Henry Stuff
                 screens[CurrentScreen].Draw(spriteBatch);
                 TheMouse.Draw(spriteBatch); //mouse is always the last thing drawn so that it appears on top
-            }
+            
             spriteBatch.End();
             base.Draw(gameTime);
         }
 
         void Window_ClientSizeChanged(object sender, EventArgs e) {
-            // Make changes to handle the new window size.
-            RESOLUTION.X = graphics.GraphicsDevice.DisplayMode.Width;
-            RESOLUTION.Y = graphics.GraphicsDevice.DisplayMode.Height;
+            //update the RESOLUTION variable
+            //RESOLUTION.X = ((GameWindow)sender).ClientBounds.Width;
+            //RESOLUTION.Y = ((GameWindow)sender).ClientBounds.Height;
         }
 
         //Ryan's MULTIPLAYER CODE
@@ -890,6 +827,69 @@ namespace teamstairwell{
                 // this will be thrown by OpenStream if gamedata.txt
                 // doesn't exist in the title storage location
             }
+        }
+
+        void createHowToPlayMenus() {
+            //function to make how to play menus, because they, being several in nature,
+            //hath taken up much space, and being so did necessitate their moving to an
+            //isolated and manageable locale
+
+            //screen 1
+            HenryMenu HowToPlay = (HenryMenu)screens["HowToPlay"];
+            HowToPlay.AddButton(0.9f, 0.9f, "Back", new OnClick(() => {
+                RNSEB.CurrentScreen = "MainMenu";
+            }));
+            HowToPlay.AddText(0.5f, 0.1f, TitleFont, Color.White, "The Players");
+            HowToPlay.AddText(0.35f, 0.25f, TextFont, Color.White, "Zihao is the last fighter pilot\nof ... something, something ...");
+            HowToPlay.AddButton(0.65f, 0.25f, "", new OnClick(() => {
+                RNSEB.CurrentScreen = "HowToPlay2";
+            }), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.0f);
+            HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
+            HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(() => {
+                RNSEB.CurrentScreen = "HowToPlay3";
+            }), "BossIdle", "BossHit", "BossDeath", 1.0f);
+
+            //screen 2 (zihao's)
+            screens.Add("HowToPlay2", new HenryMenu(cm));
+            HenryMenu HowToPlay2 = (HenryMenu)screens["HowToPlay2"];
+            HowToPlay2.AddText(0.5f, 0.1f, TitleFont, Color.White, "Zihao");
+            //story
+            HowToPlay2.AddText(0.5f, 0.2f, TextFont, Color.White, "Zihao backstory goes here.");
+            //controls
+            HowToPlay2.AddText(0.5f, 0.5f, TextFont, Color.White, "Zihao relies on superior maneuverablility to survive.\n"
+                + "He also carries an advanced shield generator\nthat recharges quickly.\n"
+                + "When the shield is destabilized by weaponfire,\nit takes some time to be reestablished.\n");
+            HowToPlay2.AddText(0.5f, 0.75f, TextFont, Color.White, "You carry at most two weapons.\n"
+                + "One is \"focused\" and targeted by the mouse. (Button 1)\n"
+                + "The other is \"diffuse\" and hits foes around you. (Button 2)\n");
+            HowToPlay2.AddText(0.5f, 0.85f, TextFont, Color.White, "Move with W,A,S,D.");
+            //back button
+            HowToPlay2.AddButton(0.9f, 0.9f, "Back", new OnClick(() => {
+                RNSEB.CurrentScreen = "HowToPlay";
+            }));
+
+            //screen 3 (notus's)
+            screens.Add("HowToPlay3", new HenryMenu(cm));
+            HenryMenu HowToPlay3 = (HenryMenu)screens["HowToPlay3"];
+            HowToPlay3.AddText(0.5f, 0.1f, TitleFont, Color.White, "Notus");
+            //story
+            HowToPlay3.AddText(0.5f, 0.25f, TextFont, Color.White, "The last dreadnaught of a long dead warrior race,\n"
+                + "the Notus, this devastating engine of destruction\n"
+                + "carries out its ancient programming:\n"
+                + "  if(x != Notus) Destroy(x);");
+            //controls
+            HowToPlay3.AddText(0.5f, 0.48f, TextFont, Color.White, "Notus relies on superior durability to survive.\n"
+                + "It launches mindless drones to decimate foes.\n");
+            HowToPlay3.AddText(0.5f, 0.67f, TextFont, Color.White, "Launch spawners with the left mouse button.\n"
+                + "Hold the left mouse button to supercharge a spawner.\n"
+                + "Spawners are launched in the direction of the mouse.\n"
+                + "Select which spawner to launch with 0-9 or the mouse wheel.\n"
+                + "Some other weapons may be fired with the right mouse button");
+            HowToPlay3.AddText(0.5f, 0.85f, TextFont, Color.White, "Move with W,A,S,D.");
+            //back button
+            HowToPlay3.AddButton(0.9f, 0.9f, "Back", new OnClick(() => {
+                RNSEB.CurrentScreen = "HowToPlay";
+            }));
         }
     }
 }

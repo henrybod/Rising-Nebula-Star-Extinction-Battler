@@ -15,7 +15,6 @@ namespace teamstairwell {
     public class HenryBattlefield : HenryScreen {
 
         private string music = "Level1Music";
-        private ContentManager cm;
         public bool BossMode;
         public List<HenryBullet> bullets = new List<HenryBullet>();
         public List<HenrySpawner> ships = new List<HenrySpawner>();
@@ -25,8 +24,7 @@ namespace teamstairwell {
         public ProgressBar NotusHealthBar, ZihaoShieldBar;
         public WeaponBar NotusWepBar, ZihaoWepBar;
 
-        public HenryBattlefield(ContentManager cm, bool mode) {
-            this.cm = cm;
+        public HenryBattlefield(bool mode) {
             BossMode = mode;
             SetBackground("BattlefieldBackground");
             SpinBackground = true;
@@ -34,8 +32,8 @@ namespace teamstairwell {
 
         public void LoadContent() {
             //load the default stuff
-            Zihao = new HenryPlayer(cm, this, 100, new Vector2(600, 600), new Vector2(0, 0), 0.9999999999999f);
-            Notus = new HenryBoss(cm, this, 1000, new Vector2(200, 300), new Vector2(0, 0), 0.8f);
+            Zihao = new HenryPlayer(RNSEB.cm, this, 20, new Vector2(600, 600), new Vector2(0, 0), 0.9999999999999f);
+            Notus = new HenryBoss(RNSEB.cm, this, 100, new Vector2(200, 300), new Vector2(0, 0), 0.8f);
             ships.Add(Notus);
             ships.Add(Zihao);
             ZihaoWepBar = new WeaponBar();
@@ -43,15 +41,15 @@ namespace teamstairwell {
             if (BossMode) {
                 Zihao.Automated = true;
                 Zihao.Invulnerable = true;
-                ZihaoShieldBar = new ProgressBar(cm, new Rectangle(0, 0, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
-                NotusHealthBar = new ProgressBar(cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y - 20, (int)RNSEB.RESOLUTION.X, 20), "HealthTick");
+                ZihaoShieldBar = new ProgressBar(RNSEB.cm, new Rectangle(0, 0, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
+                NotusHealthBar = new ProgressBar(RNSEB.cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y - 20, (int)RNSEB.RESOLUTION.X, 20), "HealthTick");
                 ZihaoWepBar.Position = new Vector2(RNSEB.RESOLUTION.X - 96, 6+22);
                 NotusWepBar.Position = new Vector2(6, RNSEB.RESOLUTION.Y - (45+6+22));
                 NotusWepBar.SelectorVisible = true;
             } else {
                 Notus.Automated = true;
-                ZihaoShieldBar = new ProgressBar(cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y - 20, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
-                NotusHealthBar = new ProgressBar(cm, new Rectangle(0, 0, (int)RNSEB.RESOLUTION.X, 20), "HealthTick");
+                ZihaoShieldBar = new ProgressBar(RNSEB.cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y - 20, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
+                NotusHealthBar = new ProgressBar(RNSEB.cm, new Rectangle(0, 0, (int)RNSEB.RESOLUTION.X, 20), "HealthTick");
                 ZihaoWepBar.Position = new Vector2(RNSEB.RESOLUTION.X - 96, RNSEB.RESOLUTION.Y - 70);
                 NotusWepBar.Position = new Vector2(6, 12+22);
             }
@@ -92,8 +90,11 @@ namespace teamstairwell {
             }
 
             //update our players
+            Zihao.CollidedThisFrame = false;
+            Notus.CollidedThisFrame = false;
             Zihao.Update(gt);
             Notus.Update(gt);
+            CheckCollisions();
 
             //update interface elements
             ZihaoShieldBar.Quantity = Zihao.Shield;
@@ -107,11 +108,6 @@ namespace teamstairwell {
             RNSEB.Audio.PlayMusic(music); //this can be called every update because of logic in PlayMusic()
         }
 
-
-
-
-
-
         public void GrantUpgrade(RNSEB.HenryUpgrade up) {
             switch(up) {
                 //zihao focused weapons
@@ -123,7 +119,11 @@ namespace teamstairwell {
                     Zihao.FocusedWeapon = new QuadLaser(Zihao);
                     ZihaoWepBar.ChangeWeapon(1, Zihao.FocusedWeapon);
                     break;
-                //two more to create!
+                case RNSEB.HenryUpgrade.PlayerIonBeam:
+                    Zihao.FocusedWeapon = new IonBeam(Zihao);
+                    ZihaoWepBar.ChangeWeapon(1, Zihao.FocusedWeapon);
+                    break;
+                //one more to create!
 
                 //zihao diffuse weapons
                 case RNSEB.HenryUpgrade.PlayerTwinRockets:
@@ -219,6 +219,38 @@ namespace teamstairwell {
                 default:
                     //unimplemented upgrade; do nothin'
                     break;
+            }
+        }
+
+        public void CheckCollisions() {
+            //check for collisions!
+            foreach(HenrySpawner This in ships)
+            if (!This.CollidedThisFrame && !This.Dead) {
+                foreach (HenrySpawner That in ships) {
+                    if (  ((This.spawnerType == "Boss" && That.spawnerType == "Player")
+                        || (This.spawnerType == "Spawner" && That.spawnerType == "Player")
+                        || (This.spawnerType == "Spawner" && That.spawnerType == "Spawner")
+                        || (This.spawnerType == "Player" && That.spawnerType == "Spawner")
+                        || (This.spawnerType == "Player" && That.spawnerType == "Boss"))
+                        && !That.CollidedThisFrame
+                        && !That.Dead
+                        && This.Collision(That)) {
+
+                        Vector2 v1 = This.Velocity;
+                        Vector2 v2 = That.Velocity;
+                        float m1 = This.mass;
+                        float m2 = That.mass;
+
+                        This.Velocity = (v1 * (m1 - m2) + 2 * m2 * v2) / (m1 + m2); //from wikipedia
+                        That.Velocity = (v2 * (m2 - m1) + 2 * m1 * v1) / (m1 + m2); //ditto
+
+                        //This.Damage(1);
+                        //That.Damage(1);
+
+                        This.CollidedThisFrame = true;
+                        That.CollidedThisFrame = true;
+                    }
+                }
             }
         }
     }

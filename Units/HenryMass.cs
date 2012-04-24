@@ -13,7 +13,7 @@ namespace teamstairwell {
         //Spawners (ships) and bullets will inherit from this class their properties of motion.
 
         //variables to be set upon instantiation
-        protected float mass;
+        public float mass;
         public Vector2 Velocity = Vector2.Zero;
         public Vector2 acceleration = Vector2.Zero;
         protected float damping;
