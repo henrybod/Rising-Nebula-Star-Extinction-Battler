@@ -48,6 +48,8 @@ namespace teamstairwell.Interface.HUD {
             this.area = area;
             borderPixel = new HenrySprite(cm);
             borderPixel.LoadContent("WhiteDot", false);
+
+            RNSEB.Win.ClientSizeChanged += new EventHandler<EventArgs>(ResolutionChange);
         }
 
         public void Draw(SpriteBatch sb) {
@@ -99,6 +101,17 @@ namespace teamstairwell.Interface.HUD {
             Console.WriteLine("ProgressBar Diagnostic:");
             Console.WriteLine(" > Location (" + area.X + ", " + area.Y + ")");
             Console.WriteLine(" > Value (" + Quantity + " / " + QuantityMax + ")");
+        }
+
+        private void ResolutionChange(object sender, EventArgs e) {
+            GameWindow window = (GameWindow)sender;
+            //Position *= (new Vector2(window.ClientBounds.Width, window.ClientBounds.Height)) / RNSEB.RESOLUTION;
+            float scale = window.ClientBounds.Width / RNSEB.RESOLUTION.X;
+            area.Height = (int)(area.Height * scale);
+            area.Width = (int)(area.Width * scale);
+            area.X = (int)(area.X * scale);
+            area.Y = (int)(area.Y * scale);
+            Diag();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace teamstairwell.Weapons {
     public class Shockwave : HenryWeapon {
 
         public Shockwave(HenrySpawner ship) : base(ship, 1.0f) {
-            IconName = "BasicLaserIcon";
+            IconName = "ShockwaveIcon";
         }
         
         public override void SpawnBullets() {
@@ -20,17 +20,16 @@ namespace teamstairwell.Weapons {
             //get direction vector
             Vector2 direction = Vector2.Normalize(RNSEB.Input.GetCursor() - Ship.Position);
             //set bullet
-            HenryBullet b = new HenryBullet("BulletIonBeam", this, 0, Ship.Position, Ship.Rotation, 400, true);
-            b.Rotation = Ship.Rotation + (float)Math.PI / 2.0f;
+            HenryBullet b = new HenryBullet("BulletShockwave", this, 0, Ship.Position, Ship.Rotation, 400, true);
             b.Immortal = true;
-            b.Dps = 200;
-            b.Knockback = 1.0f;
+            b.Dps = 75;
+            b.Knockback = 0.5f;
             bullets.Add(b);
         }
 
         public override void Update(GameTime gt) {
             foreach (HenryBullet b in bullets) {
-                b.Scale += 1.0f * (float)gt.ElapsedGameTime.TotalSeconds;
+                b.Scale += 2.0f * (float)gt.ElapsedGameTime.TotalSeconds;
             }
             base.Update(gt);
         }

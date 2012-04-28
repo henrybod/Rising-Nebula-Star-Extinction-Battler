@@ -143,6 +143,7 @@
     <Compile Include="Units\HenryWeapon.cs" />
     <Compile Include="Units\Weps\ArseLightning.cs" />
     <Compile Include="Units\Weps\AutoLaser.cs" />
+    <Compile Include="Units\Weps\QuantumMines.cs" />
     <Compile Include="Units\Weps\Shockwave.cs" />
     <Compile Include="Units\Weps\IonBeam.cs" />
     <Compile Include="Units\Weps\PeaShooter.cs" />

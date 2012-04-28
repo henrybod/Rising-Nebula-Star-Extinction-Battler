@@ -10,7 +10,7 @@ using teamstairwell.Graphics;
 
 namespace teamstairwell {
 
-   public class HenryWeapon {
+    public class HenryWeapon {
         //this class holds information on a given weapon, i.e. what bullet, what dmg, ...
         //is "held" by the player
 
@@ -20,6 +20,9 @@ namespace teamstairwell {
         public List<HenryBullet> bullets = new List<HenryBullet>();
         public List<HenrySprite> otherEffects = new List<HenrySprite>();
         public string IconName = "EmptyIcon";
+        public virtual bool Hot {
+            get { return (bullets.Count > 0); }
+        }
 
         public HenryWeapon(HenrySpawner ship, float rateOfFire) {
             this.Ship = ship;
@@ -27,10 +30,13 @@ namespace teamstairwell {
             this.timeSinceLastFired = 1 / rateOfFire;
         }
 
-        public virtual void SpawnBullets() {}
-
-        public void Fire() {
-
+        public virtual void SpawnBullets() {
+            //a plain old HenryWeapon does nothing when fired
+            //look to the children for a brighter tomorrow
+        }
+        
+        public virtual void Fire() {
+            //wait for weapon to reload, then spawn bullets
             if (!Ship.Dead && timeSinceLastFired >= 1 / (rateOfFire * Ship.FireRateMultiplier)) {
                 timeSinceLastFired = 0;
                 SpawnBullets();
@@ -38,7 +44,7 @@ namespace teamstairwell {
         }
 
         public virtual void Update(GameTime gt) {
-            //fire weapon
+            //accumulate time since the weapon was last fired
             timeSinceLastFired += (float)gt.ElapsedGameTime.TotalSeconds;
 
             //update all my bullets

@@ -15,7 +15,6 @@ namespace teamstairwell {
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
-        private HenryShieldBar shieldBar;
         private bool shieldIsUp = true, invulnerableFromShield = false;
         public float Shield {
             get{ return shield; }
@@ -54,7 +53,6 @@ namespace teamstairwell {
             EnginePower = 800.0f; //accerlation magnitude of the engines
             HitRadius = 20; //what hit size is the player?
             invulnerabilityAfterDamageLength = 1.0f; //how much time (in seconds) should the player be invulnerable after a hit?
-            shieldBar = new HenryShieldBar(cm, this);
             FocusedWeapon = new BasicLaser(this);
         }
 

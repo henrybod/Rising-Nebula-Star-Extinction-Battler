@@ -13,6 +13,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
         public HenrySpriteSheets() {
             //define all the sprites to be used in the game
             //they must be defined in the order they are drawn on their respective sheet!!!
+            //AddSprite( Name of dictionary, file name, index, width, height, # of frames);
 
             //interface
             AddSprite(ref All, "SpriteSheets/Button", "ButtonNormal", 229, 130, 1);
@@ -66,8 +67,8 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletFireball", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletPlasma", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletBlueFuzz", 15, 15, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "PeaSpawner", 45, 45, 5);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "PeaSpawnerAura", 45, 45, 1);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "QuantumSpawner", 45, 45, 5);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "QuanutmSpawnerAura", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletLaser", 15, 15, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "BulletRedFuzz", 30, 30, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Marble", 60, 60, 16);
@@ -82,12 +83,13 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpK", 25, 25, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpD", 25, 25, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpP", 25, 25, 4);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "HexSpawner", 45, 45, 5);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "HexSpawnerAura", 45, 45, 1);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpR", 25, 25, 4);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "HexSpawner", 45, 42, 5);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "Replicator", 43, 44, 8);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "PowerUpR", 25, 26, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "Drone", 32, 29, 4);
                 AddSprite(ref All, "SpriteSheets/PropSheet", "ArseLightning", 150, 41, 2);
-                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletIonBeam", 150, 60, 1);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletIonBeam", 150, 68, 1);
+                AddSprite(ref All, "SpriteSheets/PropSheet", "BulletShockwave", 75, 75, 1);
 
             //HUD Sheet
                 AddSprite(ref All, "SpriteSheets/HUD", "ShieldTick", 3, 20, 1);
@@ -98,7 +100,7 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/HUD", "PulsePhaserIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "QuadLaserIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "IonBeamIcon", 45, 45, 1);
-                AddSprite(ref All, "SpriteSheets/HUD", "PF5Icon", 45, 45, 1);
+                AddSprite(ref All, "SpriteSheets/HUD", "ShockwaveIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "PF6Icon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "TwinRocketsIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "SeekersIcon", 45, 45, 1);
@@ -111,8 +113,8 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/HUD", "PeaShooterIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "PhotonTorpedoIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "PlasmaTorpedoIcon", 45, 45, 1);
-                AddSprite(ref All, "SpriteSheets/HUD", "BF4Icon", 45, 45, 1);
-                AddSprite(ref All, "SpriteSheets/HUD", "BF5Icon", 45, 45, 1);
+                AddSprite(ref All, "SpriteSheets/HUD", "QuantumMinesIcon", 45, 45, 1);
+                AddSprite(ref All, "SpriteSheets/HUD", "ReplicatorIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "BF6Icon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "RingOfFireIcon", 45, 45, 1);
                 AddSprite(ref All, "SpriteSheets/HUD", "HorizontalPlasmaWallIcon", 45, 45, 1);

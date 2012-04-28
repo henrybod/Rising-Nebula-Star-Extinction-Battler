@@ -64,12 +64,11 @@ namespace teamstairwell {
                 if(FacesTarget)
                     Rotation = (float)(Math.Atan2(Position.Y - Battlefield.Zihao.Position.Y,
                                        Position.X - Battlefield.Zihao.Position.X) - Math.PI / 2);
-                if (Magnetic) {
-                    Vector2 distance = Battlefield.Zihao.Position - this.Position;
-                    acceleration = 125.0f * Vector2.Normalize(distance);
-                    
-                }
+                if (Magnetic)
+                    acceleration = 2*(Battlefield.Zihao.Position - this.Position);
+                
                 firingFocused = true;
+                firingDiffuse = true;
             }
 
             //update weapons

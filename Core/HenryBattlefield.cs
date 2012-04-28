@@ -123,7 +123,10 @@ namespace teamstairwell {
                     Zihao.FocusedWeapon = new IonBeam(Zihao);
                     ZihaoWepBar.ChangeWeapon(1, Zihao.FocusedWeapon);
                     break;
-                //one more to create!
+                case RNSEB.HenryUpgrade.PlayerShockwave:
+                    Zihao.FocusedWeapon = new Shockwave(Zihao);
+                    ZihaoWepBar.ChangeWeapon(1, Zihao.FocusedWeapon);
+                    break;
 
                 //zihao diffuse weapons
                 case RNSEB.HenryUpgrade.PlayerTwinRockets:
@@ -208,10 +211,7 @@ namespace teamstairwell {
                     Notus.DamageReceivedMultiplier = 0.5f;
                     break;
                 case RNSEB.HenryUpgrade.BossAutoTurrets:
-                    Notus.ExtraWeapons.Add(new AutoLaser(Notus, new Vector2(-25, -25)));
-                    Notus.ExtraWeapons.Add(new AutoLaser(Notus, new Vector2(-25, 25)));
-                    Notus.ExtraWeapons.Add(new AutoLaser(Notus, new Vector2(25, -25)));
-                    Notus.ExtraWeapons.Add(new AutoLaser(Notus, new Vector2(25, 25)));
+                    Notus.ExtraWeapons.Add(new AutoLaser(Notus));
                     break;
 
 
@@ -229,7 +229,7 @@ namespace teamstairwell {
                 foreach (HenrySpawner That in ships) {
                     if (  ((This.spawnerType == "Boss" && That.spawnerType == "Player")
                         || (This.spawnerType == "Spawner" && That.spawnerType == "Player")
-                        || (This.spawnerType == "Spawner" && That.spawnerType == "Spawner")
+                        //|| (This.spawnerType == "Spawner" && That.spawnerType == "Spawner")
                         || (This.spawnerType == "Player" && That.spawnerType == "Spawner")
                         || (This.spawnerType == "Player" && That.spawnerType == "Boss"))
                         && !That.CollidedThisFrame

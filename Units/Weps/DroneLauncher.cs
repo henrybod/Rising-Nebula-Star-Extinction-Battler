@@ -24,7 +24,7 @@ namespace teamstairwell.Weapons {
                 return; //we may have at most four drones at once
 
             //add a new drone
-            HenrySpawner drone = new HenrySpawner(Ship.cm, Ship.Battlefield, 5, 1, Ship.Position, Vector2.Zero, 0.0f);
+            HenrySpawner drone = new HenrySpawner(Ship.cm, Ship.Battlefield, 5, 50, Ship.Position, Vector2.Zero, 0.0f);
             drone.FocusedWeapon = new BasicLaser(drone);
             drone.Automated = true;
             drone.ManageHitRadius = true;

@@ -52,13 +52,13 @@ namespace teamstairwell{
             PlayerPulsePhaser, //focused offense
             PlayerQuadLaser, //focused offense
             PlayerIonBeam, //focused offense
-            //1 more!
+            PlayerShockwave, //focused/diffuse offense
 
             PlayerTwinRockets, //diffuse offense
             PlayerSeekers, //diffuse
             PlayerSpiralRockets, //diffuse offense
             PlayerEnergyBomb, //diffuse offense (double spiral rockets)
-            PlayerDrones, //diffuse offense
+            PlayerDrones, //diffuse offense + defense
 
             PlayerShieldRecharge1, //defense: increase rate of shield recharge
             PlayerShieldCapacity1, //defense: increase total shield capacity
@@ -68,14 +68,14 @@ namespace teamstairwell{
             
             BossPhotonTorpedo, //focused
             BossPlasmaTorpedo,
-            //
-            //
+            BossQuantumMines,
+            BossReplicator,
             
             BossRingOfFire,
             BossHorizontalPlasmaWall, //offense: send out a line of purple plasma balls
             BossVerticalPlasmaWall, //offense: send out a line of purple plasma balls
             BossHulk,
-            //
+            BossMagneto,
 
             BossStaticField, //defense: damage the player while he is in the blue bubble
             BossKevlar, //damage to boss reduced +25%
@@ -109,7 +109,7 @@ namespace teamstairwell{
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
-            Window.AllowUserResizing = true;
+            //Window.AllowUserResizing = true; //I'm giving up on this. There's just too many complications.
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             Content.RootDirectory = "Content";
             cm = this.Content;
@@ -148,8 +148,8 @@ namespace teamstairwell{
                 Audio.LoadContent();
                 screens.Add("Exit", new HenryMenu(this.Content));
                 screens.Add("MainMenu", new HenryMenu(this.Content));
-                screens.Add("PlayerUpgradeMenu", new HenryUpgradeMenu(false));
-                screens.Add("BossUpgradeMenu", new HenryUpgradeMenu(true));
+                screens.Add("PlayerUpgradeMenu", new HenryScreen());
+                screens.Add("BossUpgradeMenu", new HenryScreen());
                 screens.Add("SaveMenu", new HenryMenu(this.Content));
                 screens.Add("LoadMenu", new HenryMenu(this.Content));
                 screens.Add("PlayerVictory", new HenryMenu(this.Content));
@@ -166,12 +166,16 @@ namespace teamstairwell{
                 //create main menu
                 HenryMenu MainMenu = (HenryMenu)screens["MainMenu"];
                 MainMenu.AddButton(0.3f, 0.5f, "Boss\nMode", new OnClick(() => {
+                    screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
+                    screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
                     screens["Battlefield"] = new HenryBattlefield(true); //new battlefield w/ boss mode true
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
                     TheBattlefield.LoadContent();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
                 MainMenu.AddButton(0.175f, 0.5f, "Player\nMode", new OnClick(() => {
+                    screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
+                    screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
                     screens["Battlefield"] = new HenryBattlefield(false); //new battlefield w/ boss mode false, i.e. player mode true
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
                     TheBattlefield.LoadContent();
