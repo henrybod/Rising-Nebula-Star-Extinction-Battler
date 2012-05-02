@@ -9,17 +9,15 @@ using System.Runtime.Serialization;
 
 namespace teamstairwell.Interface {
 
-    public class HenryScreen : ISerializable {
+    [Serializable()]
+    public class HenryScreen {
 
         //this is a just a parent for the menus and battlefield so I can make a dictionary of them
 
         //one thing all screens have in common is a background, so that is handled here
 
-        private HenrySprite background = new HenrySprite(RNSEB.cm);
+        protected HenrySprite background = new HenrySprite(RNSEB.cm);
         public bool SpinBackground = true;
-
-        public virtual void GetObjectData(SerializationInfo i, StreamingContext c){
-        }
 
         public virtual void Update(GameTime gt) {
             if (SpinBackground)
@@ -42,5 +40,7 @@ namespace teamstairwell.Interface {
             background.Position.X = (float)RNSEB.RESOLUTION.X / 2.0f;
             background.Position.Y = (float)RNSEB.RESOLUTION.Y / 2.0f;
         }
+
+        
     }
 }

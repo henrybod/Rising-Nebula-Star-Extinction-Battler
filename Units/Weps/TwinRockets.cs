@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class TwinRockets : HenryWeapon {
 
         public TwinRockets(HenrySpawner ship) : base(ship, 5) {
@@ -14,7 +14,7 @@ namespace teamstairwell.Weapons {
         
         public override void SpawnBullets() {
             //logic for spawning bullets here!
-            RNSEB.Audio.PlayEffect("BulletMissle");
+            RNSEB.Audio.PlayEffect("Rocket");
             //rocket #1
             HenryBullet b = new HenryBullet("BulletMissle", this, 2, Ship.Position, Ship.Rotation, 100, true);
             b.acceleration = 400 * new Vector2((float)Math.Cos(Ship.Rotation-Math.PI/2.0f), (float)Math.Sin(Ship.Rotation-Math.PI/2.0f));

@@ -8,19 +8,19 @@ using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface.HUD {
-
+    [Serializable()]
     public class WeaponBar {
 
         //data members
         public Vector2 Position = Vector2.Zero; //the top left corner of the weapon bar
         public List<WeaponIndicator> Weapons = new List<WeaponIndicator>(); //a list of all the weapons in this weapon bar
-        private HenrySprite selectorSquare;
+        public HenrySprite selectorSquare;
         public bool SelectorVisible = false;
 
         //functions
         public WeaponBar() {
             selectorSquare = new HenrySprite(RNSEB.cm);
-            selectorSquare.LoadContent("SelectorSquare", true, 5);
+            selectorSquare.LoadContent("SelectorSquare", true, 10);
             selectorSquare.Position = this.Position;
         }
 

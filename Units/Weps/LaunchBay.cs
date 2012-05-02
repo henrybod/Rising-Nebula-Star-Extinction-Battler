@@ -6,27 +6,32 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class LaunchBay : HenryWeapon {
 
-        private List<HenrySpawner> spawners = new List<HenrySpawner>();
+        public List<HenrySpawner> spawners = new List<HenrySpawner>();
         private float spawnerMaxVelocity; //currently unused
         private string spawnerType;
         SpawnerTemplate template = new SpawnerTemplate();
         public float chargingTimeMax = 0.0f;
-        private float chargingTime = 0.0f;
-        private bool charging = false;
+        public float chargingTime = 0.0f;
+        private bool chargingThisFrame = false;
+        public enum ChargeStatusEnum {
+            PreCharge,
+            Charging,
+            PostCharge
+        }
+        public ChargeStatusEnum ChargeStatus = ChargeStatusEnum.PreCharge;
         private float chargePercent = 0.0f;
-        public override bool Hot {
-            get {
-                return (spawners.Count > 0);
-            }
+        public override bool Hot { //I'm a hot weapon if any of my bullets are on the battlefield
+            get { return (spawners.Count > 0); }
         }
 
         public LaunchBay(HenrySpawner ship, float launchRate, string spawnerType, float spawnerMaxVelocity) : base(ship, launchRate) {
 
             this.spawnerType = spawnerType;
             this.spawnerMaxVelocity = spawnerMaxVelocity;
+            this.chargingTimeMax = 0.5f * (1.0f / launchRate);
 
             template.health = 10;
             template.mass = 10;
@@ -104,13 +109,18 @@ namespace teamstairwell.Weapons {
 
             //better launch mechanic, I guess...
             Vector2 initVel;
-            if(Ship is HenryBoss) initVel = spawnerMaxVelocity * Vector2.Normalize(RNSEB.Input.GetCursor() - Ship.Position);
-            else { //(Ship is a Replicator-type Spawner
+            if(Ship is HenryBoss) {
+                if(!Ship.Automated) initVel = spawnerMaxVelocity * Vector2.Normalize(RNSEB.Input.GetCursor() - Ship.Position);
+                else {
+                    Random rand = new Random();
+                    float theta = (float)(2.0 * Math.PI * rand.NextDouble());
+                    initVel = spawnerMaxVelocity * new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta));
+                }
+            } else { //(Ship is a Replicator-type Spawner
                 float speed = Ship.Velocity.Length();
                 double angle = Math.Atan2(Ship.Velocity.Y, Ship.Velocity.X);
                 Ship.Velocity = speed * new Vector2((float)Math.Cos(angle+Math.PI/4.0f), (float)Math.Sin(angle+Math.PI/4.0f));
                 initVel = speed * new Vector2((float)Math.Cos(angle-Math.PI/4.0f), (float)Math.Sin(angle-Math.PI/4.0f));
-                
             }
 
             //create t3h spawner
@@ -137,7 +147,7 @@ namespace teamstairwell.Weapons {
                 case "QuantumMines":
                     s.FocusedWeapon = new QuantumMines(s);
                     break;
-                case "Replicator":
+                case "Replicator": 
                     s.FocusedWeapon = new LaunchBay(s, 0.3f, "Replicator", 100);
                     s.Oscillate = false;
                     break;
@@ -158,9 +168,10 @@ namespace teamstairwell.Weapons {
             }
 
             s.FocusedWeapon.timeSinceLastFired = 0.0f;
+            s.Overcharge(0.5f*chargingTime/chargingTimeMax, 0.5f*chargingTime/chargingTimeMax);
             spawners.Add(s);
             Ship.Battlefield.ships.Add(s);
-            RNSEB.Audio.PlayEffect("LaunchSpawner");
+            RNSEB.Audio.PlayEffect("Launch");
             timeSinceLastFired = 0;
             //phew!
 
@@ -169,9 +180,6 @@ namespace teamstairwell.Weapons {
         }
 
         public override void Update(GameTime gt) {
-            if (charging) chargingTime += (float)gt.ElapsedGameTime.TotalSeconds;
-            else if (chargingTime >= chargingTimeMax) ;
-            charging = false;
 
             //remove dead spawners
             for (int i = 0; i < spawners.Count; i++) {
@@ -186,6 +194,22 @@ namespace teamstairwell.Weapons {
             //update
             foreach (HenrySpawner s in spawners)
                 s.Update(gt);
+
+            //update charge time
+            if (ChargeStatus == ChargeStatusEnum.Charging)
+                chargingTime += (float)gt.ElapsedGameTime.TotalSeconds;
+
+            if (ChargeStatus == ChargeStatusEnum.Charging && (!chargingThisFrame || chargingTime >= chargingTimeMax)) {
+                //charging is complete
+                SpawnBullets();
+                timeSinceLastFired = 0;
+                chargingTime = 0;
+                ChargeStatus = ChargeStatusEnum.PreCharge;
+            }
+
+            //reset charge status
+            chargingThisFrame = false;
+
             base.Update(gt);
         }
 
@@ -194,6 +218,7 @@ namespace teamstairwell.Weapons {
                 s.Draw(sb);
         }
 
+        [Serializable()]
         public struct SpawnerTemplate {
             public string spriteName;
             public int health;
@@ -202,8 +227,20 @@ namespace teamstairwell.Weapons {
         }
 
         public override void Fire() {
-            charging = true;
-            base.Fire();
+            chargingThisFrame = true;
+            if (!Ship.Dead && timeSinceLastFired >= 1 / (rateOfFire * Ship.FireRateMultiplier) ) { //I've finished reloading
+                if (ChargeStatus == ChargeStatusEnum.PreCharge)
+                    ChargeStatus = ChargeStatusEnum.Charging; //begin charging
+                else if (ChargeStatus == ChargeStatusEnum.Charging) {
+                    //hmm ... continue charging
+                }/* else if (ChargeStatus == ChargeStatusEnum.PostCharge) {
+                    //done charging... fire!
+                    SpawnBullets();
+                    timeSinceLastFired = 0;
+                    chargingTime = 0;
+                    ChargeStatus = ChargeStatusEnum.PreCharge;
+                }*/      
+            }
         }
     }
 }

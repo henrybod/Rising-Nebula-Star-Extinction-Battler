@@ -6,16 +6,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
+using teamstairwell.Weapons;
 
 namespace teamstairwell.Interface.HUD {
-
+    [Serializable()]
     public class WeaponIndicator {
         
-        private HenrySprite icon;
-        private ProgressBar chargeBar, superBar;
+        public HenrySprite icon;
+        public ProgressBar chargeBar;
         private HenryWeapon myWeapon;
         private Vector2 position;
-        private HenryText text;
+        public HenryText text;
 
         public WeaponIndicator(HenryWeapon myWeapon, Vector2 pos, string text = "") {
             icon = new HenrySprite(RNSEB.cm);
@@ -43,7 +44,15 @@ namespace teamstairwell.Interface.HUD {
 
         public void Update(GameTime gt) {
             icon.Update(gt);
-            chargeBar.Quantity = myWeapon.timeSinceLastFired;
+            if (myWeapon is LaunchBay && ((LaunchBay)myWeapon).ChargeStatus == LaunchBay.ChargeStatusEnum.Charging) {
+                chargeBar.QuantityMax = ((LaunchBay)myWeapon).chargingTimeMax;
+                chargeBar.Quantity = ((LaunchBay)myWeapon).chargingTime;
+                chargeBar.tick.Color = Color.Red;
+            } else {
+                chargeBar.QuantityMax = 1 / myWeapon.rateOfFire;
+                chargeBar.Quantity = myWeapon.timeSinceLastFired;
+                chargeBar.tick.Color = Color.White;
+            }
             chargeBar.Update(gt);
         }
     }

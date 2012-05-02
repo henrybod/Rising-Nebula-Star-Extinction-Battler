@@ -8,13 +8,13 @@ using Microsoft.Xna.Framework.Content;
 using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface {
-
+    [Serializable()]
     class HenryUpgradeButton : HenryButton {
 
         private string name = "";
         private string description = "";
         private bool displayingText = false;
-        private HenrySprite selectorSquare;
+        public HenrySprite selectorSquare;
         public RNSEB.HenryUpgrade Upgrade;
         public string Requirement = "NA";
         public enum UpgradeStatus {
@@ -25,7 +25,7 @@ namespace teamstairwell.Interface {
         public UpgradeStatus Status = UpgradeStatus.Unobtainable;
 
         public HenryUpgradeButton(string name, int column, int row, RNSEB.HenryUpgrade up, string description)
-            : base((int)(0.2f*RNSEB.RESOLUTION.X + column * 0.15f * RNSEB.RESOLUTION.X),
+            : base((int)(0.1f*RNSEB.RESOLUTION.X + column * 0.2f * RNSEB.RESOLUTION.X),
                    (int)(0.2f*RNSEB.RESOLUTION.Y + row * 0.125f * RNSEB.RESOLUTION.Y),
                    "", new RNSEB.OnClick(()=>{}), RNSEB.cm,
                    name+"Icon", name+"Icon", name+"Icon") {
@@ -38,12 +38,13 @@ namespace teamstairwell.Interface {
             selectorSquare = new HenrySprite(cm);
             selectorSquare.LoadContent("SelectorSquare", true, 10);
             selectorSquare.CenterOrigin();
-            selectorSquare.Position = Position + new Vector2(0, 1);
+            selectorSquare.Position = Position;
             selectorSquare.Scale = 1.5f;
         }
 
         public new void Update(GameTime gt) {
-            displayingText = (GetButtonState() != ButtonState.Normal);
+            //displayingText = (GetButtonState() != ButtonState.Normal);
+            displayingText = RNSEB.Input.MouseIsIn(Position, Size);
 
             Enabled = (Status == UpgradeStatus.Obtainable);
 
@@ -69,6 +70,17 @@ namespace teamstairwell.Interface {
             
             selectorSquare.Draw(sb);
             base.Draw(sb);
+        }
+
+        public new void ReloadContent() {
+            base.ReloadContent();
+            selectorSquare = new HenrySprite(RNSEB.cm);
+            selectorSquare.LoadContent("SelectorSquare", true, 10);
+            selectorSquare.CenterOrigin();
+            selectorSquare.Position = Position;
+            selectorSquare.Scale = 1.5f;
+            buttonText = new HenryText(Position, RNSEB.ButtonFont, "");
+            onClick = new RNSEB.OnClick(()=>{});
         }
     }
 }

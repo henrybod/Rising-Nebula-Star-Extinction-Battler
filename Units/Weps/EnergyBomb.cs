@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class EnergyBomb : HenryWeapon {
 
         public EnergyBomb(HenrySpawner ship) : base(ship, 0.2f) {

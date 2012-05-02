@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class AutoLaser : HenryWeapon {
 
         int count = 0;
@@ -27,7 +27,7 @@ namespace teamstairwell.Weapons {
                 (float)(Math.Atan2(aim.Y, aim.X) - Math.PI / 2),
                 800, true));
             Count++;
-            RNSEB.Audio.PlayEffect("BulletLaser");
+            RNSEB.Audio.PlayEffect("Laser");
         }
     }
 }

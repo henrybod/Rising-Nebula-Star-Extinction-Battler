@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class SeekerMissles : HenryWeapon {
 
         private const float rotationalVelocity = (float)Math.PI/1.5f;
@@ -24,7 +24,7 @@ namespace teamstairwell.Weapons {
             bullets.Add(new HenryBullet("BulletSeeker", this, 2, Ship.Position, Ship.Rotation + 3*(float)Math.PI/2, 50, true));
             
             //play appropriate sound effect
-            RNSEB.Audio.PlayEffect("BulletMissle"); //todo: find appropriate sound effect
+            RNSEB.Audio.PlayEffect("SeekerMissles");
         }
 
         public override void Update(GameTime gt){

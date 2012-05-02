@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class DroneLauncher : HenryWeapon {
 
         private List<HenrySpawner> drones = new List<HenrySpawner>();
@@ -35,7 +35,7 @@ namespace teamstairwell.Weapons {
             drone.spawnerType = "Player";
             drones.Add(drone);
             RNSEB.TheBattlefield.ships.Add(drone);
-            RNSEB.Audio.PlayEffect("LaunchSpawner");
+            RNSEB.Audio.PlayEffect("Launch");
         }
 
         public override void Update(GameTime gt) {

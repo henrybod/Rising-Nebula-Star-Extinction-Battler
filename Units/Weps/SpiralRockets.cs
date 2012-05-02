@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class SpiralRockets : HenryWeapon {
 
         float rotation = 0;
@@ -27,7 +27,7 @@ namespace teamstairwell.Weapons {
             b.acceleration = 400 * new Vector2((float)Math.Cos(rotation+Math.PI / 2), (float)Math.Sin(rotation+Math.PI / 2));
             bullets.Add(b);
 
-            RNSEB.Audio.PlayEffect("BulletMissle");
+            RNSEB.Audio.PlayEffect("Rocket");
         }
 
         public override void Update(GameTime gt) {

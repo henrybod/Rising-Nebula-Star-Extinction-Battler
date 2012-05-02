@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class PlasmaWall : HenryWeapon {
 
         float rotation; //should be 0 or pi/2 for horizontal or vertical walls of plasma
@@ -30,7 +30,7 @@ namespace teamstairwell.Weapons {
 
 
             //and play an appropriate sound effect
-            RNSEB.Audio.PlayEffect("BulletTorpedo"); //todo: find a more uniquely suited effect
+            RNSEB.Audio.PlayEffect("PlasmaTorpedo");
         }
     }
 }

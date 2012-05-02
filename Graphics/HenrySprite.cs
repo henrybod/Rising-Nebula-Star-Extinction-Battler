@@ -9,13 +9,16 @@ using teamstairwell.Graphics.SpriteSheets;
 
 namespace teamstairwell.Graphics {
 
+    [Serializable]
     public class HenrySprite {
 
         //data members
+        [field: NonSerialized]
         public ContentManager cm;
         public Color Color = Color.White;
         public Vector2 Position = new Vector2(0, 0);
         public Vector2 Origin = new Vector2(0, 0);
+        [field: NonSerialized]
         protected Texture2D Texture;
         public Vector2 Size = new Vector2(0, 0);
         private float scale = 1.0f, hitRadius;
@@ -74,7 +77,7 @@ namespace teamstairwell.Graphics {
         public void LoadContent(string spriteName, bool loop, float frameSpeed = 20.0f) {
             if((spriteName == currentSprite) || (!Loop && Animate)) return;
             SpriteInfo s = RNSEB.HenrySprites.All[spriteName];
-            Texture = cm.Load<Texture2D>(s.Filename);
+            Texture = RNSEB.cm.Load<Texture2D>(s.Filename);
             currentSprite = spriteName;
             Size.X = (int)(s.Width * scale);
             Size.Y = (int)(s.Height * scale);
@@ -136,6 +139,12 @@ namespace teamstairwell.Graphics {
                 return Size.Y / 2.0f;
             else
                 return Size.X / 2.0f;
+        }
+
+        public void ReloadContent() {
+            SpriteInfo s = RNSEB.HenrySprites.All[currentSprite];
+            Texture = RNSEB.cm.Load<Texture2D>(s.Filename);
+            cm = RNSEB.cm;
         }
     }
 }

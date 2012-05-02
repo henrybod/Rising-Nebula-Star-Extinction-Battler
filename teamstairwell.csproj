@@ -120,7 +120,6 @@
     <Compile Include="Core\HenryBattlefield.cs" />
     <Compile Include="Interface\HenryUpgradeMenu.cs" />
     <Compile Include="Interface\HenryScreen.cs" />
-    <Compile Include="Interface\HenryShieldBar.cs" />
     <Compile Include="Interface\HenryUpgradeButton.cs" />
     <Compile Include="Interface\HUD\ProgressBar.cs" />
     <Compile Include="Interface\HUD\WeaponBar.cs" />
@@ -212,7 +211,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="Content\RNESB_TFS_SILVERContent.contentproj">
       <Project>{1928A6B4-18B6-473E-85FF-388AF0E293B2}</Project>

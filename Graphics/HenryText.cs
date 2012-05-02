@@ -7,9 +7,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace teamstairwell.Graphics {
 
-    class HenryText {
+    [Serializable()]
+    public class HenryText {
 
         public string Text;
+        [field: NonSerialized]
         public SpriteFont Font;
         public Vector2 Position = Vector2.Zero;
         public Vector2 Origin = Vector2.Zero;
@@ -36,5 +38,8 @@ namespace teamstairwell.Graphics {
             Scale *= window.ClientBounds.Width / RNSEB.RESOLUTION.X;
         }
 
+        public void ReloadContent(string font) {
+            Font = RNSEB.Fonts[font];
+        }
     }
 }

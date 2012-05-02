@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 using teamstairwell.Graphics;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class ArseLightning : HenryWeapon {
 
         HenrySprite lightning;
 
-        public ArseLightning(HenrySpawner ship) : base(ship, 2) {
+        public ArseLightning(HenrySpawner ship) : base(ship, 1) {
             IconName = "StaticFieldIcon";
         }
         
@@ -21,9 +21,9 @@ namespace teamstairwell.Weapons {
             if (distance < 160) {
                 //zihao is in range! zap!
                 //damage zihao
-                RNSEB.TheBattlefield.Zihao.Damage(2);
+                RNSEB.TheBattlefield.Zihao.Damage(1);
                 //play lightning sound effect
-                RNSEB.Audio.PlayEffect("BulletLaser");
+                RNSEB.Audio.PlayEffect("Lightning");
                 //draw lightning
                 lightning = new HenrySprite(RNSEB.cm);
                 lightning.LoadContent("ArseLightning", false, 5);

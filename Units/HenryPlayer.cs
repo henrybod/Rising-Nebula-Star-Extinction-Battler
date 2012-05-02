@@ -9,9 +9,9 @@ using teamstairwell.Interface;
 using teamstairwell.Weapons;
 
 namespace teamstairwell {
-
-   public class HenryPlayer : HenrySpawner {
-
+    [Serializable()]
+    public class HenryPlayer : HenrySpawner {
+        
         private float shield, shieldRegenRate, shieldDownTime, shieldDownTimeCounter = 0, shieldReturnCapacity;
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
@@ -47,10 +47,10 @@ namespace teamstairwell {
             CenterOrigin();
             ShieldMax = 2; //just a random starting value (upgrades will increment this)
             Shield = 2; //starting shield charge
-            shieldDownTime = 8.0f; //how many seconds should the shield stay offline when brought to 0?
+            shieldDownTime = 5.0f; //how many seconds should the shield stay offline when brought to 0?
             shieldReturnCapacity = 0.2f; //what percentage of the shield should be instantly restored when shield comes back online?
             ShieldRegenRate = 0.2f; //this many shield hitpoints regen per second (1 bullet takes 1 point)
-            EnginePower = 800.0f; //accerlation magnitude of the engines
+            EnginePower = 800.0f; //acceleration magnitude of the engines
             HitRadius = 20; //what hit size is the player?
             invulnerabilityAfterDamageLength = 1.0f; //how much time (in seconds) should the player be invulnerable after a hit?
             FocusedWeapon = new BasicLaser(this);
@@ -59,12 +59,23 @@ namespace teamstairwell {
         public new void Update(GameTime gt){
 
             if (!Dead) {
-                //play anim
-                LoadContent("PlayerIdle", true);
+                //play animation (idle & banking)
+
+                /*Vector2 shipDir = Vector2.Normalize(RNSEB.Input.GetCursor() - Position);
+                Vector2 velDir = Vector2.Normalize(Velocity);
+
+                float diff = (float)((Math.Acos(Vector2.Dot(shipDir, velDir) / (shipDir.Length() * velDir.Length()))) * 180/Math.PI);
+                if (45 < diff && diff < 135)
+                    LoadContent("PlayerBankRight", false);
+                else if (225 < diff && diff < 315)
+                    LoadContent("PlayerBankLeft", false);
+                else*/
+                    LoadContent("PlayerIdle", true);
+
 
                 //update invulnerability from shield hit
-                if(invulnerableFromShield) invulnerabilityAfterDamageCounter += (float)gt.ElapsedGameTime.TotalSeconds;
-                if(invulnerabilityAfterDamageCounter > invulnerabilityAfterDamageLength){
+                if (invulnerableFromShield) invulnerabilityAfterDamageCounter += (float)gt.ElapsedGameTime.TotalSeconds;
+                if (invulnerabilityAfterDamageCounter > invulnerabilityAfterDamageLength) {
                     invulnerabilityAfterDamageCounter = 0;
                     invulnerableFromShield = false;
                 }
@@ -77,7 +88,7 @@ namespace teamstairwell {
                     if (shieldDownTimeCounter >= shieldDownTime) {
                         Shield = shieldReturnCapacity * ShieldMax;
                         shieldIsUp = true;
-                        //RNSEB.Audio.Play("PlayerShieldUp"); <-- todo: find sound effect
+                        RNSEB.Audio.PlayEffect("PlayerShieldUp");
                         shieldDownTimeCounter = 0;
                     }
                 }
@@ -97,15 +108,23 @@ namespace teamstairwell {
                 acceleration = forceDirection * EnginePower;
 
                 //calculate ship rotation from mouse cursor position (props to ryan)
-                if(!Battlefield.BossMode)
+                if(!Automated)
                     Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
+                else {
+                    HenrySpawner s = FindNearestEnemy();
+                    Rotation = (float)(Math.Atan2(Position.Y - s.Position.Y, Position.X - s.Position.X) - Math.PI / 2);
+                    Vector2 dir = (s.Position - this.Position);
+                    acceleration = EnginePower * Vector2.Normalize(new Vector2( (float)Math.Cos(Rotation), (float)Math.Sin(Rotation) ));
+                }
 
                 //fire weapons!
                 firingFocused = RNSEB.Input.GetKey("PlayerFire1");
                 firingDiffuse = RNSEB.Input.GetKey("PlayerFire2");
 
-            } else if (!Animate)
+            } else if (!Animate) {
+                RNSEB.Audio.PlayMusic("NotusVictoryMusic");
                 RNSEB.CurrentScreen = "BossVictory";
+            }
 
             base.Update(gt);
         }
@@ -129,15 +148,29 @@ namespace teamstairwell {
 
                 //shield logic
                 if (Shield <= 0) { //oh noes! teh shield iz down!
-                    //LoadContent("PlayerShieldDown", false, 3); //<---TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    //RNSEB.Audio.PlayEffect("PlayerShieldDown"); //<---TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    RNSEB.Audio.PlayEffect("PlayerHit");
+                    RNSEB.Audio.PlayEffect("PlayerShieldDown");
                     shieldIsUp = false; //this initiates logic in the update method
-                    //RNSEB.Audio.Play("PlayerShieldDown!!!"); <-- todo: find sound effect
                 } else { //shield absorbs damage
                     LoadContent("PlayerHit", false, 3);
                     RNSEB.Audio.PlayEffect("PlayerHit");
                 }
             }
+        }
+
+        HenrySpawner FindNearestEnemy(){
+            float smallestDistance = 100000000; //just some large distance to make the first comparison with
+            HenrySpawner nearest = Battlefield.Notus;
+            foreach (HenrySpawner s in RNSEB.TheBattlefield.ships) {
+                if (s.Dead || s.spawnerType == "Player")
+                    continue;
+                float distance = Vector2.Distance(this.Position, s.Position);
+                if (distance < smallestDistance) {
+                    smallestDistance = distance;
+                    nearest = s;
+                }
+            }
+            return nearest;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace teamstairwell.Weapons {
-
+    [Serializable()]
     public class BasicLaser : HenryWeapon {
 
         public BasicLaser(HenrySpawner ship) : base(ship, 20) {
@@ -14,7 +14,7 @@ namespace teamstairwell.Weapons {
         
         public override void SpawnBullets() {
             //logic for spawning bullets here!
-            RNSEB.Audio.PlayEffect("BulletLaser");
+            RNSEB.Audio.PlayEffect("Laser");
             bullets.Add(new HenryBullet("BulletLaser", this, 1, Ship.Position, Ship.Rotation, 800, true));
         }
     }

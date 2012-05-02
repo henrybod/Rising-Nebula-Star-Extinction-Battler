@@ -10,19 +10,19 @@ using teamstairwell.Weapons;
 using teamstairwell.Graphics;
 
 namespace teamstairwell {
-    [Serializable]
+
+    [Serializable()]
     public class HenryBoss : HenrySpawner {
 
-        //private List<HenrySpawnerBay> spawnerBays = new List<HenrySpawnerBay>();
         public List<HenryWeapon> LaunchBays = new List<HenryWeapon>();
         public List<HenryWeapon> ExtraWeapons = new List<HenryWeapon>();
         public bool StaticField = false, Regeneration = false;
-        private HenrySprite staticFieldSprite;
+        public HenrySprite staticFieldSprite;
         public float DamageReceivedMultiplier = 1.0f;
         public int SelectedLaunchBay = 1;
 
         public HenryBoss(ContentManager cm, HenryBattlefield b, float mass, Vector2 initPos, Vector2 initVel, float damping)
-            : base(cm, b, 1000, mass, initPos, initVel, damping) {
+            : base(cm, b, 4000, mass, initPos, initVel, damping) {
             spawnerType = "Boss";
             this.LoadContent("BossIdle", true); //initally idle
             this.CenterOrigin();
@@ -91,8 +91,10 @@ namespace teamstairwell {
                 foreach (LaunchBay bay in LaunchBays)
                     bay.Update(gt);
             
-            } else if (!Animate)
+            } else if (!Animate) {
+                RNSEB.Audio.PlayMusic("ZihaoVictoryMusic");
                 RNSEB.CurrentScreen = "PlayerVictory";
+            }
 
             //regeneration upgrade
             if (Regeneration)

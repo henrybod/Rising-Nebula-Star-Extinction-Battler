@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Media;
 namespace teamstairwell.Audio {
 
     public class HenryMediaPlayer {
-        //todo: implement fade on stop/start (music)
-        private float musicVolume = 0.1f;
-        private float effectVolume = 0.5f;
+
+        private float musicVolume = 0.2f;
+        private float effectVolume = 0.2f;
 
         private string currentlyPlaying = "";
         private ContentManager cm;
@@ -27,35 +27,50 @@ namespace teamstairwell.Audio {
         }
 
         public void LoadContent(){
-            music.Add("ForestMusic", cm.Load<Song>("Audio/Music/Forest Theme"));
-            music.Add("ForestBoss", cm.Load<Song>("Audio/Music/Forest Boss"));
             music.Add("MenuMusic", cm.Load<Song>("Audio/Music/teamstairwell Intro"));
             music.Add("Level1Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
             music.Add("Level2Music", cm.Load<Song>("Audio/Music/Forest Theme"));
             music.Add("Level3Music", cm.Load<Song>("Audio/Music/Forest Boss"));
             music.Add("Level4Music", cm.Load<Song>("Audio/Music/StarWars1"));
-            music.Add("Level5Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
-            music.Add("Level6Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
-            music.Add("Level7Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
-            music.Add("Level8Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
-            music.Add("Level9Music", cm.Load<Song>("Audio/Music/teamstairwell Theme"));
+            music.Add("Level5Music", cm.Load<Song>("Audio/Music/Boogie Wonderland"));
+            music.Add("Level6Music", cm.Load<Song>("Audio/Music/StarCraft Terran2"));
+            music.Add("Level7Music", cm.Load<Song>("Audio/Music/StarWars2"));
+            music.Add("Level8Music", cm.Load<Song>("Audio/Music/IndependenceDay1"));
+            music.Add("Level9Music", cm.Load<Song>("Audio/Music/SuperMarioAnnoying"));
             music.Add("Level10Music", cm.Load<Song>("Audio/Music/StarTrek1"));
+            music.Add("ZihaoVictoryMusic", cm.Load<Song>("Audio/Music/ChronoTrigger1"));
+            music.Add("NotusVictoryMusic", cm.Load<Song>("Audio/Music/StarWars3"));
 
-            effects.Add("BossDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryBossDeath"));
             effects.Add("ButtonClick", cm.Load<SoundEffect>("Audio/SoundEffects/HenryButtonClick"));
             effects.Add("ButtonRollover", cm.Load<SoundEffect>("Audio/SoundEffects/HenryButtonRollover"));
-            effects.Add("Upgrade", cm.Load<SoundEffect>("Audio/SoundEffects/HenryUpgrade"));
+            effects.Add("PlayerHit", cm.Load<SoundEffect>("Audio/SoundEffects/Shield Zap"));
+            effects.Add("PlayerShieldDown", cm.Load<SoundEffect>("Audio/SoundEffects/PlayerShieldDown"));
+            effects.Add("PlayerShieldUp", cm.Load<SoundEffect>("Audio/SoundEffects/PlayerShieldUp"));
             effects.Add("PlayerDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryPlayerDeath"));
             effects.Add("BossHit", cm.Load<SoundEffect>("Audio/SoundEffects/Boss Hit"));
-            effects.Add("PlayerHit", cm.Load<SoundEffect>("Audio/SoundEffects/Shield Zap"));
+            effects.Add("Launch", cm.Load<SoundEffect>("Audio/SoundEffects/Launch"));
+            effects.Add("BossDeath", cm.Load<SoundEffect>("Audio/SoundEffects/HenryBossDeath"));
+            effects.Add("LevelUp", cm.Load<SoundEffect>("Audio/SoundEffects/LevelUp"));
+            effects.Add("UpgradeInstall", cm.Load<SoundEffect>("Audio/SoundEffects/UpgradeInstall"));
+            effects.Add("Laser", cm.Load<SoundEffect>("Audio/SoundEffects/Laser"));
+            effects.Add("IonBeam", cm.Load<SoundEffect>("Audio/SoundEffects/IonBeam"));
+            effects.Add("Shockwave", cm.Load<SoundEffect>("Audio/SoundEffects/Shockwave"));
+            effects.Add("Rocket", cm.Load<SoundEffect>("Audio/SoundEffects/Rocket"));
+            effects.Add("SeekerMissles", cm.Load<SoundEffect>("Audio/SoundEffects/SeekerMissles"));
+            effects.Add("PeaShooter", cm.Load<SoundEffect>("Audio/SoundEffects/PeaShooter"));
+            effects.Add("PhotonTorpedo", cm.Load<SoundEffect>("Audio/SoundEffects/PhotonTorpedo"));
+            effects.Add("PlasmaTorpedo", cm.Load<SoundEffect>("Audio/SoundEffects/PlasmaTorpedo"));
+            effects.Add("QuantumMines", cm.Load<SoundEffect>("Audio/SoundEffects/QuantumMines"));
+            effects.Add("RingOfFire", cm.Load<SoundEffect>("Audio/SoundEffects/RingOfFire"));
+            effects.Add("PlasmaWall", cm.Load<SoundEffect>("Audio/SoundEffects/PlasmaWall"));
+            effects.Add("Lightning", cm.Load<SoundEffect>("Audio/SoundEffects/Lightning"));
             effects.Add("ExplosionSmall", cm.Load<SoundEffect>("Audio/SoundEffects/Explosion small"));
             effects.Add("ExplosionMedium", cm.Load<SoundEffect>("Audio/SoundEffects/Explosion medium"));
-            effects.Add("BulletTorpedo", cm.Load<SoundEffect>("Audio/SoundEffects/QuantumTorpedo"));
-            effects.Add("BulletMissle", cm.Load<SoundEffect>("Audio/SoundEffects/Missle"));
-            effects.Add("BulletLaser", cm.Load<SoundEffect>("Audio/SoundEffects/BasicLaser"));
-            effects.Add("BulletPhoton", cm.Load<SoundEffect>("Audio/SoundEffects/PhotonTorpedo"));
-            effects.Add("LaunchSpawner", cm.Load<SoundEffect>("Audio/SoundEffects/BossLaunchSpawner"));
-            effects.Add("BulletPea", cm.Load<SoundEffect>("Audio/SoundEffects/BulletPea"));
+
+
+
+
+
         }
 
         public void PlayMusic(string name){

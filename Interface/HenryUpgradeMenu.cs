@@ -6,22 +6,30 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace teamstairwell.Interface {
-
-    class HenryUpgradeMenu : HenryMenu {
+    [Serializable()]
+    public class HenryUpgradeMenu : HenryMenu, ISerializable {
         
         //this is a special kind of menu with very special buttons and other mechanics necessary for
         //the user to select upgrades every "level" in a spiffy manner
-
+        [field: NonSerialized]
         private Dictionary<string, HenryUpgradeButton> upgradeButtons = new Dictionary<string, HenryUpgradeButton>();
-        private bool bossMode;
-        private bool mayUpgrade = true;
-        
+        private bool bossMode, mayUpgrade = true;
+        private List<HenryUpgradeButton> serialUpgradeButtons = new List<HenryUpgradeButton>();
+        private List<string> serialUpgradeIndices = new List<string>();
+        private List<HenryButton> serialButtons = new List<HenryButton>();
+        private List<string> serialIndices = new List<string>();
+
         public HenryUpgradeMenu(bool bossMode) : base(RNSEB.cm) {
             this.bossMode = bossMode;
 
             AddText(0.5f, 0.1f, RNSEB.TitleFont, Color.White, "Upgrades");
+            AddText(0.3f, 0.2f, RNSEB.TextFont, Color.White, " Focused\nWeaponry");
+            AddText(0.5f, 0.2f, RNSEB.TextFont, Color.White, " Diffuse\nWeaponry");
+            AddText(0.7f, 0.2f, RNSEB.TextFont, Color.White, "Defensive\nUpgrades");
             AddButton(0.9f, 0.9f, "Done", new RNSEB.OnClick(() => {
                 mayUpgrade = true;
                 Buttons["Done"].Enabled = false;
@@ -42,7 +50,7 @@ namespace teamstairwell.Interface {
                 AddUpgradeButton("Seekers", 2, 2, RNSEB.HenryUpgrade.PlayerSeekers, "Four missles seek closest target");
                 AddUpgradeButton("SpiralRockets", 2, 3, RNSEB.HenryUpgrade.PlayerSpiralRockets, "Rocket fountain");
                 AddUpgradeButton("EnergyBomb", 2, 4, RNSEB.HenryUpgrade.PlayerEnergyBomb, "Area-wide damage");
-                AddUpgradeButton("Drones", 2, 5, RNSEB.HenryUpgrade.PlayerDrones, "Up to four mini-starfighters protect you and fire outwards");
+                AddUpgradeButton("Drones", 2, 5, RNSEB.HenryUpgrade.PlayerDrones, "Up to four automated drones protect you");
 
                 AddUpgradeButton("ShieldCapacity1", 3, 1, RNSEB.HenryUpgrade.PlayerShieldCapacity1, "Increase shield capacity by +2 (4)");
                 AddUpgradeButton("ShieldRecharge1", 3, 2, RNSEB.HenryUpgrade.PlayerShieldRecharge1, "Increase shield recharge rate by +25% (125%)");
@@ -144,6 +152,7 @@ namespace teamstairwell.Interface {
                         && u.GetButtonState() == HenryButton.ButtonState.JustClicked) {
                     u.Status = HenryUpgradeButton.UpgradeStatus.Obtained;
                     RNSEB.TheBattlefield.GrantUpgrade(u.Upgrade);
+                    RNSEB.Audio.PlayEffect("UpgradeInstall");
                     mayUpgrade = false;
                     Buttons["Done"].Enabled = true;
                 }
@@ -151,5 +160,76 @@ namespace teamstairwell.Interface {
                 u.Update(gt);
             }
         }
+
+
+
+
+        protected HenryUpgradeMenu(SerializationInfo info, StreamingContext context) : base(RNSEB.cm) {
+            serialUpgradeIndices = (List<string>)info.GetValue("serialUpgradeIndices", typeof(List<string>));
+            serialUpgradeButtons = (List<HenryUpgradeButton>)info.GetValue("serialUpgradeButtons", typeof(List<HenryUpgradeButton>));
+            serialIndices = (List<string>)info.GetValue("serialIndices", typeof(List<string>));
+            serialButtons = (List<HenryButton>)info.GetValue("serialButtons", typeof(List<HenryButton>));
+
+            upgradeButtons = new Dictionary<string, HenryUpgradeButton>();
+            for (int i = 0; i < serialUpgradeIndices.Count; i++) {
+                Console.WriteLine("Index: " + i);
+                upgradeButtons.Add(serialUpgradeIndices[i], serialUpgradeButtons[i]);
+            }
+            Buttons = new Dictionary<string, HenryButton>();
+            for (int i = 0; i < serialIndices.Count; i++) {
+                Console.WriteLine("Index: " + i);
+                Buttons.Add(serialIndices[i], serialButtons[i]);
+            }
+
+            bossMode = info.GetBoolean("BossMode");
+            mayUpgrade = info.GetBoolean("mayUpgrade");
+            music = info.GetString("music");
+            texts = (List<HenryText>)info.GetValue("texts", typeof(List<HenryText>));
+            texts[0].ReloadContent("Title");
+            texts[1].ReloadContent("Text");
+            texts[2].ReloadContent("Text");
+            texts[3].ReloadContent("Text");
+            background.ReloadContent();
+            Console.WriteLine("Num of upgradeButtons: " + upgradeButtons.Count);
+            foreach (HenryUpgradeButton butt in upgradeButtons.Values)
+                butt.ReloadContent();
+            foreach (HenryButton butt in Buttons.Values) {
+                butt.ReloadContent();
+                butt.onClick = new RNSEB.OnClick(() => {
+                    RNSEB.CurrentScreen = "Battlefield";
+                });
+            }
+            
+        }
+
+        //Serialization function.
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) {
+
+            serialUpgradeIndices = new List<string>();
+            foreach (string s in upgradeButtons.Keys)
+                serialUpgradeIndices.Add(s);
+            serialUpgradeButtons = new List<HenryUpgradeButton>();
+            foreach (HenryUpgradeButton b in upgradeButtons.Values)
+                serialUpgradeButtons.Add(b);
+            serialIndices = new List<string>();
+            foreach (string s in Buttons.Keys)
+                serialIndices.Add(s);
+            serialButtons = new List<HenryButton>();
+            foreach (HenryButton b in Buttons.Values)
+                serialButtons.Add(b);
+
+            info.AddValue("serialUpgradeIndices", serialUpgradeIndices);
+            info.AddValue("serialUpgradeButtons", serialUpgradeButtons);
+            info.AddValue("serialIndices", serialIndices);
+            info.AddValue("serialButtons", serialButtons);
+            info.AddValue("BossMode", bossMode);
+            info.AddValue("mayUpgrade", mayUpgrade);
+            info.AddValue("upgradeButtons", upgradeButtons);
+            info.AddValue("music", music);
+            info.AddValue("texts", texts);
+
+            Console.WriteLine("/////////////////////////////////");
+        }
+
     }
 }

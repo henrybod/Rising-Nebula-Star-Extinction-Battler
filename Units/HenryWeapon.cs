@@ -9,7 +9,7 @@ using teamstairwell.Interface;
 using teamstairwell.Graphics;
 
 namespace teamstairwell {
-
+    [Serializable()]
     public class HenryWeapon {
         //this class holds information on a given weapon, i.e. what bullet, what dmg, ...
         //is "held" by the player

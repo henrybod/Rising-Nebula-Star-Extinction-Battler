@@ -9,21 +9,22 @@ using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface {
 
-    class HenryMenu : HenryScreen {
-        private string music = "MenuMusic";
-        private ContentManager cm;
+    [Serializable()]
+    public class HenryMenu : HenryScreen {
+
+        protected string music = "MenuMusic";
         public Dictionary<string, HenryButton> Buttons = new Dictionary<string, HenryButton>();
-        private List<HenryText> texts = new List<HenryText>();
+        protected List<HenryText> texts = new List<HenryText>();
         
         public HenryMenu(ContentManager cm, string backgroundSprite = "MenuBackground"){
-            this.cm = cm;
+
             this.SetBackground(backgroundSprite);
         }
 
         public void AddButton(float percentX, float percentY, string text, RNSEB.OnClick callbackfunc, string spriteNormal = "ButtonNormal", string spriteHighlight = "ButtonHighlight", string spritePress = "ButtonClick", float scale = 0.6f) {
             int x = (int)(percentX * RNSEB.RESOLUTION.X);
             int y = (int)(percentY * RNSEB.RESOLUTION.Y);
-            HenryButton b = new HenryButton(x, y, text, callbackfunc, cm, spriteNormal, spriteHighlight, spritePress);
+            HenryButton b = new HenryButton(x, y, text, callbackfunc, RNSEB.cm, spriteNormal, spriteHighlight, spritePress);
             b.Scale = scale;
             
             Buttons.Add(text, b);
@@ -51,6 +52,7 @@ namespace teamstairwell.Interface {
                 b.Update(gt);
             RNSEB.Audio.PlayMusic(music);
         }
+
         public void clearTexts()
         {
             texts.Clear();

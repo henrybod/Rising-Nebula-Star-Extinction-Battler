@@ -9,7 +9,7 @@ using teamstairwell.Graphics;
 using teamstairwell.Interface;
 
 namespace teamstairwell {
-
+    [Serializable()]
     public class HenrySpawner : HenryMass {
 
         public string spawnerType = "Spawner";
@@ -31,11 +31,16 @@ namespace teamstairwell {
         public float EnginePower;
         public HenryBattlefield Battlefield;
         public bool Dead = false, Automated = false, Invulnerable = false, FacesTarget = false, CollidedThisFrame = false, Magnetic = false;
-        protected bool firingFocused = false, firingDiffuse = false;
+        public bool firingFocused = false, firingDiffuse = false;
         private float fireRateMultiplier = 1.0f;
         public float FireRateMultiplier {
             get { return fireRateMultiplier; }
             set { fireRateMultiplier = (value <= 0) ? 1.0f : value; }
+        }
+        private float speedMultiplier = 1.0f;
+        public float SpeedMultiplier {
+            get { return speedMultiplier; }
+            set { speedMultiplier = (value <= 0) ? 1.0f : value; }
         }
         public HenryWeapon FocusedWeapon, DiffuseWeapon;
 
@@ -95,8 +100,15 @@ namespace teamstairwell {
                 Velocity = Vector2.Zero;
                 acceleration = Vector2.Zero;
                 LoadContent("Explosion", false, 3.0f); //dieeeee!
+                CenterOrigin();
                 RNSEB.Audio.PlayEffect("ExplosionSmall");
             }
+        }
+
+        public void Overcharge(float bonusFireRate, float bonusSpeed) {
+            FireRateMultiplier = 1 + bonusFireRate;
+            Velocity *= 1 + bonusSpeed;
+            SpeedMultiplier = 1 + bonusSpeed;
         }
     }
 }

@@ -9,9 +9,10 @@ using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface {
 
+    [Serializable()]
     public class HenryButton : HenrySprite {
 
-        private HenryText buttonText;
+        public HenryText buttonText;
         public enum ButtonState {
             Normal,
             Highlighted,
@@ -53,7 +54,8 @@ namespace teamstairwell.Interface {
                 //mouse is pressing button
                 LoadContent(buttonClick, true);
                 buttonText.Color = Color.Aqua;
-                RNSEB.Audio.PlayEffect("ButtonClick");
+                if (!(this is HenryUpgradeButton))
+                    RNSEB.Audio.PlayEffect("ButtonClick");
             } else if (GetButtonState() == ButtonState.Highlighted) {
                 //mouse is hovering over button
                 LoadContent(buttonHighlight, true);
@@ -98,10 +100,11 @@ namespace teamstairwell.Interface {
         private void ResolutionChange(object sender, EventArgs e){
             GameWindow window = (GameWindow)sender;
             Position *= (new Vector2(window.ClientBounds.Width, window.ClientBounds.Height)) / RNSEB.RESOLUTION;
-            if(buttonText.Text == "How to\n  Play") {
-                Console.Write("How to Play button's position: ");
-                Console.WriteLine("(" + Position.X + ", " + Position.Y + ")");
-            }
+        }
+
+        public new void ReloadContent() {
+            buttonText = new HenryText(Position, RNSEB.ButtonFont, "");
+            base.ReloadContent();
         }
     }
 }

@@ -35,10 +35,10 @@ namespace teamstairwell.Graphics.SpriteSheets {
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "Emptiness", 49, 49, 1);
 
                 //Zihao
-                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerShiftLeft", 40, 40, 3);
-                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerGoLeft", 40, 40, 2);
-                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerShiftRight", 40, 40, 3);
-                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerGoRight", 40, 40, 2);
+                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerBankLeft", 40, 40, 3);
+                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerGoLeft?", 40, 40, 2);
+                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerBankRight", 40, 40, 3);
+                AddSprite(ref All, "SpriteSheets/PlayerSheet", "PlayerGoRight?", 40, 40, 2);
 
                 //Notus
                 AddSprite(ref All, "SpriteSheets/PlayerSheet", "BossStaticField", 500, 519, 1);

@@ -8,13 +8,14 @@ using Microsoft.Xna.Framework.Graphics;
 using teamstairwell.Graphics;
 
 namespace teamstairwell.Interface.HUD {
-
+    [Serializable()]
     public class ProgressBar {
         //a HUD element to display a progress bar. border and number display only work correctly when bar is horizontal.
 
-        private HenrySprite tick, borderPixel;
-        private HenryText text;
-        private Rectangle area;
+        public HenrySprite tick;
+        public HenrySprite borderPixel;
+        public HenryText text;
+        public Rectangle area;
         private float quantity = 0;
         public float Quantity {
             get { return quantity; }
@@ -49,7 +50,7 @@ namespace teamstairwell.Interface.HUD {
             borderPixel = new HenrySprite(cm);
             borderPixel.LoadContent("WhiteDot", false);
 
-            RNSEB.Win.ClientSizeChanged += new EventHandler<EventArgs>(ResolutionChange);
+            //RNSEB.Win.ClientSizeChanged += new EventHandler<EventArgs>(ResolutionChange);
         }
 
         public void Draw(SpriteBatch sb) {
