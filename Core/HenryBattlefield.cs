@@ -16,6 +16,7 @@ namespace teamstairwell {
 
         private string music = "Level1Music";
         public bool BossMode;
+        public bool MultiMode;
         public List<HenryBullet> bullets = new List<HenryBullet>();
         public List<HenrySpawner> ships = new List<HenrySpawner>();
         public HenryPlayer Zihao;
@@ -26,6 +27,15 @@ namespace teamstairwell {
 
         public HenryBattlefield(bool mode) {
             BossMode = mode;
+            MultiMode = false;
+            SetBackground("BattlefieldBackground");
+            SpinBackground = true;
+        }
+
+        public HenryBattlefield(bool mode, bool multi)
+        {
+            BossMode = mode;
+            MultiMode = multi;
             SetBackground("BattlefieldBackground");
             SpinBackground = true;
         }
@@ -39,15 +49,21 @@ namespace teamstairwell {
             ZihaoWepBar = new WeaponBar();
             NotusWepBar = new WeaponBar();
             if (BossMode) {
-                Zihao.Automated = true;
-                Zihao.Invulnerable = true;
+                if (!MultiMode)
+                {
+                    Zihao.Automated = true;
+                    Zihao.Invulnerable = true;
+                }
                 ZihaoShieldBar = new ProgressBar(RNSEB.cm, new Rectangle(0, 0, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
                 NotusHealthBar = new ProgressBar(RNSEB.cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y - 20, (int)RNSEB.RESOLUTION.X, 20), "HealthTick");
                 ZihaoWepBar.Position = new Vector2(RNSEB.RESOLUTION.X - 96, 6+22);
                 NotusWepBar.Position = new Vector2(6, RNSEB.RESOLUTION.Y - (45+6+22));
                 NotusWepBar.SelectorVisible = true;
             } else {
-                Notus.Automated = true;
+                if (!MultiMode)
+                {
+                    Notus.Automated = true;
+                }
                 ZihaoShieldBar = new ProgressBar(RNSEB.cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y - 20, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
                 NotusHealthBar = new ProgressBar(RNSEB.cm, new Rectangle(0, 0, (int)RNSEB.RESOLUTION.X, 20), "HealthTick");
                 ZihaoWepBar.Position = new Vector2(RNSEB.RESOLUTION.X - 96, RNSEB.RESOLUTION.Y - 70);

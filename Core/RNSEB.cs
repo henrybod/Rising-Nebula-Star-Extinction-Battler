@@ -42,6 +42,7 @@ namespace teamstairwell{
 
         HenryMenu Lobby;
         HenryMenu ListSessions;
+        User me;
 
         //Henry Stuff (just testin')
         bool HenryMode = true;
@@ -319,12 +320,15 @@ namespace teamstairwell{
             {
                 HandleListSessions();
             }
-                RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
-                Input.Update(gameTime);
-                TheMouse.Update(gameTime);
-                SendDataPlayer(Notus, gameTime);//NEW!
-                SendDataBoss(Zihao, gameTime);//NEW!
+            RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            Input.Update(gameTime);
+            TheMouse.Update(gameTime);
+            if (networkSession != null && networkSession.SessionState == NetworkSessionState.Playing)
+            {
+                //SendDataPlayer(Notus, gameTime);//NEW!
+                //SendDataBoss(Zihao, gameTime);//NEW!
                 networkSession.Update(); //NEW!
+            }
                 if (CurrentScreen == "Exit")
                     this.Exit();
                 else
@@ -451,6 +455,7 @@ namespace teamstairwell{
                     Lobby.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
                     Lobby.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A When Ready");
                     float y = 0.25f;
+                    int gamernum = 0;
                     foreach (NetworkGamer gamer in networkSession.AllGamers)
                     {
                         string text = gamer.Gamertag;
@@ -459,16 +464,60 @@ namespace teamstairwell{
                         if (gamer.IsReady)
                             text += " - ready!";
 
+                        if (gamernum == 0)
+                            player.BossMode = false;
+                        else
+                            player.BossMode = true;
+
                         Lobby.AddText(0.2f, y, TextFont, Color.White, text);
                         y += 0.06f;
+                        gamernum++;
                     }
 
                     // The host checks if everyone is ready, and moves to game play if true.
-                    if (networkSession.IsHost)
+                    /*if (networkSession.IsHost)
                     {
-                        if (networkSession.IsEveryoneReady)
+                        if (networkSession.IsEveryoneReady && networkSession.AllGamers.Count == 2)
+                        {
                             networkSession.StartGame();
+                            screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
+                            screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
+                            //If player is local (i.e Us) then create a battlefield with the correct Player/Boss mode
+                            foreach (NetworkGamer gamer in networkSession.AllGamers)
+                            {
+                                User player = gamer.Tag as User;
+                                if (gamer.IsLocal)
+                                {
+                                    screens["Battlefield"] = new HenryBattlefield(player.BossMode, true);
+                                }
+                            }
+                            //screens["Battlefield"] = new HenryBattlefield(false, true);
+                            TheBattlefield = (HenryBattlefield)screens["Battlefield"];
+                            TheBattlefield.LoadContent();
+                            RNSEB.CurrentScreen = "Battlefield";
+                        }
+                    }*/
+                    if (networkSession.IsEveryoneReady && networkSession.AllGamers.Count == 2)
+                    {
+                        if (networkSession.IsHost)
+                            networkSession.StartGame();
+
+                        screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
+                        screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
+                        //If player is local (i.e Us) then create a battlefield with the correct Player/Boss mode
+                        foreach (NetworkGamer gamer in networkSession.AllGamers)
+                        {
+                            User player = gamer.Tag as User;
+                            if (gamer.IsLocal)
+                            {
+                                screens["Battlefield"] = new HenryBattlefield(player.BossMode, true);
+                            }
+                        }
+                        TheBattlefield = (HenryBattlefield)screens["Battlefield"];
+                        TheBattlefield.LoadContent();
+                        RNSEB.CurrentScreen = "Battlefield";
                     }
+
 
                     // Pump the underlying session object.
                     networkSession.Update();
@@ -561,9 +610,10 @@ namespace teamstairwell{
                 {
                     packetWriter.Write(player.acceleration);
                     packetWriter.Write(player.Position);
+                    gamer.SendData(packetWriter, SendDataOptions.InOrder);
                 }
 
-                gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+                //gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
             }
         }
 
@@ -578,9 +628,10 @@ namespace teamstairwell{
                 {
                     packetWriter.Write(boss.acceleration);
                     packetWriter.Write(boss.Position);
+                    gamer.SendData(packetWriter, SendDataOptions.InOrder);
                 }
 
-                gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+                //gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
             }
         }
 
