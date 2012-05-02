@@ -319,13 +319,12 @@ namespace teamstairwell{
             {
                 HandleListSessions();
             }
-
-
-
-            
                 RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
                 Input.Update(gameTime);
                 TheMouse.Update(gameTime);
+                SendDataPlayer(Notus, gameTime);//NEW!
+                SendDataBoss(Zihao, gameTime);//NEW!
+                networkSession.Update(); //NEW!
                 if (CurrentScreen == "Exit")
                     this.Exit();
                 else
@@ -525,6 +524,68 @@ namespace teamstairwell{
                     selectedSessionIndex++;
             }
         }
+
+        //recieve data from network
+        void RecieveData(LocalNetworkGamer gamer, GameTime gameTime)
+        {
+            while (gamer.IsDataAvailable)
+            {
+                NetworkGamer sender;
+                gamer.ReceiveData(packetReader, out sender);
+
+                if (!sender.IsLocal && ((string)gamer.Tag =="Player"))
+                {
+                    HenryBoss remoteboss = gamer.Tag as HenryBoss;
+                    remoteboss.acceleration = packetReader.ReadVector2();
+                    remoteboss.Position = packetReader.ReadVector2();
+                    remoteboss.Update(gameTime);
+                }
+                else if (!sender.IsLocal)
+                {
+                    HenryPlayer remoteplayer = gamer.Tag as HenryPlayer;
+                    remoteplayer.acceleration = packetReader.ReadVector2();
+                    remoteplayer.Position = packetReader.ReadVector2();
+                    remoteplayer.Update(gameTime);
+                }
+             }
+        }
+
+        //send data over network (in order) for player
+        private void SendDataPlayer(HenryPlayer player, GameTime gameTime)
+        {
+            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+            {
+                RecieveData(gamer, gameTime);
+
+                if (currentState.IsConnected)
+                {
+                    packetWriter.Write(player.acceleration);
+                    packetWriter.Write(player.Position);
+                }
+
+                gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+            }
+        }
+
+        //send data over network (in order) for boss
+        private void SendDataBoss(HenryBoss boss, GameTime gameTime)
+        {
+            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+            {
+                RecieveData(gamer, gameTime);
+
+                if (currentState.IsConnected)
+                {
+                    packetWriter.Write(boss.acceleration);
+                    packetWriter.Write(boss.Position);
+                }
+
+                gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+            }
+        }
+
+
+
 
 
 
