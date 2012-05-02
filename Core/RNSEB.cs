@@ -14,14 +14,18 @@ using teamstairwell.Interface;
 using teamstairwell.Graphics.SpriteSheets;
 using teamstairwell.Audio;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 using System.Diagnostics;
 
 
 namespace teamstairwell{
-   [Serializable()]
-       
+  [Serializable]
+        public struct SaveGameData
+        {
+            public HenryPlayer Notus;
+            public HenryBoss Zihao;
+            public List<HenryBullet> dBs;
+        }
     public class RNSEB : Microsoft.Xna.Framework.Game {
 
         //XNA objects for managing content
@@ -35,14 +39,16 @@ namespace teamstairwell{
         int selectedSessionIndex;
         PacketReader packetReader = new PacketReader();
         PacketWriter packetWriter = new PacketWriter();
+        GameTime current = new GameTime();
+        float gameStartTimer = 2.0f;
+        float elapsedTime;
 
         HenryMenu Lobby;
         HenryMenu ListSessions;
 
-        //Henry Stuff
+        //Henry Stuff (just testin')
         bool HenryMode = true;
         HenryMouse TheMouse;
-        public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
         Dictionary<string, HenryScreen> screens = new Dictionary<string, HenryScreen>();
         public delegate void OnClick(); //delegate type for lambda functions passed to buttons
         public enum HenryUpgrade {
@@ -83,19 +89,17 @@ namespace teamstairwell{
         }
         public static string PreviousScreen, CurrentScreen = "MainMenu"; //start by displaying the main menu
         public static HenrySpriteSheets HenrySprites; //a container for all spritedom
-        [field: NonSerialized]
         public static SpriteFont ButtonFont, TitleFont, TextFont;
         public static HenryMediaPlayer Audio; //reference for audio manager
         public static HenryInput Input; //refence for input manager
         public static HenryBattlefield TheBattlefield; //reference for other classes to access current battlefield
         public static GameWindow Win;
-        public static HenryUpgradeMenu PlayerUpgradeMenu;
-        public static HenryUpgradeMenu BossUpgradeMenu;
+
         //static data members
         public static Vector2 RESOLUTION = new Vector2(1200, 750);
         public static Dictionary<string, SoundEffect> SoundEffs; //hash table to reference sound effects
         public static Dictionary<string, Song> Music; //hash table to reference music
-        [field: NonSerialized]
+
         public static SpriteFont GameFont;
 
         //private HenryMenu Multiplayer;
@@ -108,7 +112,7 @@ namespace teamstairwell{
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = (int)RESOLUTION.X;
             graphics.PreferredBackBufferHeight = (int)RESOLUTION.Y;
-            //Window.AllowUserResizing = true; //nah, too complicated
+            //Window.AllowUserResizing = true; //I'm giving up on this. There's just too many complications.
             Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             Content.RootDirectory = "Content";
             cm = this.Content;
@@ -143,10 +147,6 @@ namespace teamstairwell{
                 ButtonFont.LineSpacing = 20;
                 TitleFont = this.Content.Load<SpriteFont>("TitleFont");
                 TextFont = this.Content.Load<SpriteFont>("TextFont");
-                Fonts["Button"] = ButtonFont;
-                Fonts["Title"] = TitleFont;
-                Fonts["Text"] = TextFont;
-
                 TheMouse = new HenryMouse(this.Content);
                 Audio.LoadContent();
                 screens.Add("Exit", new HenryMenu(this.Content));
@@ -168,23 +168,19 @@ namespace teamstairwell{
 
                 //create main menu
                 HenryMenu MainMenu = (HenryMenu)screens["MainMenu"];
-                MainMenu.AddButton(0.3f, 0.5f, "Notus SP", new OnClick(() => {
+                MainMenu.AddButton(0.3f, 0.5f, "Boss\nMode", new OnClick(() => {
                     screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
                     screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
                     screens["Battlefield"] = new HenryBattlefield(true); //new battlefield w/ boss mode true
-                    PlayerUpgradeMenu = (HenryUpgradeMenu)screens["PlayerUpgradeMenu"];
-                    BossUpgradeMenu = (HenryUpgradeMenu)screens["BossUpgradeMenu"];
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
                     TheBattlefield.LoadContent();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
-                MainMenu.AddButton(0.175f, 0.5f, "Zihao SP", new OnClick(() => {
+                MainMenu.AddButton(0.175f, 0.5f, "Player\nMode", new OnClick(() => {
                     screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
                     screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
                     screens["Battlefield"] = new HenryBattlefield(false); //new battlefield w/ boss mode false, i.e. player mode true
                     TheBattlefield = (HenryBattlefield)screens["Battlefield"]; //done so some things can reference the battlefield
-                    PlayerUpgradeMenu = (HenryUpgradeMenu)screens["PlayerUpgradeMenu"];
-                    BossUpgradeMenu = (HenryUpgradeMenu)screens["BossUpgradeMenu"];
                     TheBattlefield.LoadContent();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
@@ -200,24 +196,6 @@ namespace teamstairwell{
 
                 //create how to play screen
                 createHowToPlayMenus(); //see waay below!
-
-                ////////////////////create load menu
-
-                HenryMenu LoadMenu = (HenryMenu)screens["LoadMenu"];
-                LoadMenu.AddButton(0.9f, 0.9f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
-                LoadMenu.AddButton(0.5f, 0.5f, "Load Game", new OnClick(() =>
-                {
-                    Stream stream = File.Open("RNSEB_SAVE.osl", FileMode.Open);
-                    BinaryFormatter bformatter = new BinaryFormatter();
-                    TheBattlefield = (HenryBattlefield)bformatter.Deserialize(stream);
-                    BossUpgradeMenu = (HenryUpgradeMenu)bformatter.Deserialize(stream);
-                    PlayerUpgradeMenu = (HenryUpgradeMenu)bformatter.Deserialize(stream);
-                    stream.Close();
-                    screens["Battlefield"] = TheBattlefield;
-                    screens["PlayerUpgradeMenu"] = PlayerUpgradeMenu;
-                    screens["BossUpgradeMenu"] = BossUpgradeMenu;
-                    RNSEB.CurrentScreen = "Battlefield";
-                }));
 
                 //Create Sign In Screen
                 HenryMenu SignIn = (HenryMenu)screens["SignIn"];
@@ -243,18 +221,8 @@ namespace teamstairwell{
                 //create pause menu
                 HenryMenu PauseMenu = (HenryMenu)screens["PauseMenu"];
                 PauseMenu.AddText(0.5f, 0.1f, TitleFont, Color.White, "Paused");
-                PauseMenu.AddButton(0.5f, 0.5f, "Back", new OnClick(() => { RNSEB.CurrentScreen = "Battlefield"; }));
-                PauseMenu.AddButton(0.7f, 0.5f, "Main Menu", new OnClick(() => { RNSEB.CurrentScreen = "MainMenu"; }));
-                PauseMenu.AddButton(0.3f, 0.5f, "Save Game", new OnClick(() =>
-                {
-                    Stream strweam = File.Open("RNSEB_SAVE.osl", FileMode.Create);
-                    BinaryFormatter bformatter = new BinaryFormatter();
-                    bformatter.Serialize(strweam, TheBattlefield);
-                    bformatter.Serialize(strweam, BossUpgradeMenu);
-                    bformatter.Serialize(strweam, PlayerUpgradeMenu);
-                    strweam.Close();
-                    RNSEB.CurrentScreen = "Battlefield";
-                }));
+                PauseMenu.AddButton(0.5f, 0.5f, "Back", new OnClick(()=>{RNSEB.CurrentScreen = "Battlefield";}));
+
                 //create credits screen
                 HenryMenu Credits = (HenryMenu)screens["Credits"];
                 Credits.AddText(0.25f, 0.5f, TextFont, Color.White, "Matt Groot\nIan Wilbanks\nChris Rose\nEric See\nMatt Paniagua");
@@ -263,7 +231,7 @@ namespace teamstairwell{
 
                 //create player victory screen
                 HenryMenu PlayerVictory = (HenryMenu)screens["PlayerVictory"];
-                PlayerVictory.AddText(0.5f, 0.1f, TitleFont, Color.White, "Zihao is the victor!");
+                PlayerVictory.AddText(0.5f, 0.1f, TitleFont, Color.White, "Zihao is teh victor!");
                 PlayerVictory.AddText(0.5f, 0.5f, TextFont, Color.White, "The inexorable time marching shall be notus revenge");
                 PlayerVictory.AddButton(0.5f, 0.8f, "Main\nMenu", new OnClick(()=>{RNSEB.CurrentScreen = "MainMenu";}));
 
@@ -282,14 +250,58 @@ namespace teamstairwell{
        
         
 
-       
+        IAsyncResult result;
+        Object stateobj;
+        bool GameSaveRequested = false;
+        GamePadState currentState;
 
 
         protected override void Update(GameTime gameTime) {
+             GamePadState previousState = currentState;
             
-            
-           
-      
+            // Allows the game to exit
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) //this looks like xbox to me
+                this.Exit();
+              // Allows the default game to exit on Xbox 360 and Windows
+        
+        if ((currentState.Buttons.A == ButtonState.Pressed) &&
+                (previousState.Buttons.A == ButtonState.Released))
+            {
+                // Set the request flag
+                if ((!Guide.IsVisible) && (GameSaveRequested == false))
+                {
+                    GameSaveRequested = true;
+                    result = StorageDevice.BeginShowSelector(
+                            PlayerIndex.One, null, null);
+                }
+            }
+
+            if ((currentState.Buttons.B == ButtonState.Pressed) &&
+                (previousState.Buttons.B == ButtonState.Released))
+            {
+                if (!Guide.IsVisible)
+                {
+                    // Reset the device
+                    device = null;                   
+                    stateobj = (Object)"GetDevice for Player One";
+                    StorageDevice.BeginShowSelector(
+                            PlayerIndex.One, this.GetDevice, stateobj);
+                }
+            }
+            // If a save is pending, save as soon as the
+            // storage device is chosen
+            if ((GameSaveRequested) && (result.IsCompleted))
+            {
+                StorageDevice device = StorageDevice.EndShowSelector(result);
+                if (device != null && device.IsConnected)
+                {
+                    DoSaveGame(device);
+                   
+                }
+                // Reset the request flag
+                GameSaveRequested = false;
+            }
+        
             //Checks Lobby Sign In State
             if (RNSEB.CurrentScreen == "SignIn")
             {
@@ -302,7 +314,7 @@ namespace teamstairwell{
             //Maintains Lobby
             if(RNSEB.CurrentScreen == "Lobby")
             {
-                HandleLobby();
+                HandleLobby(gameTime);
             }
 
             //Maintains Session Select Screen
@@ -310,13 +322,15 @@ namespace teamstairwell{
             {
                 HandleListSessions();
             }
-
-
-
-            
-                RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
-                Input.Update(gameTime);
-                TheMouse.Update(gameTime);
+            RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            Input.Update(gameTime);
+            TheMouse.Update(gameTime);
+            if (networkSession != null && networkSession.SessionState == NetworkSessionState.Playing)
+            {
+                //SendDataPlayer(Notus, gameTime);//NEW!
+                //SendDataBoss(Zihao, gameTime);//NEW!
+                networkSession.Update(); //NEW!
+            }
                 if (CurrentScreen == "Exit")
                     this.Exit();
                 else
@@ -325,7 +339,26 @@ namespace teamstairwell{
             base.Update(gameTime);
         }
         
-      
+        StorageDevice device;
+        private static HenryPlayer Notus;
+        private static HenryBoss Zihao;
+        private static List<HenryBullet> dBs;
+        void GetDevice(IAsyncResult result)
+        {
+            device = StorageDevice.EndShowSelector(result);
+            if (device != null && device.IsConnected)
+            {
+                DoSaveGame(device);
+                //DoLoadGame(device);
+                //DoCreate(device);
+                //DoOpen(device);   //obviously we do not want to do all at once this is just to demonstrate the syntax
+                //DoCopy(device);
+                //DoEnumerate(device);
+                //DoRename(device);
+                //DoDelete(device);
+                //DoOpenFile();
+            }
+        }
 
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
@@ -408,7 +441,7 @@ namespace teamstairwell{
         }
 
         //Handle Lobby Updates and Redraws
-        public void HandleLobby()
+        public void HandleLobby(GameTime gameTime)
         {
             if (networkSession != null)
             {
@@ -424,6 +457,7 @@ namespace teamstairwell{
                     Lobby.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
                     Lobby.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A When Ready");
                     float y = 0.25f;
+                    int gamernum = 0;
                     foreach (NetworkGamer gamer in networkSession.AllGamers)
                     {
                         string text = gamer.Gamertag;
@@ -432,16 +466,65 @@ namespace teamstairwell{
                         if (gamer.IsReady)
                             text += " - ready!";
 
+                        if (gamernum == 0)
+                            player.BossMode = false;
+                        else
+                            player.BossMode = true;
+
                         Lobby.AddText(0.2f, y, TextFont, Color.White, text);
                         y += 0.06f;
+                        gamernum++;
                     }
 
                     // The host checks if everyone is ready, and moves to game play if true.
-                    if (networkSession.IsHost)
+                    /*if (networkSession.IsHost)
                     {
-                        if (networkSession.IsEveryoneReady)
+                        if (networkSession.IsEveryoneReady && networkSession.AllGamers.Count == 2)
+                        {
                             networkSession.StartGame();
+                            screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
+                            screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
+                            //If player is local (i.e Us) then create a battlefield with the correct Player/Boss mode
+                            foreach (NetworkGamer gamer in networkSession.AllGamers)
+                            {
+                                User player = gamer.Tag as User;
+                                if (gamer.IsLocal)
+                                {
+                                    screens["Battlefield"] = new HenryBattlefield(player.BossMode, true);
+                                }
+                            }
+                            //screens["Battlefield"] = new HenryBattlefield(false, true);
+                            TheBattlefield = (HenryBattlefield)screens["Battlefield"];
+                            TheBattlefield.LoadContent();
+                            RNSEB.CurrentScreen = "Battlefield";
+                        }
+                    }*/
+                    if (networkSession.IsEveryoneReady && networkSession.AllGamers.Count == 2)
+                    {
+                        elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        gameStartTimer -= elapsedTime;
+                        if (networkSession.IsHost && gameStartTimer <= 0)
+                            networkSession.StartGame();
+
+                        if (gameStartTimer <= 0)
+                        {
+                            screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
+                            screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
+                            //If player is local (this computer) then create a battlefield with the correct Player/Boss mode
+                            foreach (NetworkGamer gamer in networkSession.AllGamers)
+                            {
+                                User player = gamer.Tag as User;
+                                if (gamer.IsLocal)
+                                {
+                                    screens["Battlefield"] = new HenryBattlefield(player.BossMode, true);
+                                }
+                            }
+                            TheBattlefield = (HenryBattlefield)screens["Battlefield"];
+                            TheBattlefield.LoadContent();
+                            RNSEB.CurrentScreen = "Battlefield";
+                        }
                     }
+
 
                     // Pump the underlying session object.
                     networkSession.Update();
@@ -498,11 +581,376 @@ namespace teamstairwell{
             }
         }
 
+        //recieve data from network
+        void RecieveData(LocalNetworkGamer gamer, GameTime gameTime)
+        {
+            while (gamer.IsDataAvailable)
+            {
+                NetworkGamer sender;
+                gamer.ReceiveData(packetReader, out sender);
+
+                if (!sender.IsLocal && ((string)gamer.Tag =="Player"))
+                {
+                    HenryBoss remoteboss = gamer.Tag as HenryBoss;
+                    remoteboss.acceleration = packetReader.ReadVector2();
+                    remoteboss.Position = packetReader.ReadVector2();
+                    remoteboss.Update(gameTime);
+                }
+                else if (!sender.IsLocal)
+                {
+                    HenryPlayer remoteplayer = gamer.Tag as HenryPlayer;
+                    remoteplayer.acceleration = packetReader.ReadVector2();
+                    remoteplayer.Position = packetReader.ReadVector2();
+                    remoteplayer.Update(gameTime);
+                }
+             }
+        }
+
+        //send data over network (in order) for player
+        private void SendDataPlayer(HenryPlayer player, GameTime gameTime)
+        {
+            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+            {
+                RecieveData(gamer, gameTime);
+
+                if (currentState.IsConnected)
+                {
+                    packetWriter.Write(player.acceleration);
+                    packetWriter.Write(player.Position);
+                    gamer.SendData(packetWriter, SendDataOptions.InOrder);
+                }
+
+                //gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+            }
+        }
+
+        //send data over network (in order) for boss
+        private void SendDataBoss(HenryBoss boss, GameTime gameTime)
+        {
+            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+            {
+                RecieveData(gamer, gameTime);
+
+                if (currentState.IsConnected)
+                {
+                    packetWriter.Write(boss.acceleration);
+                    packetWriter.Write(boss.Position);
+                    gamer.SendData(packetWriter, SendDataOptions.InOrder);
+                }
+
+                //gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+            }
+        }
 
 
 
 
-      
+
+
+
+
+        //SAVE GAME CODE
+        /// <summary>
+        /// This method serializes a data object into
+        /// the StorageContainer for this game.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoSaveGame(StorageDevice device)
+        {
+
+            // Create the data to save.
+            SaveGameData data = new SaveGameData();
+            data.Notus = Notus;
+            data.Zihao = Zihao;
+            data.dBs = dBs;
+
+            // Open a storage container.
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+           string filename = "savegame.sav";
+
+           // Check to see whether the save exists.
+           if (container.FileExists(filename))
+              // Delete it so that we can create one fresh.
+              container.DeleteFile(filename);
+
+           // Create the file.
+           Stream stream = container.CreateFile(filename);
+
+           // Convert the object to XML data and put it in the stream.
+           XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData));
+           serializer.Serialize(stream, data);
+
+           // Close the file.
+           stream.Close();
+
+           // Dispose the container, to commit changes.
+           container.Dispose();
+        }
+        /// <summary>
+        /// This method loads a serialized data object
+        /// from the StorageContainer for this game.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoLoadGame(StorageDevice device)
+        {
+            // Open a storage container.
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            string filename = "savegame.sav";
+
+            // Check to see whether the save exists.
+            if (!container.FileExists(filename))
+            {
+               // If not, dispose of the container and return.
+               container.Dispose();
+               return;
+            }
+
+            // Open the file.
+            Stream stream = container.OpenFile(filename, FileMode.Open);
+
+            // Read the data from the file.
+            XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData));
+            SaveGameData data = (SaveGameData)serializer.Deserialize(stream);
+
+            // Close the file.
+            stream.Close();
+
+            // Dispose the container.
+            container.Dispose();
+           
+
+            // Report the data to the console.
+            Debug.WriteLine("Name:     " + data.Notus.ToString());
+            Debug.WriteLine("Level:    " + data.Zihao.ToString());
+            Debug.WriteLine("Score:    " + data.dBs.ToString());
+           
+        }
+        /// <summary>
+        /// This method creates a file called demobinary.sav and places
+        /// it in the StorageContainer for this game.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoCreate(StorageDevice device)
+        {
+            // Open a storage container.
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+
+            // Create a new file.
+            if (!container.FileExists(filename))
+            {
+               Stream file = container.CreateFile(filename);
+               file.Close();
+            }
+            // Dispose the container, to commit the data.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to open a file. It presumes
+        /// that demobinary.sav has been created.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoOpen(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+
+            Stream file = container.OpenFile(filename, FileMode.Open);
+            file.Close();
+
+            // Dispose the container.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to copy files.  It presumes
+        /// that demobinary.sav has been created.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoCopy(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+            string copyfilename = "copybinary.sav";
+
+            if (container.FileExists(filename) && !container.FileExists(copyfilename))
+            {
+                Stream file = container.OpenFile(filename, FileMode.Open);
+               Stream copyfile = container.CreateFile(copyfilename);
+               file.CopyTo(copyfile);
+
+               file.Close();
+               copyfile.Close();
+            }
+
+            // Dispose the container, to commit the change.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to rename files.  It presumes
+        /// that demobinary.sav has been created.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoRename(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string oldfilename = "demobinary.sav";
+            string newfilename = "renamebinary.sav";
+
+            if (container.FileExists(oldfilename) && !container.FileExists(newfilename))
+            {
+               Stream oldfile = container.OpenFile(oldfilename, FileMode.Open);
+               Stream newfile = container.CreateFile(newfilename);
+               oldfile.CopyTo(newfile);
+
+               oldfile.Close();
+               newfile.Close();
+               container.DeleteFile(oldfilename);
+            }
+
+            // Dispose the container, to commit the change.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method illustrates how to enumerate files in a 
+        /// StorageContainer.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoEnumerate(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            string[] FileList = container.GetFileNames();
+            foreach (string filename in FileList)
+            {
+               Console.WriteLine(filename);
+            }
+
+            // Dispose the container.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method deletes a file previously created by this demo.
+        /// </summary>
+        /// <param name="device"></param>
+        private static void DoDelete(StorageDevice device)
+        {
+            IAsyncResult result =
+                device.BeginOpenContainer("StorageDemo", null, null);
+
+            // Wait for the WaitHandle to become signaled.
+            result.AsyncWaitHandle.WaitOne();
+
+            StorageContainer container = device.EndOpenContainer(result);
+
+            // Close the wait handle.
+            result.AsyncWaitHandle.Close();
+
+            // Add the container path to our file name.
+            string filename = "demobinary.sav";
+
+            if (container.FileExists(filename))
+            {
+               container.DeleteFile(filename);
+            }
+
+            // Dispose the container, to commit the change.
+            container.Dispose();
+        }
+        /// <summary>
+        /// This method opens a file using System.IO classes and the
+        /// TitleLocation property.  It presumes that a file named
+        /// ship.dds has been deployed alongside the game.
+        /// </summary>
+        private static void DoOpenFile()
+        {
+            try
+            {
+                System.IO.Stream stream = TitleContainer.OpenStream("ship.dds");
+                System.IO.StreamReader sreader = new System.IO.StreamReader(stream);
+                // use StreamReader.ReadLine or other methods to read the file data
+
+                Console.WriteLine("File Size: " + stream.Length);
+                stream.Close();
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // this will be thrown by OpenStream if gamedata.txt
+                // doesn't exist in the title storage location
+            }
+        }
 
         void createHowToPlayMenus() {
             //function to make how to play menus, because they, being several in nature,
@@ -515,29 +963,29 @@ namespace teamstairwell{
                 RNSEB.CurrentScreen = "MainMenu";
             }));
             HowToPlay.AddText(0.5f, 0.1f, TitleFont, Color.White, "The Players");
-            HowToPlay.AddText(0.35f, 0.25f, TextFont, Color.White, "Outmaneuver your enemy");
+            HowToPlay.AddText(0.35f, 0.25f, TextFont, Color.White, "Zihao is the last fighter pilot\nof ... something, something ...");
             HowToPlay.AddButton(0.65f, 0.25f, "", new OnClick(() => {
                 RNSEB.CurrentScreen = "HowToPlay2";
             }), "PlayerIdle", "PlayerHit", "PlayerDeath", 1.0f);
-            HowToPlay.AddText(0.65f, 0.75f, TextFont, Color.White, "Overwhelm your enemy");
-            HowToPlay.AddButton(0.30f, 0.75f, " ", new OnClick(() => {
+            HowToPlay.AddText(0.65f, 0.6f, TextFont, Color.White, "*Unknown* is the last juggernaut\nof Notus ... something, something ...");
+            HowToPlay.AddButton(0.30f, 0.6f, " ", new OnClick(() => {
                 RNSEB.CurrentScreen = "HowToPlay3";
             }), "BossIdle", "BossHit", "BossDeath", 1.0f);
-            HowToPlay.AddText(0.5f, 0.5f, TextFont, Color.White, "Use W,A,S,D to move.\nUse Left & Right Mouse to fire.\nChoose 1 upgrade every level.");
 
             //screen 2 (zihao's)
             screens.Add("HowToPlay2", new HenryMenu(cm));
             HenryMenu HowToPlay2 = (HenryMenu)screens["HowToPlay2"];
             HowToPlay2.AddText(0.5f, 0.1f, TitleFont, Color.White, "Zihao");
             //story
-            HowToPlay2.AddText(0.5f, 0.25f, TextFont, Color.White, "The last remaining member of a race\nslaughtered by the Notus, Zihao races towards\ncertain death to avenge his father,\nthe inventor of the self-evolving XJ99 Starfighter.");
+            HowToPlay2.AddText(0.5f, 0.2f, TextFont, Color.White, "Zihao backstory goes here.");
             //controls
-            HowToPlay2.AddText(0.5f, 0.55f, TextFont, Color.White, "Zihao relies on superior maneuverablility to survive.\n"
+            HowToPlay2.AddText(0.5f, 0.5f, TextFont, Color.White, "Zihao relies on superior maneuverablility to survive.\n"
                 + "He also carries an advanced shield generator\nthat recharges quickly.\n"
                 + "When the shield is destabilized by weaponfire,\nit takes some time to be reestablished.\n");
-            HowToPlay2.AddText(0.5f, 0.8f, TextFont, Color.White, "You carry at most two weapons.\n"
-                + "One is \"focused\" and targeted by the mouse. (Left Mouse)\n"
-                + "The other is \"diffuse\" and hits foes around you. (Right Mouse)\n");
+            HowToPlay2.AddText(0.5f, 0.75f, TextFont, Color.White, "You carry at most two weapons.\n"
+                + "One is \"focused\" and targeted by the mouse. (Button 1)\n"
+                + "The other is \"diffuse\" and hits foes around you. (Button 2)\n");
+            HowToPlay2.AddText(0.5f, 0.85f, TextFont, Color.White, "Move with W,A,S,D.");
             //back button
             HowToPlay2.AddButton(0.9f, 0.9f, "Back", new OnClick(() => {
                 RNSEB.CurrentScreen = "HowToPlay";
@@ -560,6 +1008,7 @@ namespace teamstairwell{
                 + "Spawners are launched in the direction of the mouse.\n"
                 + "Select which spawner to launch with 0-9 or the mouse wheel.\n"
                 + "Some other weapons may be fired with the right mouse button");
+            HowToPlay3.AddText(0.5f, 0.85f, TextFont, Color.White, "Move with W,A,S,D.");
             //back button
             HowToPlay3.AddButton(0.9f, 0.9f, "Back", new OnClick(() => {
                 RNSEB.CurrentScreen = "HowToPlay";
