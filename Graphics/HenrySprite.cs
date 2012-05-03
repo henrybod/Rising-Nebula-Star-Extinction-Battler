@@ -93,8 +93,17 @@ namespace teamstairwell.Graphics {
 
         public void Draw(SpriteBatch sb) {
             if (Visible)
-                sb.Draw(Texture, Position, viewRect, Color,
-                    Rotation, Origin, Scale, SpriteEffects.None, 0);
+                if (Texture == null)
+                {
+                    string spriteName = currentSprite;
+                    SpriteInfo s = RNSEB.HenrySprites.All[spriteName];
+                    Texture = RNSEB.cm.Load<Texture2D>(s.Filename); 
+                    sb.Draw(Texture, Position, viewRect, Color,
+                        Rotation, Origin, Scale, SpriteEffects.None, 0);
+                }
+                else
+                    sb.Draw(Texture, Position, viewRect, Color,
+                       Rotation, Origin, Scale, SpriteEffects.None, 0);
         }
         
         public void Update(GameTime gt) {

@@ -172,15 +172,13 @@ namespace teamstairwell.Interface {
 
             upgradeButtons = new Dictionary<string, HenryUpgradeButton>();
             for (int i = 0; i < serialUpgradeIndices.Count; i++) {
-                Console.WriteLine("Index: " + i);
                 upgradeButtons.Add(serialUpgradeIndices[i], serialUpgradeButtons[i]);
             }
             Buttons = new Dictionary<string, HenryButton>();
             for (int i = 0; i < serialIndices.Count; i++) {
-                Console.WriteLine("Index: " + i);
                 Buttons.Add(serialIndices[i], serialButtons[i]);
             }
-
+            Buttons["Done"].ReloadContent();
             bossMode = info.GetBoolean("BossMode");
             mayUpgrade = info.GetBoolean("mayUpgrade");
             music = info.GetString("music");
@@ -189,8 +187,8 @@ namespace teamstairwell.Interface {
             texts[1].ReloadContent("Text");
             texts[2].ReloadContent("Text");
             texts[3].ReloadContent("Text");
+           // texts[4].ReloadContent("Button");
             background.ReloadContent();
-            Console.WriteLine("Num of upgradeButtons: " + upgradeButtons.Count);
             foreach (HenryUpgradeButton butt in upgradeButtons.Values)
                 butt.ReloadContent();
             foreach (HenryButton butt in Buttons.Values) {
@@ -228,7 +226,6 @@ namespace teamstairwell.Interface {
             info.AddValue("music", music);
             info.AddValue("texts", texts);
 
-            Console.WriteLine("/////////////////////////////////");
         }
 
     }

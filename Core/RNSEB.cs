@@ -210,10 +210,16 @@ namespace teamstairwell{
                     Stream stream = File.Open("RNSEB_SAVE.osl", FileMode.Open);
                     BinaryFormatter bformatter = new BinaryFormatter();
                     TheBattlefield = (HenryBattlefield)bformatter.Deserialize(stream);
-                    BossUpgradeMenu = (HenryUpgradeMenu)bformatter.Deserialize(stream);
-                    PlayerUpgradeMenu = (HenryUpgradeMenu)bformatter.Deserialize(stream);
                     stream.Close();
+                   
+                    Stream strweam = File.Open("RNSEB_UGRAD.osl", FileMode.Open);
+                    BossUpgradeMenu = (HenryUpgradeMenu)bformatter.Deserialize(strweam);
+                    PlayerUpgradeMenu = (HenryUpgradeMenu)bformatter.Deserialize(strweam);
+                    strweam.Close();
+                    
                     screens["Battlefield"] = TheBattlefield;
+
+
                     screens["PlayerUpgradeMenu"] = PlayerUpgradeMenu;
                     screens["BossUpgradeMenu"] = BossUpgradeMenu;
                     RNSEB.CurrentScreen = "Battlefield";
@@ -250,9 +256,13 @@ namespace teamstairwell{
                     Stream strweam = File.Open("RNSEB_SAVE.osl", FileMode.Create);
                     BinaryFormatter bformatter = new BinaryFormatter();
                     bformatter.Serialize(strweam, TheBattlefield);
-                    bformatter.Serialize(strweam, BossUpgradeMenu);
-                    bformatter.Serialize(strweam, PlayerUpgradeMenu);
                     strweam.Close();
+
+                    Stream stream = File.Open("RNSEB_UGRAD.osl", FileMode.Create);
+                    bformatter.Serialize(stream, BossUpgradeMenu);
+                    bformatter.Serialize(stream, PlayerUpgradeMenu);
+                    
+                    stream.Close();
                     RNSEB.CurrentScreen = "Battlefield";
                 }));
                 //create credits screen

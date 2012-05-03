@@ -29,7 +29,13 @@ namespace teamstairwell.Graphics {
         }
 
         public void Draw(SpriteBatch sb) {
-            sb.DrawString(Font, Text, Position, Color, RotationAngle, Origin, Scale, SpriteEffect, 0);
+            if (Font != null)
+                sb.DrawString(Font, Text, Position, Color, RotationAngle, Origin, Scale, SpriteEffect, 0);
+            else
+            {
+                Font = RNSEB.ButtonFont;
+                sb.DrawString(Font, Text, Position, Color, RotationAngle, Origin, Scale, SpriteEffect, 0);
+            }
         }
 
         private void ResolutionChange(object sender, EventArgs e) {
