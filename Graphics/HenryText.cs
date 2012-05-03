@@ -45,7 +45,7 @@ namespace teamstairwell.Graphics {
         }
 
         public void ReloadContent(string font) {
-            Font = RNSEB.Fonts[font];
+            //Font = RNSEB.Fonts[font];
         }
     }
 }

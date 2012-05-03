@@ -20,7 +20,11 @@ namespace teamstairwell {
 
         private string music = "Level1Music";
         public bool BossMode;
+<<<<<<< HEAD
+=======
         public bool MultiMode;
+        public List<HenryBullet> bullets = new List<HenryBullet>();
+>>>>>>> 8d9e9ad9c780a0145fb1dd1b0c20c60a47c1cb05
         public List<HenrySpawner> ships = new List<HenrySpawner>();
         public HenryPlayer Zihao;
         public HenryBoss Notus;
@@ -54,11 +58,15 @@ namespace teamstairwell {
             ZihaoWepBar = new WeaponBar();
             NotusWepBar = new WeaponBar();
             if (BossMode) {
+<<<<<<< HEAD
+                Zihao.Automated = true;
+=======
                 if (!MultiMode)
                 {
                     Zihao.Automated = true;
                     Zihao.Invulnerable = true;
                 }
+>>>>>>> 8d9e9ad9c780a0145fb1dd1b0c20c60a47c1cb05
                 ZihaoShieldBar = new ProgressBar(RNSEB.cm, new Rectangle(0, 0, (int)RNSEB.RESOLUTION.X, 20), "ShieldTick");
                 NotusHealthBar = new ProgressBar(RNSEB.cm, new Rectangle(0, (int)RNSEB.RESOLUTION.Y - 20, (int)RNSEB.RESOLUTION.X, 20), "HealthTick");
                 ZihaoWepBar.Position = new Vector2(RNSEB.RESOLUTION.X - 96, 6+22);

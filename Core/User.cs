@@ -9,5 +9,6 @@ namespace teamstairwell
     class User
     {
         public Texture2D picture;
+        public bool BossMode;
     }
 }
