@@ -16,6 +16,7 @@ namespace teamstairwell {
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
         private bool shieldIsUp = true, invulnerableFromShield = false;
+        public bool nonRotate = false;
         public float Shield {
             get{ return shield; }
             set {

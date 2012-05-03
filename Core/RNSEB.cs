@@ -38,6 +38,8 @@ namespace teamstairwell{
 
         HenryMenu Lobby;
         HenryMenu ListSessions;
+        float gameStartTimer = 2.0f;
+        float elapsedTime;
 
         //Henry Stuff
         bool HenryMode = true;
@@ -312,7 +314,7 @@ namespace teamstairwell{
             //Maintains Lobby
             if(RNSEB.CurrentScreen == "Lobby")
             {
-                HandleLobby();
+                HandleLobby(gameTime);
             }
 
             //Maintains Session Select Screen
@@ -321,12 +323,21 @@ namespace teamstairwell{
                 HandleListSessions();
             }
 
+            RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
+            Input.Update(gameTime);
+            TheMouse.Update(gameTime);
 
+            if (RNSEB.CurrentScreen == "Battlefield" && networkSession != null)
+            {
+                if (TheBattlefield.BossMode)
+                    SendDataBoss(TheBattlefield.Notus, gameTime);
+                else
+                {
+                    SendDataPlayer(TheBattlefield.Zihao, gameTime);
+                }
+                networkSession.Update();
+            }
 
-            
-                RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
-                Input.Update(gameTime);
-                TheMouse.Update(gameTime);
                 if (CurrentScreen == "Exit")
                     this.Exit();
                 else
@@ -418,7 +429,7 @@ namespace teamstairwell{
         }
 
         //Handle Lobby Updates and Redraws
-        public void HandleLobby()
+        public void HandleLobby(GameTime gameTime)
         {
             if (networkSession != null)
             {
@@ -434,6 +445,7 @@ namespace teamstairwell{
                     Lobby.AddText(0.5f, 0.1f, TitleFont, Color.White, "Lobby");
                     Lobby.AddText(0.5f, 0.18f, TextFont, Color.White, "Press A When Ready");
                     float y = 0.25f;
+                    int gamernum = 0;
                     foreach (NetworkGamer gamer in networkSession.AllGamers)
                     {
                         string text = gamer.Gamertag;
@@ -442,15 +454,42 @@ namespace teamstairwell{
                         if (gamer.IsReady)
                             text += " - ready!";
 
+                        if (gamernum == 0)
+                            player.BossMode = false;
+                        else
+                            player.BossMode = true;
+
                         Lobby.AddText(0.2f, y, TextFont, Color.White, text);
                         y += 0.06f;
+                        gamernum++;
                     }
 
                     // The host checks if everyone is ready, and moves to game play if true.
-                    if (networkSession.IsHost)
+                    if (networkSession.IsEveryoneReady && networkSession.AllGamers.Count == 2)
                     {
-                        if (networkSession.IsEveryoneReady)
+                        elapsedTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        gameStartTimer -= elapsedTime;
+                        if (networkSession.IsHost && gameStartTimer <= 0)
                             networkSession.StartGame();
+
+                        if (gameStartTimer <= 0)
+                        {
+                            screens["PlayerUpgradeMenu"] = new HenryUpgradeMenu(false);
+                            screens["BossUpgradeMenu"] = new HenryUpgradeMenu(true);
+                            //If player is local (this computer) then create a battlefield with the correct Player/Boss mode
+                            foreach (NetworkGamer gamer in networkSession.AllGamers)
+                            {
+                                User player = gamer.Tag as User;
+                                if (gamer.IsLocal)
+                                {
+                                    screens["Battlefield"] = new HenryBattlefield(player.BossMode, true);
+                                }
+                            }
+                            TheBattlefield = (HenryBattlefield)screens["Battlefield"];
+                            TheBattlefield.LoadContent();
+                            TheBattlefield.Zihao.nonRotate = TheBattlefield.BossMode;
+                            RNSEB.CurrentScreen = "Battlefield";
+                        }
                     }
 
                     // Pump the underlying session object.
@@ -509,6 +548,101 @@ namespace teamstairwell{
         }
 
 
+        //recieve data from network
+        void RecieveRemoteData(LocalNetworkGamer gamer, GameTime gameTime)
+        {
+            //System.Diagnostics.Debug.WriteLine("gamer: " + gamer.IsDataAvailable);
+            while (gamer.IsDataAvailable)
+            {
+                NetworkGamer sender;
+                gamer.ReceiveData(packetReader, out sender);
+
+                if (!sender.IsLocal)
+                {
+                    if (TheBattlefield.BossMode)
+                    {
+                        TheBattlefield.Zihao.acceleration = packetReader.ReadVector2();
+                        TheBattlefield.Zihao.Position = packetReader.ReadVector2();
+                        TheBattlefield.Zihao.Rotation = (float)packetReader.ReadDouble();
+                        bool firing = false;
+                        firing = packetReader.ReadBoolean();
+                        if (firing)
+                        {
+                            RNSEB.Input.Equals("PlayerFire1");
+                        }
+                    }
+                    else
+                    {
+                        TheBattlefield.Notus.acceleration = packetReader.ReadVector2();
+                        TheBattlefield.Notus.Position = packetReader.ReadVector2();
+                        bool firing = false;
+                        firing = packetReader.ReadBoolean();
+                        if (firing)
+                        {
+                            RNSEB.Input.Equals("BossFire2");
+                        }
+                    }
+                }
+
+                /*if (!sender.IsLocal && ((string)gamer.Tag =="Player"))
+                {
+                    HenryBoss remoteboss = gamer.Tag as HenryBoss;
+                    remoteboss.acceleration = packetReader.ReadVector2();
+                    remoteboss.Position = packetReader.ReadVector2();
+                    remoteboss.Update(gameTime);
+                }
+                else if (!sender.IsLocal)
+                {
+                    HenryPlayer remoteplayer = gamer.Tag as HenryPlayer;
+                    remoteplayer.acceleration = packetReader.ReadVector2();
+                    remoteplayer.Position = packetReader.ReadVector2();
+                    remoteplayer.Update(gameTime);
+                }*/
+            }
+        }
+
+        //send data over network (in order) for player
+        private void SendDataPlayer(HenryPlayer player, GameTime gameTime)
+        {
+            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+            {
+                RecieveRemoteData(gamer, gameTime);
+                packetWriter.Write(player.acceleration);
+                packetWriter.Write(player.Position);
+                packetWriter.Write((double)player.Rotation);
+                if (RNSEB.Input.GetKey("PlayerFire1"))
+                {
+                    packetWriter.Write(true);
+                }
+                else
+                    packetWriter.Write(false);
+                gamer.SendData(packetWriter, SendDataOptions.InOrder);
+            }
+        }
+
+        //send data over network (in order) for boss
+        private void SendDataBoss(HenryBoss boss, GameTime gameTime)
+        {
+
+            foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
+            {
+                RecieveRemoteData(gamer, gameTime);
+
+                packetWriter.Write(boss.acceleration);
+                packetWriter.Write(boss.Position);
+                /*for (int i = 0; i < TheBattlefield.Notus.LaunchBays.Count; i++)
+                {
+                    packetWriter.Write(TheBattlefield.Notus.LaunchBays[i].);
+                }*/
+                if (RNSEB.Input.GetKey("BossFire2"))
+                {
+                    packetWriter.Write(true);
+                }
+                else
+                    packetWriter.Write(false);
+                gamer.SendData(packetWriter, SendDataOptions.InOrder);
+            }
+        }
 
 
 
