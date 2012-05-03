@@ -16,6 +16,7 @@ namespace teamstairwell {
         private float invulnerabilityAfterDamageLength, invulnerabilityAfterDamageCounter = 0;
         private int shieldMax;
         private bool shieldIsUp = true, invulnerableFromShield = false;
+        public bool nonRotate = false;
         public float Shield {
             get{ return shield; }
             set {
@@ -54,6 +55,7 @@ namespace teamstairwell {
             HitRadius = 20; //what hit size is the player?
             invulnerabilityAfterDamageLength = 1.0f; //how much time (in seconds) should the player be invulnerable after a hit?
             FocusedWeapon = new BasicLaser(this);
+
         }
 
         public new void Update(GameTime gt){
@@ -108,7 +110,7 @@ namespace teamstairwell {
                 acceleration = forceDirection * EnginePower;
 
                 //calculate ship rotation from mouse cursor position (props to ryan)
-                if(!Automated)
+                if(!Automated && !nonRotate)
                     Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
                 else {
                     HenrySpawner s = FindNearestEnemy();

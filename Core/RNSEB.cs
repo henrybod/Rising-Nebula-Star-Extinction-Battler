@@ -325,12 +325,19 @@ namespace teamstairwell{
             RESOLUTION = new Vector2(Window.ClientBounds.Width, Window.ClientBounds.Height);
             Input.Update(gameTime);
             TheMouse.Update(gameTime);
-            if (networkSession != null && networkSession.SessionState == NetworkSessionState.Playing)
+
+
+            if (RNSEB.CurrentScreen == "Battlefield" && networkSession != null)
             {
-                //SendDataPlayer(Notus, gameTime);//NEW!
-                //SendDataBoss(Zihao, gameTime);//NEW!
-                networkSession.Update(); //NEW!
+                if (TheBattlefield.BossMode)
+                    SendDataBoss(TheBattlefield.Notus, gameTime);
+                else
+                {
+                    SendDataPlayer(TheBattlefield.Zihao, gameTime);
+                }
+                networkSession.Update();
             }
+
                 if (CurrentScreen == "Exit")
                     this.Exit();
                 else
@@ -521,6 +528,7 @@ namespace teamstairwell{
                             }
                             TheBattlefield = (HenryBattlefield)screens["Battlefield"];
                             TheBattlefield.LoadContent();
+                            TheBattlefield.Zihao.nonRotate = TheBattlefield.BossMode;
                             RNSEB.CurrentScreen = "Battlefield";
                         }
                     }
@@ -582,14 +590,36 @@ namespace teamstairwell{
         }
 
         //recieve data from network
-        void RecieveData(LocalNetworkGamer gamer, GameTime gameTime)
+        void RecieveRemoteData(LocalNetworkGamer gamer, GameTime gameTime)
         {
+            //System.Diagnostics.Debug.WriteLine("gamer: " + gamer.IsDataAvailable);
             while (gamer.IsDataAvailable)
             {
                 NetworkGamer sender;
                 gamer.ReceiveData(packetReader, out sender);
 
-                if (!sender.IsLocal && ((string)gamer.Tag =="Player"))
+                if (!sender.IsLocal)
+                {
+                    if (TheBattlefield.BossMode)
+                    {
+                        TheBattlefield.Zihao.acceleration = packetReader.ReadVector2();
+                        TheBattlefield.Zihao.Position = packetReader.ReadVector2();
+                        TheBattlefield.Zihao.Rotation = (float)packetReader.ReadDouble();
+                    }
+                    else
+                    {
+                        TheBattlefield.Notus.acceleration = packetReader.ReadVector2();
+                        TheBattlefield.Notus.Position = packetReader.ReadVector2();
+                        bool firing = false;
+                        firing = packetReader.ReadBoolean();
+                        if (firing)
+                        {
+                            RNSEB.Input.Equals("BossFire2");
+                        }
+                    }
+                }
+
+                /*if (!sender.IsLocal && ((string)gamer.Tag =="Player"))
                 {
                     HenryBoss remoteboss = gamer.Tag as HenryBoss;
                     remoteboss.acceleration = packetReader.ReadVector2();
@@ -602,7 +632,7 @@ namespace teamstairwell{
                     remoteplayer.acceleration = packetReader.ReadVector2();
                     remoteplayer.Position = packetReader.ReadVector2();
                     remoteplayer.Update(gameTime);
-                }
+                }*/
              }
         }
 
@@ -611,34 +641,35 @@ namespace teamstairwell{
         {
             foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
             {
-                RecieveData(gamer, gameTime);
-
-                if (currentState.IsConnected)
-                {
-                    packetWriter.Write(player.acceleration);
-                    packetWriter.Write(player.Position);
-                    gamer.SendData(packetWriter, SendDataOptions.InOrder);
-                }
-
-                //gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+                RecieveRemoteData(gamer, gameTime);
+                packetWriter.Write(player.acceleration);
+                packetWriter.Write(player.Position);
+                packetWriter.Write((double)player.Rotation);
+                gamer.SendData(packetWriter, SendDataOptions.InOrder);
             }
         }
 
         //send data over network (in order) for boss
         private void SendDataBoss(HenryBoss boss, GameTime gameTime)
         {
+
             foreach (LocalNetworkGamer gamer in networkSession.LocalGamers)
             {
-                RecieveData(gamer, gameTime);
-
-                if (currentState.IsConnected)
+                RecieveRemoteData(gamer, gameTime);
+                
+                packetWriter.Write(boss.acceleration);
+                packetWriter.Write(boss.Position);
+                /*for (int i = 0; i < TheBattlefield.Notus.LaunchBays.Count; i++)
                 {
-                    packetWriter.Write(boss.acceleration);
-                    packetWriter.Write(boss.Position);
-                    gamer.SendData(packetWriter, SendDataOptions.InOrder);
+                    packetWriter.Write(TheBattlefield.Notus.LaunchBays[i].);
+                }*/
+                if (RNSEB.Input.GetKey("BossFire2"))
+                {
+                    packetWriter.Write(true);
                 }
-
-                //gamer.SendData(packetWriter, SendDataOptions.InOrder); //packet loss prevention (hopefully)
+                else
+                    packetWriter.Write(false);
+                gamer.SendData(packetWriter, SendDataOptions.InOrder);
             }
         }
 
