@@ -8,7 +8,7 @@ namespace teamstairwell.Interface {
 
     public class HenryInput {
 
-        private Dictionary<string, bool> input = new Dictionary<string, bool>();
+        public Dictionary<string, bool> input = new Dictionary<string, bool>();
         private int MouseX = (int)RNSEB.RESOLUTION.X / 2;
         private int MouseY = (int)RNSEB.RESOLUTION.Y / 2;
         private int currMouseWheel = 0, prevMouseWheel = 0;

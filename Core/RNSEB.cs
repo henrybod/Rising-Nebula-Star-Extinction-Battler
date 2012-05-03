@@ -342,6 +342,9 @@ namespace teamstairwell{
                     this.Exit();
                 else
                     screens[CurrentScreen].Update(gameTime);
+
+                //Input.Update(gameTime);
+                //TheMouse.Update(gameTime);
             
             base.Update(gameTime);
         }
@@ -568,7 +571,12 @@ namespace teamstairwell{
                         firing = packetReader.ReadBoolean();
                         if (firing)
                         {
-                            RNSEB.Input.Equals("PlayerFire1");
+                            RNSEB.Input.input["PlayerFire1"] = true;
+                        }
+                        firing = packetReader.ReadBoolean();
+                        if (firing)
+                        {
+                            RNSEB.Input.input["PlayerFire2"] = true;
                         }
                     }
                     else
@@ -579,7 +587,12 @@ namespace teamstairwell{
                         firing = packetReader.ReadBoolean();
                         if (firing)
                         {
-                            RNSEB.Input.Equals("BossFire2");
+                            RNSEB.Input.input["BossFire1"] = true;
+                        }
+                        firing = packetReader.ReadBoolean();
+                        if (firing)
+                        {
+                            RNSEB.Input.input["BossFire2"] = true;
                         }
                     }
                 }
@@ -616,6 +629,12 @@ namespace teamstairwell{
                 }
                 else
                     packetWriter.Write(false);
+                if (RNSEB.Input.GetKey("PlayerFire2"))
+                {
+                    packetWriter.Write(true);
+                }
+                else
+                    packetWriter.Write(true);
                 gamer.SendData(packetWriter, SendDataOptions.InOrder);
             }
         }
@@ -634,6 +653,12 @@ namespace teamstairwell{
                 {
                     packetWriter.Write(TheBattlefield.Notus.LaunchBays[i].);
                 }*/
+                if (RNSEB.Input.GetKey("BossFire1"))
+                {
+                    packetWriter.Write(true);
+                }
+                else
+                    packetWriter.Write(false);
                 if (RNSEB.Input.GetKey("BossFire2"))
                 {
                     packetWriter.Write(true);

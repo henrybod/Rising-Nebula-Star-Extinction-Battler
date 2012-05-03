@@ -109,9 +109,9 @@ namespace teamstairwell {
                 acceleration = forceDirection * EnginePower;
 
                 //calculate ship rotation from mouse cursor position (props to ryan)
-                if(!Automated)
+                if(!Automated && !nonRotate)
                     Rotation = (float)(Math.Atan2(Position.Y - RNSEB.Input.GetCursor().Y, Position.X - RNSEB.Input.GetCursor().X) - Math.PI / 2);
-                else {
+                else if(!nonRotate){
                     HenrySpawner s = FindNearestEnemy();
                     Rotation = (float)(Math.Atan2(Position.Y - s.Position.Y, Position.X - s.Position.X) - Math.PI / 2);
                     Vector2 dir = (s.Position - this.Position);
